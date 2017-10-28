@@ -1,0 +1,35 @@
+<div id="logo">
+	<img src="images/netTNC-logo.svg">
+</div>
+<h1>{{title}}</h1>
+<h2>Configuration</h2>
+<form>
+<table>
+<tr>
+<th>
+Radio: 
+</th>
+<td>
+<select id="radio" name="radio" onchange='updateRadio({port1:{radioID:this.value}})'>
+{{#each radios}}
+<option value="{{model}}" title="{{description}}">{{model}}</option>
+{{/each}}
+</select>
+</td>
+</tr>
+<th>
+{{#each modems}}
+Modem:
+</th>
+<td>
+<select id="modem" name="modem" onchange='updateRadio({port1:{modemID:this.value}})'>
+{{#each speeds}}
+<option value="{{rate}}" title="{{description}}">{{rate}} bps {{modulation}}</option>
+{{/each}}
+</select>
+{{/each}}
+</td>
+</tr>
+</table>
+</form>
+

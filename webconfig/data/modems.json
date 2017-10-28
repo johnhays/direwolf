@@ -1,0 +1,10 @@
+{"modem":{"speeds":[
+	{"rate":"300","modulation":"afsk","description":"Typically Used on HF"},
+	{"rate":"1200","modulation":"afsk","description":"Typically Used on 10m/VHF"},
+	{"rate":"3600","modulation":"psk","description":"Experimental"},
+	{"rate":"4800","modulation":"psk","description":"Experimental"},
+	{"rate":"9600","modulation":"fsk","description":"Satellite and Terrestrial"},
+	{"rate":"19200","modulation":"fsk","description":"Experimental"},
+	{"rate":"28800","modulation":"fsk","description":"Experimental"}]
+	}
+}
