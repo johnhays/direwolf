@@ -1,5 +1,24 @@
 "use strict";
 
+class Test {
+	constructor(name){
+		this.name = name;
+	}
+	addKeyVal(key,val) {
+		Object.defineProperty(this,key, {
+			value: val,
+			writeable: true,
+			enumerable: true,
+			configurable: true
+		});
+	}
+
+	asJSON(){
+		return this;
+	}
+}
+		
+
 class Adevice {
 	constructor(){
 		this.name = null;
@@ -61,7 +80,275 @@ class Adevice {
 
 class Beacon {
 	constructor(){
-		
+		this.DELAY = null;
+		this.EVERY = null;
+		this.SENDTO = null;
+		this.DESTINATION = null;
+		this.VIA = null;	
+	}
+
+	setDELAY(DELAY) {
+		this.DELAY = DELAY;
+	}
+	getDELAY(){
+		return this.DELAY;
+	}
+
+	setEVERY(EVERY) {
+		this.EVERY = EVERY;
+	}
+	getEVERY(){
+		return this.EVERY;
+	}
+
+	setSENDTO(SENDTO) {
+		this.SENDTO = SENDTO;
+	}
+	getSENDTO(){
+		return this.SENDTO;
+	}
+
+	setDESTINATION(DESTINATION) {
+		this.DESTINATION = DESTINATION;
+	}
+	getDESTINATION(){
+		return this.DESTINATION;
+	}
+
+	setVIA(VIA) {
+		this.VIA = VIA;
+	}
+	getVIA(){
+		return this.VIA;
+	}
+
+}
+
+class Pbeacon extends Beacon {
+	constructor(){
+		super();
+		this.MESSAGING = null;
+		this.LAT = null;
+		this.LONG = null;
+		this.ZONE = null;
+		this.EASTING = null;
+		this.NORTHING = null;
+		this.ALTITUDE = null;
+		this.SYMBOL = null;
+		this.OVERLAY = null;
+		this.POWER = null;
+		this.HEIGHT = null;
+		this.GAIN = null;
+		this.DIR = null;
+		this.FREQ = null;
+		this.TONE = null;
+		this.OFFSET = null;
+		this.COMMENT = null;
+		this.COMMENTCMD = null;
+		this.COMPRESS = null;
+	}
+
+	setMESSAGING(MESSAGING) {
+		this.MESSAGING = MESSAGING;
+	}
+	getMESSAGING(){
+		return this.MESSAGING;
+	}
+
+	setLAT(LAT) {
+		this.LAT = LAT;
+	}
+	getLAT(){
+		return this.LAT;
+	}
+
+	setLONG(LONG) {
+		this.LONG = LONG;
+	}
+	getLONG(){
+		return this.LONG;
+	}
+
+	setZONE(ZONE) {
+		this.ZONE = ZONE;
+	}
+	getZONE(){
+		return this.ZONE;
+	}
+
+	setEASTING(EASTING) {
+		this.EASTING = EASTING;
+	}
+	getEASTING(){
+		return this.EASTING;
+	}
+
+	setNORTHING(NORTHING) {
+		this.NORTHING = NORTHING;
+	}
+	getNORTHING(){
+		return this.NORTHING;
+	}
+
+	setALT(ALT) {
+		this.ALT = ALT;
+	}
+	getALT(){
+		return this.ALT;
+	}
+
+	setSYMBOL(SYMBOL) {
+		this.SYMBOL = SYMBOL;
+	}
+	getSYMBOL(){
+		return this.SYMBOL;
+	}
+
+	setOVERLAY(OVERLAY) {
+		this.OVERLAY = OVERLAY;
+	}
+	getOVERLAY(){
+		return this.OVERLAY;
+	}
+
+	setPOWER(POWER) {
+		this.POWER = POWER;
+	}
+	getPOWER(){
+		return this.POWER;
+	}
+
+	setHEIGHT(HEIGHT) {
+		this.HEIGHT = HEIGHT;
+	}
+	getHEIGHT(){
+		return this.HEIGHT;
+	}
+
+	setGAIN(GAIN) {
+		this.GAIN = GAIN;
+	}
+	getGAIN(){
+		return this.GAIN;
+	}
+
+	setDIR(DIR) {
+		this.DIR = DIR;
+	}
+	getDIR(){
+		return this.DIR;
+	}
+
+	setFREQ(FREQ) {
+		this.FREQ = FREQ;
+	}
+	getFREQ(){
+		return this.FREQ;
+	}
+
+	setTONE(TONE) {
+		this.TONE = TONE;
+	}
+	getTONE(){
+		return this.TONE;
+	}
+
+	setOFFSET(OFFSET) {
+		this.OFFSET = OFFSET;
+	}
+	getOFFSET(){
+		return this.OFFSET;
+	}
+
+	setCOMMENT(COMMENT) {
+		this.COMMENT = COMMENT;
+	}
+	getCOMMENT(){
+		return this.COMMENT;
+	}
+
+	setCOMMENTCMD(COMMENTCMD) {
+		this.COMMENTCMD = COMMENTCMD;
+	}
+	getCOMMENTCMD(){
+		return this.COMMENTCMD;
+	}
+
+	setCOMPRESS(COMPRESS) {
+		this.COMPRESS = COMPRESS;
+	}
+	getCOMPRESS(){
+		return this.COMPRESS;
+	}
+
+	getElements() {
+		var elements = "";
+		for (var prop in this) if (this[prop] != null) elements += " " + prop + "=" + this[prop];
+		return elements;
+	}
+	
+	toString() {
+		return "PBEACON" + this.getElements();
+	}
+
+}
+
+class Obeacon extends Pbeacon {
+	
+	constructor() {
+		super();
+		this.OBJNAME = null;
+	}
+	setOBJNAME(OBJNAME) {
+		this.OBJNAME = OBJNAME;
+	}
+	getOBJNAME(){
+		return this.OBJNAME;
+	}
+
+}
+
+class Cbeacon extends Beacon {
+
+	constructor() {
+		super();
+		this.INFO = null;
+		this.INFOCMD = null;
+	}
+	setINFO(INFO) {
+		this.INFO = INFO;
+	}
+	getINFO(){
+		return this.INFO;
+	}
+
+	setINFOCMD(INFOCMD) {
+		this.INFOCMD = INFOCMD;
+	}
+	getINFOCMD(){
+		return this.INFOCMD;
+	}
+
+
+}
+
+class Tbeacon extends Pbeacon {
+
+	constructor() {
+		super();
+		delete this.LAT;
+		delete this.LONG;
+		delete this.ZONE;
+		delete this.EASTING;
+		delete this.NORTHING;
+	}
+
+}
+
+class Ibeacon extends Beacon {
+	
+	constructor() {
+		super();
 	}
 }
 
@@ -547,6 +834,9 @@ function ParseDirewolf(file) {
 				}
 				direwolf.addAdevice(adevices[curdevice]);
 				break;
+			case (tokens[0].match(/^[POCIT]BEACON$/) || {}).input:
+				console.log(tokens[0] + " MATCHED");
+				break;
 			case "ARATE" :
 				adevices[curdevice].setARATE(tokens[1]);
 				break;
@@ -620,4 +910,21 @@ console.log(direwolf.asJSON());
 console.log('--- end of object');
 console.log(direwolf.toString());
 console.log('--- end of string');
-
+var test = new Test("For fun");
+test.addKeyVal("size","big");
+test.addKeyVal("weight","heavy");
+console.log(test.asJSON());
+var BEACON = new Beacon();
+console.log(BEACON);
+var CBEACON = new Cbeacon();
+console.log(CBEACON);
+var PBEACON = new Pbeacon();
+PBEACON.setCOMMENT(1);
+console.log(PBEACON);
+var OBEACON = new Obeacon();
+console.log(OBEACON);
+var TBEACON = new Tbeacon();
+console.log(TBEACON);
+var IBEACON = new Ibeacon();
+console.log(IBEACON);
+console.log(PBEACON.toString());
