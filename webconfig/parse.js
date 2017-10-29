@@ -306,6 +306,16 @@ class Obeacon extends Pbeacon {
 		return this.OBJNAME;
 	}
 
+        getElements() {
+                var elements = "";
+                for (var prop in this) if (this[prop] != null) elements += " " + prop + "=" + this[prop];
+                return elements;
+        }
+
+        toString() {
+                return "OBEACON" + this.getElements();
+        }
+
 }
 
 class Cbeacon extends Beacon {
@@ -329,6 +339,16 @@ class Cbeacon extends Beacon {
 		return this.INFOCMD;
 	}
 
+        getElements() {
+                var elements = "";
+                for (var prop in this) if (this[prop] != null) elements += " " + prop + "=" + this[prop];
+                return elements;
+        }
+
+        toString() {
+                return "OBEACON" + this.getElements();
+        }
+
 
 }
 
@@ -343,6 +363,16 @@ class Tbeacon extends Pbeacon {
 		delete this.NORTHING;
 	}
 
+        getElements() {
+                var elements = "";
+                for (var prop in this) if (this[prop] != null) elements += " " + prop + "=" + this[prop];
+                return elements;
+        }
+
+        toString() {
+                return "TBEACON" + this.getElements();
+        }
+
 }
 
 class Ibeacon extends Beacon {
@@ -350,6 +380,16 @@ class Ibeacon extends Beacon {
 	constructor() {
 		super();
 	}
+
+        getElements() {
+                var elements = "";
+                for (var prop in this) if (this[prop] != null) elements += " " + prop + "=" + this[prop];
+                return elements;
+        }
+
+        toString() {
+                return "IBEACON" + this.getElements();
+        }
 }
 
 class Channel {
@@ -367,6 +407,7 @@ class Channel {
 		this.PERSIST = 63;
 		this.TXDELAY = 30;
 		this.TXTAIL = 10;
+		this.FULLDUP = null;
 		this.FIX_BITS = null;
 		this.DTMF = false;
 	}
@@ -453,6 +494,13 @@ class Channel {
 		return this.TXTAIL;
 	}
 
+	setFULLDUP(FULLDUP) {
+		this.FULLDUP = FULLDUP;
+	}
+	getFULLDUP() {
+		return this.FULLDUP;
+	}
+
 
 	getChannel() {
 		return this.CHANNEL;
@@ -487,6 +535,7 @@ class Channel {
 		if (this.PERSIST != null) str += "\nPERSIST " + this.PERSIST;
 		if (this.TXDELAY != null) str += "\nTXDELAY " + this.TXDELAY;
 		if (this.TXTAIL != null) str += "\nTXTAIL " + this.TXTAIL;
+		if (this.FULLDUP != null) str += "\nFULLDUP " + this.FULLDUP;
 		if (this.DTMF) str += "\nDTMF";
 		return str;
 	}			
@@ -771,6 +820,18 @@ function ParseDirewolf(file) {
 		let tokens = line.split(/\s+/);
 		switch(tokens[0])
 		{
+			case "ARATE" :
+				adevices[curdevice].setARATE(tokens[1]);
+				break;
+			case "ACHANNELS" :
+				adevices[curdevice].setACHANNELS(tokens[1]);
+				break;
+			case "AGWPORT" :
+				direwolf.setAGWPORT(tokens[1]);
+				break;
+			case "KISSPORT" :
+				direwolf.setKISSPORT(tokens[1]);
+				break;
 			case "CHANNEL" :
 				curchannel = tokens[1];
 				channels[curchannel] = new Channel(curchannel);
@@ -834,29 +895,80 @@ function ParseDirewolf(file) {
 				}
 				direwolf.addAdevice(adevices[curdevice]);
 				break;
-			case (tokens[0].match(/^[POCIT]BEACON$/) || {}).input:
-				console.log(tokens[0] + " MATCHED");
-				break;
-			case "ARATE" :
-				adevices[curdevice].setARATE(tokens[1]);
-				break;
-			case "ACHANNELS" :
-				adevices[curdevice].setACHANNELS(tokens[1]);
-				break;
-			case "AGWPORT" :
-				direwolf.setAGWPORT(tokens[1]);
-				break;
-			case "KISSPORT" :
-				direwolf.setKISSPORT(tokens[1]);
+			case "PBEACON" :
+				var argstr = line.substring(tokens[0].length,line.length);
+				var hash = argstr.match(/(\S+)=(".*?"|\S+)/g);
+				var pbeacon = new Pbeacon();
+				for (let arg of hash) {
+					var [key,val] = arg.split('=');
+					key = key.toUpperCase();
+					if (pbeacon.hasOwnProperty(key)) {
+						pbeacon[key] = val;
+					} else {
+						console.log("# PBEACON has no " + key);
+					}
+				}
+				direwolf.addBeacon(pbeacon);
 				break;
 			case "TBEACON" :
-				direwolf.addBeacon("TBEACON " + joinAddTokens(tokens));
+				var argstr = line.substring(tokens[0].length,line.length);
+				var hash = argstr.match(/(\S+)=(".*?"|\S+)/g);
+				var tbeacon = new Tbeacon();
+				for (let arg of hash) {
+					var [key,val] = arg.split('=');
+					key = key.toUpperCase();
+					if (tbeacon.hasOwnProperty(key)) {
+						tbeacon[key] = val;
+					} else {
+						console.log("# TBEACON has no " + key);
+					}
+				}
+				direwolf.addBeacon(tbeacon);
 				break;
 			case "OBEACON" :
-				direwolf.addBeacon("OBEACON " + joinAddTokens(tokens));
+				var argstr = line.substring(tokens[0].length,line.length);
+				var hash = argstr.match(/(\S+)=(".*?"|\S+)/g);
+				var obeacon = new Obeacon();
+				for (let arg of hash) {
+					var [key,val] = arg.split('=');
+					key = key.toUpperCase();
+					if (obeacon.hasOwnProperty(key)) {
+						obeacon[key] = val;
+					} else {
+						console.log("# OBEACON has no " + key);
+					}
+				}
+				direwolf.addBeacon(obeacon);
 				break;
-			case "PBEACON" :
-				direwolf.addBeacon("PBEACON " + joinAddTokens(tokens));
+			case "CBEACON" :
+				var argstr = line.substring(tokens[0].length,line.length);
+				var hash = argstr.match(/(\S+)=(".*?"|\S+)/g);
+				var cbeacon = new Cbeacon();
+				for (let arg of hash) {
+					var [key,val] = arg.split('=');
+					key = key.toUpperCase();
+					if (cbeacon.hasOwnProperty(key)) {
+						cbeacon[key] = val;
+					} else {
+						console.log("# CBEACON has no " + key);
+					}
+				}
+				direwolf.addBeacon(cbeacon);
+				break;
+			case "IBEACON" :
+				var argstr = line.substring(tokens[0].length,line.length);
+				var hash = argstr.match(/(\S+)=(".*?"|\S+)/g);
+				var ibeacon = new Ibeacon();
+				for (let arg of hash) {
+					var [key,val] = arg.split('=');
+					key = key.toUpperCase();
+					if (ibeacon.hasOwnProperty(key)) {
+						ibeacon[key] = val;
+					} else {
+						console.log("# IBEACON has no " + key);
+					}
+				}
+				direwolf.addBeacon(ibeacon);
 				break;
 			case "DIGIPEAT" :
 				var digi = new Digipeater(tokens[1],tokens[2],tokens[3],tokens[4]);
@@ -895,8 +1007,11 @@ function ParseDirewolf(file) {
 			case "TXTAIL" :
 				channels[curchannel].setTXTAIL(tokens[1]);
 				break;
+			case "FULLDUP" :
+				channels[curchannel].setFULLDUP(tokens[1]);
+				break;
 			default :
-				console.log("Reject - " + line);
+				console.log("# Reject - " + line);
 				break;
 		}
 	}
@@ -910,6 +1025,7 @@ console.log(direwolf.asJSON());
 console.log('--- end of object');
 console.log(direwolf.toString());
 console.log('--- end of string');
+/*
 var test = new Test("For fun");
 test.addKeyVal("size","big");
 test.addKeyVal("weight","heavy");
@@ -928,3 +1044,4 @@ console.log(TBEACON);
 var IBEACON = new Ibeacon();
 console.log(IBEACON);
 console.log(PBEACON.toString());
+*/
