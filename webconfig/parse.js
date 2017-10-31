@@ -409,6 +409,14 @@ class Channel {
 		this.TXTAIL = 10;
 		this.FULLDUP = null;
 		this.FIX_BITS = null;
+		this.FRACK = null;
+		this.RETRY = null;
+		this.PACLEN = null;
+		this.MAXFRAME = null;
+		this.EMAXFRAME = null;
+		this.MAXV22 = null;
+
+
 		this.DTMF = false;
 	}
 	setChannel(number) {
@@ -428,6 +436,47 @@ class Channel {
 	}
 	setFixBits(fixbits) {
 		this.FIX_BITS = fixbits;
+	}
+	setFRACK(FRACK) {
+		this.FRACK = FRACK;
+	}
+	getFRACK(){
+		return this.FRACK;
+	}
+
+	setRETRY(RETRY) {
+		this.RETRY = RETRY;
+	}
+	getRETRY(){
+		return this.RETRY;
+	}
+
+	setPACLEN(PACLEN) {
+		this.PACLEN = PACLEN;
+	}
+	getPACLEN(){
+		return this.PACLEN;
+	}
+
+	setMAXFRAME(MAXFRAME) {
+		this.MAXFRAME = MAXFRAME;
+	}
+	getMAXFRAME(){
+		return this.MAXFRAME;
+	}
+
+	setEMAXFRAME(EMAXFRAME) {
+		this.EMAXFRAME = EMAXFRAME;
+	}
+	getEMAXFRAME(){
+		return this.EMAXFRAME;
+	}
+
+	setMAXV22(MAXV22) {
+		this.MAXV22 = MAXV22;
+	}
+	getMAXV22(){
+		return this.MAXV22;
 	}
 
 
@@ -546,12 +595,12 @@ class Channel {
 }
 
 class Digipeater {
-	constructor(from,to,aliases,wide) {
+	constructor(from,to) {
 		this.FROM = from;
 		this.TO = to;
-		this.ALIASES = aliases;
-		this.WIDE = wide;
-		this.PREEMPTIVE = "OFF";
+		this.ALIASES = null;
+		this.WIDE = null;
+		this.PREEMPTIVE = null;
 	}
 	
 	setFROM(from) {
@@ -595,9 +644,51 @@ class Digipeater {
 	}
 
 	toString() {
-		return "DIGIPEAT " + this.FROM + " " + this.TO + " " + this.ALIASES + " " + this.WIDE + " " + this.PREEMPTIVE;
+		var str =  "DIGIPEAT " + this.FROM + " " + this.TO + " " + this.ALIASES + " " + this.WIDE;
+		if (this.PREEMPTIVE != null) str += " " + this.PREEMPTIVE;
+		return str;
 	}
 }
+
+class Cdigipeater extends Digipeater {
+	constructor(from,to) {
+		super(from,to);
+		delete this.WIDE;
+		delete this.PREEMPTIVE;
+	}
+	
+	setFROM(from) {
+		this.FROM = form;
+	}
+
+	getFROM() {
+		return this.FROM;
+	}
+	
+	setTO(to) {
+		this.TO = to;
+	}
+
+	getTO() {
+		return this.TO;
+	}
+	
+	setALIASES(aliases) {
+		this.ALIASES = aliases;
+	}
+
+	getALIASES() {
+		return this.ALIASES;
+	}
+
+	
+	toString() {
+		var str = "CDIGIPEAT " + this.FROM + " " + this.TO;
+		if (this.ALIASES != null) str += " " + this.ALIASES;
+		return str;
+	}
+}
+
 
 class Direwolf {
 	constructor() {
@@ -693,6 +784,227 @@ class Direwolf {
 	asJSON(){
 		return JSON.stringify(this);
 	}
+
+	ParseConfig(f) {
+		var raw = f.split(/\r?\n/);
+		var channels = [];
+		var adevices = [];
+		var curdevice = null;
+		var curchannel = null;
+		
+		for (var i = 0; i < raw.length ; i++) {
+			let line = raw[i];
+			let tokens = line.split(/\s+/);
+			switch(tokens[0])
+			{
+				case "ARATE" :
+					adevices[curdevice].setARATE(tokens[1]);
+					break;
+				case "ACHANNELS" :
+					adevices[curdevice].setACHANNELS(tokens[1]);
+					break;
+				case "AGWPORT" :
+					this.setAGWPORT(tokens[1]);
+					break;
+				case "KISSPORT" :
+					this.setKISSPORT(tokens[1]);
+					break;
+				case "CHANNEL" :
+					curchannel = tokens[1];
+					channels[curchannel] = new Channel(curchannel);
+					adevices[curdevice].addChannel(channels[curchannel]);
+					break;
+				case "MYCALL" :
+					channels[curchannel].setMycall(tokens[1]);
+					break;
+				case "MODEM" :
+					var modem = new Modem();
+					modem.SPEED = tokens[1];
+					if (tokens.length > 2) {
+						for (var j=2; j < tokens.length; j++) {
+							modem.addOption(tokens[j]);
+						}
+					}
+					channels[curchannel].setModem(modem);
+					break;
+				case "FILTER" :
+					var filter = new Filter();
+					filter.FROM = tokens[1];
+					filter.TO = tokens[2];
+					filter.EXPRESSION = tokens.slice(3,tokens.length).join(' ');
+					this.addFilter(filter);
+					break;
+				case "CFILTER" :
+					var filter = new Cfilter();
+					filter.FROM = tokens[1];
+					filter.TO = tokens[2];
+					filter.EXPRESSION = tokens.slice(3,tokens.length).join(' ');
+					this.addFilter(filter);
+					break;
+				case "FIX_BITS" :
+					var fixbits = new FixBits();
+					fixbits.EFFORT = tokens[1];
+					if (tokens.length > 2) {
+						for (var j=2; j < tokens.length; j++) {
+							fixbits.addOption(tokens[j]);
+						}
+					}
+					channels[curchannel].setFixBits(fixbits);
+					break;
+				case "PTT" :
+					channels[curchannel].setPtt(tokens.slice(1,tokens.length).join(' '));
+					break;
+				case "DCD" :
+					channels[curchannel].setDCD(tokens.slice(1,tokens.length).join(' '));
+					break;
+				case "CON" :
+					channels[curchannel].setCON(tokens.slice(1,tokens.length).join(' '));
+					break;
+				case "TXINH" :
+					channels[curchannel].setTXINH(tokens.slice(1,tokens.length).join(' '));
+					break;
+				case "DEDUPE" :
+					this.setDEDUPE(tokens[1]);
+					break;
+				case "DTMF" :
+					channels[curchannel].setDTMF();
+					break;
+				case (tokens[0].match(/^ADEVICE[0-2]?$/) || {}).input: 
+					curdevice = tokens[0];
+					adevices[curdevice] = new Adevice();
+					adevices[curdevice].setAdeviceName(tokens[0]);
+					adevices[curdevice].setInput(tokens[1]);
+					if (tokens.length > 2) {
+						adevices[curdevice].setOutput(tokens[2]);
+					}
+					this.addAdevice(adevices[curdevice]);
+					break;
+				case "PBEACON" :
+					var argstr = line.substring(tokens[0].length,line.length);
+					var hash = argstr.match(/(\S+)=(".*?"|\S+)/g);
+					var pbeacon = new Pbeacon();
+					for (let arg of hash) {
+						var [key,val] = arg.split('=');
+						key = key.toUpperCase();
+						if (pbeacon.hasOwnProperty(key)) {
+							pbeacon[key] = val;
+						} else {
+							console.log("# PBEACON has no " + key);
+						}
+					}
+					this.addBeacon(pbeacon);
+					break;
+				case "TBEACON" :
+					var argstr = line.substring(tokens[0].length,line.length);
+					var hash = argstr.match(/(\S+)=(".*?"|\S+)/g);
+					var tbeacon = new Tbeacon();
+					for (let arg of hash) {
+						var [key,val] = arg.split('=');
+						key = key.toUpperCase();
+						if (tbeacon.hasOwnProperty(key)) {
+							tbeacon[key] = val;
+						} else {
+							console.log("# TBEACON has no " + key);
+						}
+					}
+					this.addBeacon(tbeacon);
+					break;
+				case "OBEACON" :
+					var argstr = line.substring(tokens[0].length,line.length);
+					var hash = argstr.match(/(\S+)=(".*?"|\S+)/g);
+					var obeacon = new Obeacon();
+					for (let arg of hash) {
+						var [key,val] = arg.split('=');
+						key = key.toUpperCase();
+						if (obeacon.hasOwnProperty(key)) {
+							obeacon[key] = val;
+						} else {
+							console.log("# OBEACON has no " + key);
+						}
+					}
+					this.addBeacon(obeacon);
+					break;
+				case "CBEACON" :
+					var argstr = line.substring(tokens[0].length,line.length);
+					var hash = argstr.match(/(\S+)=(".*?"|\S+)/g);
+					var cbeacon = new Cbeacon();
+					for (let arg of hash) {
+						var [key,val] = arg.split('=');
+						key = key.toUpperCase();
+						if (cbeacon.hasOwnProperty(key)) {
+							cbeacon[key] = val;
+						} else {
+							console.log("# CBEACON has no " + key);
+						}
+					}
+					this.addBeacon(cbeacon);
+					break;
+				case "IBEACON" :
+					var argstr = line.substring(tokens[0].length,line.length);
+					var hash = argstr.match(/(\S+)=(".*?"|\S+)/g);
+					var ibeacon = new Ibeacon();
+					for (let arg of hash) {
+						var [key,val] = arg.split('=');
+						key = key.toUpperCase();
+						if (ibeacon.hasOwnProperty(key)) {
+							ibeacon[key] = val;
+						} else {
+							console.log("# IBEACON has no " + key);
+						}
+					}
+					this.addBeacon(ibeacon);
+					break;
+				case "DIGIPEAT" :
+					var digi = new Digipeater(tokens[1],tokens[2]);
+					if (typeof tokens[3] !== 'undefined') digi.setALIASES(tokens[3]);
+					if (typeof tokens[4] !== 'undefined') digi.setWIDE(tokens[4]);
+					if (typeof tokens[5] !== 'undefined') digi.setPREEMPTIVE(tokens[5]);
+					this.addDigipeater(digi);
+					break;
+				case "CDIGIPEAT" :
+					var digi = new Cdigipeater(tokens[1],tokens[2]);
+					if (typeof tokens[3] !== 'undefined') digi.setALIASES(tokens[3]);
+					this.addDigipeater(digi);
+					break;
+				case "IGSERVER" :
+					this.setIGSERVER(tokens[1]);
+					break;
+				case "IGLOGIN" :
+					this.setIGLOGIN(tokens.slice(1,tokens.length).join(' '));
+					break;
+				case "IGTXLIMIT" :
+					this.setIGTXLIMIT(tokens.slice(1,tokens.length).join(' '));
+					break;
+				case "GPSD" :
+					this.setGPSD(tokens[1]);
+					break;
+				case "LOGDIR" :
+					this.setLOGDIR(tokens[1]);
+					break;
+				case "DWAIT" :
+					channels[curchannel].setDWAIT(tokens[1]);
+					break;
+				case "SLOTTIME" :
+					channels[curchannel].setSLOTTIME(tokens[1]);
+					break;
+				case "PERSIST" :
+					channels[curchannel].setPERSIST(tokens[1]);
+					break;
+				case "TXDELAY" :
+					channels[curchannel].setTXDELAY(tokens[1]);
+					break;
+				case "TXTAIL" :
+					channels[curchannel].setTXTAIL(tokens[1]);
+					break;
+				case "FULLDUP" :
+					channels[curchannel].setFULLDUP(tokens[1]);
+					break;
+				default :
+					console.log("# Reject - " + line);
+					break;
+			}
+		}
+	}
 }
 
 class Filter {
@@ -723,14 +1035,33 @@ class Filter {
 		return this.EXPRESSION;
 	}
 
-	toString() {
+	getParamString() {
 		if (this.FROM != null && this.TO != null && this.EXPRESSION != null) {
-			return "FILTER " + this.FROM + " " + this.TO + " " + this.EXPRESSION;
+			return this.FROM + " " + this.TO + " " + this.EXPRESSION;
+		} else {
+			return null;
 		}
-		return "";
+	}
+
+	toString() {
+		var params = this.getParamString();
+		if (params == null) return "# FILTER  malformed"
+		else return "FILTER " + params;
 	}
 }
-		
+
+class Cfilter extends Filter{
+	constructor() {
+		super();
+	}
+
+	toString() {
+		var params = super.getParamString();
+		if (params == null) return "# CFILTER  malformed"
+		else return "CFILTER " + params;
+	}
+}		
+	
 
 class FixBits {
 	constructor() {
@@ -798,250 +1129,17 @@ class Modem {
 	asJSON() {
 		return JSON.stringify(this);
 	}
-}
-
-function joinAddTokens(tokens) {
-	return tokens.slice(1,tokens.length).join(' ');
-}
-
-
-function ParseDirewolf(file) {
-	var fs = require("fs");
 	
-	var raw = fs.readFileSync(file,"utf8").split(/\r?\n/);
-	var channels = [];
-	var adevices = [];
-	var curdevice = null;
-	var curchannel = null;
-	var direwolf = new Direwolf();
-	
-	for (var i = 0; i < raw.length ; i++) {
-		let line = raw[i];
-		let tokens = line.split(/\s+/);
-		switch(tokens[0])
-		{
-			case "ARATE" :
-				adevices[curdevice].setARATE(tokens[1]);
-				break;
-			case "ACHANNELS" :
-				adevices[curdevice].setACHANNELS(tokens[1]);
-				break;
-			case "AGWPORT" :
-				direwolf.setAGWPORT(tokens[1]);
-				break;
-			case "KISSPORT" :
-				direwolf.setKISSPORT(tokens[1]);
-				break;
-			case "CHANNEL" :
-				curchannel = tokens[1];
-				channels[curchannel] = new Channel(curchannel);
-				adevices[curdevice].addChannel(channels[curchannel]);
-				break;
-			case "MYCALL" :
-				channels[curchannel].setMycall(tokens[1]);
-				break;
-			case "MODEM" :
-				var modem = new Modem();
-				modem.SPEED = tokens[1];
-				if (tokens.length > 2) {
-					for (var j=2; j < tokens.length; j++) {
-						modem.addOption(tokens[j]);
-					}
-				}
-				channels[curchannel].setModem(modem);
-				break;
-			case "FILTER" :
-				var filter = new Filter();
-				filter.FROM = tokens[1];
-				filter.TO = tokens[2];
-				filter.EXPRESSION = tokens.slice(3,tokens.length).join(' ');
-				direwolf.addFilter(filter);
-				break;
-			case "FIX_BITS" :
-				var fixbits = new FixBits();
-				fixbits.EFFORT = tokens[1];
-				if (tokens.length > 2) {
-					for (var j=2; j < tokens.length; j++) {
-						fixbits.addOption(tokens[j]);
-					}
-				}
-				channels[curchannel].setFixBits(fixbits);
-				break;
-			case "PTT" :
-				channels[curchannel].setPtt(joinAddTokens(tokens));
-				break;
-			case "DCD" :
-				channels[curchannel].setDCD(joinAddTokens(tokens));
-				break;
-			case "CON" :
-				channels[curchannel].setCON(joinAddTokens(tokens));
-				break;
-			case "TXINH" :
-				channels[curchannel].setTXINH(joinAddTokens(tokens));
-				break;
-			case "DEDUPE" :
-				direwolf.setDEDUPE(tokens[1]);
-				break;
-			case "DTMF" :
-				channels[curchannel].setDTMF();
-				break;
-			case (tokens[0].match(/^ADEVICE[0-2]?$/) || {}).input: 
-				curdevice = tokens[0];
-				adevices[curdevice] = new Adevice();
-				adevices[curdevice].setAdeviceName(tokens[0]);
-				adevices[curdevice].setInput(tokens[1]);
-				if (tokens.length > 2) {
-					adevices[curdevice].setOutput(tokens[2]);
-				}
-				direwolf.addAdevice(adevices[curdevice]);
-				break;
-			case "PBEACON" :
-				var argstr = line.substring(tokens[0].length,line.length);
-				var hash = argstr.match(/(\S+)=(".*?"|\S+)/g);
-				var pbeacon = new Pbeacon();
-				for (let arg of hash) {
-					var [key,val] = arg.split('=');
-					key = key.toUpperCase();
-					if (pbeacon.hasOwnProperty(key)) {
-						pbeacon[key] = val;
-					} else {
-						console.log("# PBEACON has no " + key);
-					}
-				}
-				direwolf.addBeacon(pbeacon);
-				break;
-			case "TBEACON" :
-				var argstr = line.substring(tokens[0].length,line.length);
-				var hash = argstr.match(/(\S+)=(".*?"|\S+)/g);
-				var tbeacon = new Tbeacon();
-				for (let arg of hash) {
-					var [key,val] = arg.split('=');
-					key = key.toUpperCase();
-					if (tbeacon.hasOwnProperty(key)) {
-						tbeacon[key] = val;
-					} else {
-						console.log("# TBEACON has no " + key);
-					}
-				}
-				direwolf.addBeacon(tbeacon);
-				break;
-			case "OBEACON" :
-				var argstr = line.substring(tokens[0].length,line.length);
-				var hash = argstr.match(/(\S+)=(".*?"|\S+)/g);
-				var obeacon = new Obeacon();
-				for (let arg of hash) {
-					var [key,val] = arg.split('=');
-					key = key.toUpperCase();
-					if (obeacon.hasOwnProperty(key)) {
-						obeacon[key] = val;
-					} else {
-						console.log("# OBEACON has no " + key);
-					}
-				}
-				direwolf.addBeacon(obeacon);
-				break;
-			case "CBEACON" :
-				var argstr = line.substring(tokens[0].length,line.length);
-				var hash = argstr.match(/(\S+)=(".*?"|\S+)/g);
-				var cbeacon = new Cbeacon();
-				for (let arg of hash) {
-					var [key,val] = arg.split('=');
-					key = key.toUpperCase();
-					if (cbeacon.hasOwnProperty(key)) {
-						cbeacon[key] = val;
-					} else {
-						console.log("# CBEACON has no " + key);
-					}
-				}
-				direwolf.addBeacon(cbeacon);
-				break;
-			case "IBEACON" :
-				var argstr = line.substring(tokens[0].length,line.length);
-				var hash = argstr.match(/(\S+)=(".*?"|\S+)/g);
-				var ibeacon = new Ibeacon();
-				for (let arg of hash) {
-					var [key,val] = arg.split('=');
-					key = key.toUpperCase();
-					if (ibeacon.hasOwnProperty(key)) {
-						ibeacon[key] = val;
-					} else {
-						console.log("# IBEACON has no " + key);
-					}
-				}
-				direwolf.addBeacon(ibeacon);
-				break;
-			case "DIGIPEAT" :
-				var digi = new Digipeater(tokens[1],tokens[2],tokens[3],tokens[4]);
-				if (typeof tokens[5] !== 'undefined') {
-					digi.setPREEMPTIVE(tokens[5]);
-				}
-				direwolf.addDigipeater(digi);
-				break;
-			case "IGSERVER" :
-				direwolf.setIGSERVER(tokens[1]);
-				break;
-			case "IGLOGIN" :
-				direwolf.setIGLOGIN(joinAddTokens(tokens));
-				break;
-			case "IGTXLIMIT" :
-				direwolf.setIGTXLIMIT(joinAddTokens(tokens));
-				break;
-			case "GPSD" :
-				direwolf.setGPSD(tokens[1]);
-				break;
-			case "LOGDIR" :
-				direwolf.setLOGDIR(tokens[1]);
-				break;
-			case "DWAIT" :
-				channels[curchannel].setDWAIT(tokens[1]);
-				break;
-			case "SLOTTIME" :
-				channels[curchannel].setSLOTTIME(tokens[1]);
-				break;
-			case "PERSIST" :
-				channels[curchannel].setPERSIST(tokens[1]);
-				break;
-			case "TXDELAY" :
-				channels[curchannel].setTXDELAY(tokens[1]);
-				break;
-			case "TXTAIL" :
-				channels[curchannel].setTXTAIL(tokens[1]);
-				break;
-			case "FULLDUP" :
-				channels[curchannel].setFULLDUP(tokens[1]);
-				break;
-			default :
-				console.log("# Reject - " + line);
-				break;
-		}
-	}
 
-	return direwolf;
 }
 
-var direwolf = ParseDirewolf("direwolf.conf");
+var fs = require("fs");
+var direwolf = new Direwolf();
+var raw = fs.readFileSync('direwolf.conf',"utf8");
+direwolf.ParseConfig(raw);
+
 
 console.log(direwolf.asJSON());
 console.log('--- end of object');
 console.log(direwolf.toString());
 console.log('--- end of string');
-/*
-var test = new Test("For fun");
-test.addKeyVal("size","big");
-test.addKeyVal("weight","heavy");
-console.log(test.asJSON());
-var BEACON = new Beacon();
-console.log(BEACON);
-var CBEACON = new Cbeacon();
-console.log(CBEACON);
-var PBEACON = new Pbeacon();
-PBEACON.setCOMMENT(1);
-console.log(PBEACON);
-var OBEACON = new Obeacon();
-console.log(OBEACON);
-var TBEACON = new Tbeacon();
-console.log(TBEACON);
-var IBEACON = new Ibeacon();
-console.log(IBEACON);
-console.log(PBEACON.toString());
-*/
