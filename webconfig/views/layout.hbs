@@ -7,15 +7,21 @@
     <script>
         var full = location.protocol+'//'+location.hostname+(location.port ? ':'+location.port: '');
         var socket = io.connect(full);
-        socket.on('news', function (data) {
+        socket.on('direwolf', function (data) {
             console.log(data);
         });
-        socket.on('radio', function (data) {
+        socket.on('radios', function (data) {
+            console.log(data);
+        });
+        socket.on('modems', function (data) {
             console.log(data);
         });
         function updateRadio(data) {
             socket.emit('radio',data);
         }
+	function updateDirewolf(data) {
+            socket.emit('direwolf',data);
+	}
     </script>
   </head>
   <body>

@@ -1133,6 +1133,25 @@ class Modem {
 
 }
 
+module.exports = {
+	Adevice : Adevice,
+	Beacon : Beacon,
+	Pbeacon : Pbeacon,
+	Obeacon : Obeacon,
+	Cbeacon : Cbeacon,
+	Tbeacon : Tbeacon,
+	Ibeacon : Ibeacon,
+	Channel : Channel,
+	Digipeater : Digipeater,
+	Cdigipeater : Cdigipeater,
+	Direwolf : Direwolf,
+	Filter : Filter,
+	Cfilter : Cfilter,
+	FixBits : FixBits,
+	Modem : Modem
+}
+
+/*
 var fs = require("fs");
 var direwolf = new Direwolf();
 var raw = fs.readFileSync('direwolf.conf',"utf8");
@@ -1143,3 +1162,4 @@ console.log(direwolf.asJSON());
 console.log('--- end of object');
 console.log(direwolf.toString());
 console.log('--- end of string');
+*/

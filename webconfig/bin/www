@@ -5,9 +5,28 @@
  */
 
 var app = require('../app');
-var radios = require('../data/radios.json');
 var debug = require('debug')('nettnc:server');
 var http = require('http');
+var fs = require('fs');
+var dw = require('../parse.js');
+var direwolf = new dw.Direwolf();
+
+var raw = fs.readFileSync('direwolf.conf');
+console.log(raw.toString());
+direwolf.ParseConfig(raw.toString());
+console.log(direwolf);
+
+var direwolfinstance =  function(req, res, next) {
+	req.direwolf = direwolf;
+	next();
+}
+
+var radios = require('../data/radios.json');
+//console.log(JSON.stringify(radios));
+var modems = require('../data/modems.json');
+//console.log(JSON.stringify(modems));
+
+
 
 /**
  * Get port from environment and store in Express.
@@ -15,6 +34,7 @@ var http = require('http');
 
 var port = normalizePort(process.env.PORT || '8040');
 app.set('port', port);
+app.use(direwolfinstance);
 
 /**
  * Create HTTP server.
@@ -34,10 +54,15 @@ server.on('listening', onListening);
 
 io.on('connection', function (socket) {
 	console.log('socket.io connection established');
-	socket.emit('news', {'radios':radios});
+	socket.emit('direwolf',{direwolf:direwolf});
+	socket.emit('radios', {radios:radios});
+	socket.emit('modems', {modems:modems});
 	socket.on('radio', function (data) {
-		console.log(JSON.stringify(data));
-		socket.emit('radio', data);
+		console.log(data);
+	});
+	socket.on('direwolf', function( dwobj ) {
+		direwolf = dwobj;
+		console.log(direwolf);
 	});
 });
 
