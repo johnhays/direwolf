@@ -9,7 +9,7 @@ var index = require('./routes/index');
 var users = require('./routes/users');
 
 var app = express();
-
+var fs = require('fs');
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'hbs');
@@ -24,6 +24,15 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', index);
 app.use('/users', users);
+app.use('/direwolf.classes.js', function (req, res, next) {
+	var x = fs.readFileSync('parse.js').toString().split('module.exports');
+	x = x[0].toString();
+	console.log(x);
+	res.send(x);
+});
+app.use('/direwolf.conf', function (req, res, next) {
+	res.send(raw);
+});
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

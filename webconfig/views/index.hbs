@@ -31,7 +31,21 @@ Modem:
 </td>
 </tr>
 </table>
-{{direwolf}}
-<input type="submit" onclick='updateDirewolf({{direwolf}})'/>
+<div>AGW PORT</div>
+<input id="AGWPORT" type="number" min="1" max="65535" onchange="direwolf.setAGWPORT(this.value)"/>
+<div>KISS PORT</div>
+<input id="KISSPORT" type="number" min="1" max="65535" onchange="direwolf.setKISSPORT(this.value)"/>
+<div>DEDUPE</div>
+<input id="DEDUPE" type="number" min="1" max="65535" onchange="direwolf.setDEDUPE(this.value)"/>
+<div>APRS-IS Server</div>
+<input id="IGSERVER" type="text" onchange="direwolf.setIGSERVER(this.value)"/>
+<div>APRS-IS Login</div>
+<input id="IGLOGIN" type="text" onchange="direwolf.setIGLOGIN(this.value)"/>
+<div>APRS-IS TX Limit</div>
+<input id="IGTXLIMIT" type="text" onchange="direwolf.setIGTXLIMIT(this.value)"/>
+<div>Log Directory</div>
+<input id="LOGDIR" type="text" onchange="direwolf.setLOGDIR(this.value)"/>
+<br/>
+<input type="button" onclick='updateDirewolf()' value="Update"/>
 </form>
 

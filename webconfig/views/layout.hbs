@@ -4,11 +4,23 @@
     <title>{{title}}</title>
     <link rel='stylesheet' href='/stylesheets/style.css' />
     <script src="/socket.io/socket.io.js"></script>
+    <script src="/direwolf.classes.js"></script>
     <script>
+	var direwolf = new Direwolf();
+	console.log(direwolf);
         var full = location.protocol+'//'+location.hostname+(location.port ? ':'+location.port: '');
         var socket = io.connect(full);
         socket.on('direwolf', function (data) {
-            console.log(data);
+	    console.log(data.toString());
+	    direwolf.ParseConfig(data.toString());
+	    console.log("Direwolf: " + JSON.stringify(direwolf));
+	    document.getElementById("AGWPORT").value = direwolf.getAGWPORT() != null ? direwolf.getAGWPORT() : 0;
+	    document.getElementById("KISSPORT").value = direwolf.getKISSPORT() != null ? direwolf.getKISSPORT() : 0;
+	    document.getElementById("DEDUPE").value = direwolf.getDEDUPE() != null ? direwolf.getDEDUPE() : 30;
+	    document.getElementById("IGSERVER").value = direwolf.getIGSERVER() != null ? direwolf.getIGSERVER() : "";
+	    document.getElementById("IGLOGIN").value = direwolf.getIGLOGIN() != null ? direwolf.getIGLOGIN() : "";
+	    document.getElementById("IGTXLIMIT").value = direwolf.getIGTXLIMIT() != null ? direwolf.getIGTXLIMIT() : "";
+	    document.getElementById("LOGDIR").value = direwolf.getLOGDIR() != null ? direwolf.getLOGDIR() : "";
         });
         socket.on('radios', function (data) {
             console.log(data);
@@ -19,8 +31,8 @@
         function updateRadio(data) {
             socket.emit('radio',data);
         }
-	function updateDirewolf(data) {
-            socket.emit('direwolf',data);
+	function updateDirewolf() {
+            socket.emit('direwolf',direwolf.toString());
 	}
     </script>
   </head>

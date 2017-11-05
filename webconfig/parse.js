@@ -1,5 +1,12 @@
 "use strict";
 
+function isSet(v) {
+	if (v == null) return false;
+	if (v.length == 0) return false;
+	return true;
+}
+
+
 class Test {
 	constructor(name){
 		this.name = name;
@@ -706,54 +713,94 @@ class Direwolf {
 		this.LOGDIR = null;
 		this.GPSD = null;
 	}
-		addAdevice(adevice){
-			this.adevices.push(adevice);
-		}
 
-		setAGWPORT(AGWPORT){
-			this.AGWPORT = AGWPORT;
-		}
+	setAGWPORT(AGWPORT) {
+		this.AGWPORT = AGWPORT;
+	}
+	getAGWPORT(){
+		return this.AGWPORT;
+	}
 
-		setKISSPORT(KISSPORT){
-			this.KISSPORT = KISSPORT;
-		}
+	setKISSPORT(KISSPORT) {
+		this.KISSPORT = KISSPORT;
+	}
+	getKISSPORT(){
+		return this.KISSPORT;
+	}
 
-		addBeacon(beacon){
-			this.beacons.push(beacon);
-		}
+	setDEDUPE(DEDUPE) {
+		this.DEDUPE = DEDUPE;
+	}
+	getDEDUPE(){
+		return this.DEDUPE;
+	}
 
-		addDigipeater(digipeater){
-			this.digipeaters.push(digipeater);
-		}
+	setIGSERVER(IGSERVER) {
+		this.IGSERVER = IGSERVER;
+	}
+	getIGSERVER(){
+		return this.IGSERVER;
+	}
 
-		addFilter(filter){
-			this.filters.push(filter);
-		}
+	setIGLOGIN(IGLOGIN) {
+		this.IGLOGIN = IGLOGIN;
+	}
+	getIGLOGIN(){
+		return this.IGLOGIN;
+	}
 
-		setIGSERVER(IGSERVER){
-			this.IGSERVER = IGSERVER;
-		}
+	setIGTXLIMIT(IGTXLIMIT) {
+		this.IGTXLIMIT = IGTXLIMIT;
+	}
+	getIGTXLIMIT(){
+		return this.IGTXLIMIT;
+	}
 
-		setIGLOGIN(IGLOGIN){
-			this.IGLOGIN = IGLOGIN;
-		}
+	setLOGDIR(LOGDIR) {
+		this.LOGDIR = LOGDIR;
+	}
+	getLOGDIR(){
+		return this.LOGDIR;
+	}
 
-		setIGTXLIMIT(IGTXLIMIT){
-			this.IGTXLIMIT = IGTXLIMIT;
-		}
+	setGPSD(GPSD) {
+		this.GPSD = GPSD;
+	}
+	getGPSD(){
+		return this.GPSD;
+	}
 
-		setGPSD(GPSD){
-			this.GPSD = GPSD;
-		}
+	addAdevice(adevice){
+		this.adevices.push(adevice);
+	}
 
-		setLOGDIR(LOGDIR) {
-			this.LOGDIR = LOGDIR;
-		}
+	getAdevices() {
+		return this.adevices;
+	}
 
-		setDEDUPE(dedupe) {
-			this.DEDUPE = dedupe;
-		}
+	addBeacon(beacon){
+		this.beacons.push(beacon);
+	}
 
+	getBeacons() {
+		return this.beacons;
+	}
+
+	addDigipeater(digipeater){
+		this.digipeaters.push(digipeater);
+	}
+
+	getDigipeaters() {
+		return this.digipeaters;
+	}
+
+	addFilter(filter){
+		this.filters.push(filter);
+	}
+
+	getFilters(){
+		return this.filters;
+	}
 
 	toString() {
 		var additional = "";
@@ -770,13 +817,13 @@ class Direwolf {
 		for (var i = 0; i < this.filters.length; i++) {
 			additional += this.filters[i].toString() + '\n';
 		}
-		if (this.GPSD !== null) additional += "GPSD " + this.GPSD + "\n";
-		if (this.AGWPORT !== null) additional += "AGWPORT " +  this.AGWPORT + "\n";
-		if (this.KISSPORT !== null) additional += "KISSPORT " +  this.KISSPORT + "\n";
-		if (this.IGSERVER != null) additional += "IGSERVER " + this.IGSERVER + "\n";
-		if (this.IGLOGIN != null) additional += "IGLOGIN " + this.IGLOGIN + "\n" ;
-		if (this.IGTXLIMIT != null) additional += "IGTXLIMIT " + this.IGTXLIMIT + "\n" ;
-		if (this.LOGDIR != null) additional += "LOGDIR " + this.LOGDIR + "\n" ;
+		if (isSet(this.GPSD)) additional += "GPSD " + this.GPSD + "\n";
+		if (isSet(this.AGWPORT)) additional += "AGWPORT " +  this.AGWPORT + "\n";
+		if (isSet(this.KISSPORT)) additional += "KISSPORT " +  this.KISSPORT + "\n";
+		if (isSet(this.IGSERVER)) additional += "IGSERVER " + this.IGSERVER + "\n";
+		if (isSet(this.IGLOGIN)) additional += "IGLOGIN " + this.IGLOGIN + "\n" ;
+		if (isSet(this.IGTXLIMIT)) additional += "IGTXLIMIT " + this.IGTXLIMIT + "\n" ;
+		if (isSet(this.LOGDIR)) additional += "LOGDIR " + this.LOGDIR + "\n" ;
 
 		return additional;
 	}
@@ -1150,16 +1197,3 @@ module.exports = {
 	FixBits : FixBits,
 	Modem : Modem
 }
-
-/*
-var fs = require("fs");
-var direwolf = new Direwolf();
-var raw = fs.readFileSync('direwolf.conf',"utf8");
-direwolf.ParseConfig(raw);
-
-
-console.log(direwolf.asJSON());
-console.log('--- end of object');
-console.log(direwolf.toString());
-console.log('--- end of string');
-*/
