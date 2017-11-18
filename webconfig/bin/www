@@ -9,45 +9,13 @@ var fs = require('fs');
 var debug = require('debug')('nettnc:server');
 var http = require('http');
 var radios = require('../data/radios.json');
-//console.log(JSON.stringify(radios));
 var modems = require('../data/modems.json');
-//console.log(JSON.stringify(modems));
-var dw = require('../parse.js');
-console.log(dw);
-var direwolf = new dw.Direwolf();
-
 var raw = fs.readFileSync('direwolf.conf');
-console.log(raw.toString());
-direwolf.ParseConfig(raw.toString());
-console.log(direwolf);
-
-/* 
-var direwolfinstance =  function(req, res, next) {
-        req.direwolf = JSON.stringify(direwolf);
-        next();
-}
-app.use(direwolfinstance);
-*/
-
-
-
-/**
- * Get port from environment and store in Express.
- */
-
 var port = normalizePort(process.env.PORT || '8040');
 app.set('port', port);
 
-/**
- * Create HTTP server.
- */
-
 var server = http.createServer(app);
 var io = require('socket.io')(server);
-
-/**
- * Listen on provided port, on all network interfaces.
- */
 
 server.listen(port);
 server.on('error', onError);
@@ -63,17 +31,9 @@ io.on('connection', function (socket) {
 		console.log(data);
 	});
 	socket.on('direwolf', function( dwobj ) {
-		direwolf = new dw.Direwolf();
-		direwolf.ParseConfig(dwobj);
-		console.log("direwolf --> " + dwobj);
-		console.log("direwolf --> " + direwolf.asJSON());
-		
+		console.log("direwolf -->\n" + dwobj);
 	});
 });
-
-/**
- * Normalize a port into a number, string, or false.
- */
 
 function normalizePort(val) {
   var port = parseInt(val, 10);
@@ -90,10 +50,6 @@ function normalizePort(val) {
 
   return false;
 }
-
-/**
- * Event listener for HTTP server "error" event.
- */
 
 function onError(error) {
   if (error.syscall !== 'listen') {
@@ -118,10 +74,6 @@ function onError(error) {
       throw error;
   }
 }
-
-/**
- * Event listener for HTTP server "listening" event.
- */
 
 function onListening() {
   var addr = server.address();

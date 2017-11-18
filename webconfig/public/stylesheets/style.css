@@ -10,3 +10,35 @@ a {
 #logo {
 	float:right;
 }
+
+fieldset.channel {
+	float:left;
+}
+
+fieldset.channel input {
+	right: 2px;
+}
+
+.div-table {
+  display: table;         
+  width: auto;         
+/*  background-color: #eee;         
+  border: 1px solid #666666; */         
+  border-spacing: 5px; /* cellspacing:poor IE support for  this */
+}
+.div-table-row {
+  display: table-row;
+  width: auto;
+  clear: both;
+}
+.div-table-col {
+  float: left; /* fix for  buggy browsers */
+  display: table-column;         
+  width: 200px;         
+/*  background-color: #ccc;  */
+}
+
+.text-right {
+  text-align: right;
+  padding-right: 1 em;
+}

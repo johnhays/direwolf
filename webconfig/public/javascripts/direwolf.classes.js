@@ -6,7 +6,6 @@ function isSet(v) {
 	return true;
 }
 
-
 class Test {
 	constructor(name){
 		this.name = name;
@@ -1180,20 +1179,3 @@ class Modem {
 
 }
 
-module.exports = {
-	Adevice : Adevice,
-	Beacon : Beacon,
-	Pbeacon : Pbeacon,
-	Obeacon : Obeacon,
-	Cbeacon : Cbeacon,
-	Tbeacon : Tbeacon,
-	Ibeacon : Ibeacon,
-	Channel : Channel,
-	Digipeater : Digipeater,
-	Cdigipeater : Cdigipeater,
-	Direwolf : Direwolf,
-	Filter : Filter,
-	Cfilter : Cfilter,
-	FixBits : FixBits,
-	Modem : Modem
-}

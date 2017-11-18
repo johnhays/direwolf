@@ -1,56 +1,44 @@
 <div id="logo">
-	<img src="images/netTNC-logo.svg">
+	<img alt="netTNC" src="images/netTNC-logo.svg" />
 </div>
-<h1>{{title}}</h1>
+<h1><img src="images/direwolf.svg" alt="Direwolf" /></h1>
 <h2>Configuration</h2>
 <form>
-<table>
-<tr>
-<th>
-Radio: 
-</th>
-<td>
-<select id="radio" name="radio" onchange='updateRadio({port1:{radioID:this.value}})'>
-{{#each radios}}
-<option value="{{model}}" title="{{description}}">{{model}}</option>
-{{/each}}
-</select>
-</td>
-</tr>
-<th>
-{{#each modems}}
-Modem:
-</th>
-<td>
-<select id="modem" name="modem" onchange='updateRadio({port1:{modemID:this.value}})'>
-{{#each speeds}}
-<option value="{{rate}}" title="{{description}}">{{rate}} bps {{modulation}}</option>
-{{/each}}
-</select>
-{{/each}}
-</td>
-</tr>
-</table>
 <div class="dw"></div>
-<input type="button" onclick='updateDirewolf()' value="Update"/>
+<br/>
+<input alt="Direwolf" type="button" onclick='updateDirewolf()' value="Update"/>
 </form>
 <script>
     var full = location.protocol + '//' + location.hostname + (location.port ? ':' + location.port : '');
+
+    Handlebars.registerHelper('toLowerCase', function(str) {
+      return str.toLowerCase();
+    });
+    
+    Handlebars.registerHelper('toUpperCase', function(str) {
+      return str.toUpperCase();
+    });
+
     var socket = io.connect(full);
+
     var direwolf = new Direwolf();
+
     var template = Handlebars.templates['direwolf'];
+
     socket.on('direwolf', function(data) {
-        console.log(data.toString());
         direwolf.ParseConfig(data.toString());
         var html = template(direwolf);
-        console.log(html);
         $('.dw').append(html);
     });
+
     socket.on('radios', function(data) {
         console.log(data);
     });
+
     socket.on('modems', function(data) {
-        console.log(data);
+	var template = Handlebars.templates['modems'];
+	var html = template(data);
+	Handlebars.registerPartial('modems',html);
     });
 
     function updateRadio(data) {
@@ -59,6 +47,11 @@ Modem:
 
     function updateDirewolf() {
         socket.emit('direwolf', direwolf.toString());
+    }
+
+    function reloadDirewolf(){
+	var html = template(direwolf);
+	$('.dw').html(html);
     }
 </script>
 
