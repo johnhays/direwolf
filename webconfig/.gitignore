@@ -29,11 +29,8 @@ node_modules
 # Debug log from npm
 npm-debug.log
 
-webconfig/public/images/netTNC-logo.svg
+public/images/netTNC-logo.svg
 templates/direwolf.html
-.metadata/
-.project
-RemoteSystemsTempFiles/
-webconfig/notes.txt
-webconfig/public/images/netTNC-logo.svg
-webconfig/public/nwdigital.ico
+notes.txt
+public/images/netTNC-logo.svg
+public/nwdigital.ico
