@@ -1,230 +1,464 @@
-{{#each adevices}}
-<fieldset>
-	<legend>Soundcard {{@index}}</legend>
-	<fieldset class="channel">
-	<legend>General Settings</legend>
-	<div class+"div-table">
-		<div class="div-table-row">
-			<div class="div-table-col">Name: </div>
-			<div class="div-table-col" id="{{name}}-name"><input type="text" onchange="direwolf.adevices[{{@index}}].setAdeviceName(this.value)" value="{{name}}"/></div>
-		</div>
-		<div class="div-table-row">
-			<div class="div-table-col">Input: </div>
-			<div class="div-table-col" id="{{name}}-input"><input type="text" onchange="direwolf.adevices[{{@index}}].setInput(this.value)" value="{{input}}"/></div>
-		</div>
-		<div class="div-table-row">
-			<div class="div-table-col">Output: </div>
-			<div class="div-table-col" id="{{name}}-output"><input type="text" onchange="direwolf.adevices[{{@index}}].setOutput(this.value)" value="{{output}}"/></div>
-		</div>
-		<div class="div-table-row">
-			<div class="div-table-col">Sample Rate: </div>
-			<div class="div-table-col" id="{{name}}-arate"><input type="number" onchange="direwolf.adevices[{{@index}}].setARATE(this.value)" value="{{ARATE}}"/></div>
-		</div>
-		<div class="div-table-row">
-			<div class="div-table-col">Number of Channels: </div>
-			<div class="div-table-col" id="{{name}}-achannels"><input type="number" onchange="direwolf.adevices[{{@index}}].setACHENNELS(this.value)" value="{{ACHANNELS}}"/></div>
+<div id="tabs">
+	<ul>
+		<li><a href="#tabs-1">Soundcards</a></li>
+		<li><a href="#tabs-2">Common</a></li>
+		<li><a href="#tabs-3">Beacons</a></li>
+		<li><a href="#tabs-4">Digipeaters</a></li>
+		<li><a href="#tabs-5">Filters</a></li>
+	</ul>
+	<div id="tabs-1">
+		<div>
+			{{#each adevices}}
+			<div style="float: left;">
+				<h3>Soundcard Settings {{name}}</h3>
+				<div class="div-table">
+					<div class="div-table-row">
+						<div class="div-table-col">Name</div>
+						<div class="div-table-col">
+							<select
+								onchange="direwolf.adevices[{{@index}}].setAdeviceName(this.value)">
+								<option value="ADEVICE" {{#ifEquals
+									name "ADEVICE"}}
+							 selected="selected"{{/ifEquals}}
+					>ADEVICE</option>
+								<option value="ADEVICE0" {{#ifEquals
+									name "ADEVICE0"}}
+							 selected="selected"{{/ifEquals}}
+					>ADEVICE0</option>
+								<option value="ADEVICE1" {{#ifEquals
+									name "ADEVICE1"}}
+							 selected="selected"{{/ifEquals}}
+					>ADEVICE1</option>
+								<option value="ADEVICE2" {{#ifEquals
+									name "ADEVICE2"}}
+							 selected="selected"{{/ifEquals}}
+					>ADEVICE2</option>
+								<select>
+						</div>
+					</div>
+					<div class="div-table-row">
+						<div class="div-table-col">Input</div>
+						<div class="div-table-col">
+							<input type="text"
+								onchange="direwolf.adevices[{{@index}}].setInput(this.value)"
+								value="{{input}}" />
+						</div>
+					</div>
+					<div class="div-table-row">
+						<div class="div-table-col">Output</div>
+						<div class="div-table-col">
+							<input type="text"
+								onchange="direwolf.adevices[{{@index}}].setOutput(this.value)"
+								value="{{output}}" />
+						</div>
+					</div>
+					<div class="div-table-row">
+						<div class="div-table-col">Sample Rate</div>
+						<div class="div-table-col">
+							<input type="number"
+								onchange="direwolf.adevices[{{@index}}].setARATE(this.value)"
+								value="{{ARATE}}" />
+						</div>
+					</div>
+					<div class="div-table-row">
+						<div class="div-table-col">Audio Channels</div>
+						<div class="div-table-col">
+							<select
+								onchange="direwolf.adevices[{{@index}}].setACHANNELS(this.value)">
+								<option value="1" {{#ifEquals
+									ACHANNELS "1"}} selected="selected"{{/ifEquals}}>Mono</option>
+								<option value="2" {{#ifEquals
+									ACHANNELS "2"}} selected="selected"{{/ifEquals}}>Stereo</option>
+							</select>
+						</div>
+					</div>
+				</div>
+				{{#each channels}}
+				<div style="float: left; border-right: 1px black solid;padding-left: 1em;">
+					<h4>Channel {{CHANNEL}}</h4>
+					<div class="div-table">
+						<div class="div-table-row">
+							<div class="div-table-col">Channel</div>
+							<div class="div-table-col">
+								<input type="number" min=0 max=5
+									onchange="direwolf.adevices[{{@../index}}].channels[{{@index}}].setChannel(this.value)"
+									value="{{CHANNEL}}" />
+							</div>
+						</div>
+						<div class="div-table-row">
+							<div class="div-table-col">Modem Speed</div>
+							<div class="div-table-col">
+								<select
+									onchange="direwolf.adevices[{{@../index}}].channels[{{@index}}].MODEM.setSpeed(this.value)">
+									<option value="300" {{#ifEquals
+										MODEM.SPEED "300"}} selected="selected"{{/ifEquals}}>300
+										(HF)</option>
+									<option value="1200" {{#ifEquals
+										MODEM.SPEED "1200"}} selected="selected"{{/ifEquals}}>1200
+										(AFSK)</option>
+									<option value="2400" {{#ifEquals
+										MODEM.SPEED "2400"}} selected="selected"{{/ifEquals}}>2400
+										(PSK)</option>
+									<option value="4800" {{#ifEquals
+										MODEM.SPEED "4800"}} selected="selected"{{/ifEquals}}>4800
+										(PSK)</option>
+									<option value="9600" {{#ifEquals
+										MODEM.SPEED "9600"}} selected="selected"{{/ifEquals}}>9600
+										(FSK)</option>
+									<option value="19200" {{#ifEquals
+										MODEM.SPEED "19200"}} selected="selected"{{/ifEquals}}>19200
+										(FSK)</option>
+									<option value="38400" {{#ifEquals
+										MODEM.SPEED "38400"}} selected="selected"{{/ifEquals}}>38400
+										(FSK)</option>
+								</select>
+							</div>
+						</div>
+						<div class="div-table-row">
+							<div class="div-table-col"></div>
+							<div class="div-table-col">Modem Options</div>
+						</div>
+						{{#each MODEM.options}}
+						<div class="div-table-row">
+							<div class="div-table-col text-right">Value</div>
+							<div class="div-table-col">
+								<input class="div-table-col" type="text" value="{{this}}"
+									onchange="direwolf.adevices[{{@../../index}}].channels[{{@../index}}].MODEM.setOption({{@index}},this.value)" />
+							</div>
+						</div>
+						{{/each}}
+						<div class="div-table-row">
+							<div class="div-table-col text-right">New Option</div>
+							<input class="div-table-col" type="text"
+								onchange="direwolf.adevices[{{@../../index}}].channels[{{@../index}}].MODEM.addOption(this.value)" />
+						</div>
+						<div class="div-table-row">
+							<div class="div-table-col">Call-SSID</div>
+							<div class="div-table-col">
+								<input type="text"
+									onchange="direwolf.adevices[{{@../index}}].channels[{{@index}}].setMycall(this.value)"
+									value="{{MYCALL}}" />
+							</div>
+						</div>
+						<div class="div-table-row">
+							<div class="div-table-col">PTT</div>
+							<div class="div-table-col">
+								<input type="text"
+									onchange="direwolf.adevices[{{@../index}}].channels[{{@index}}].setPTT(this.value)"
+									value="{{PTT}}" />
+							</div>
+						</div>
+						<div class="div-table-row">
+							<div class="div-table-col">DCD</div>
+							<div class="div-table-col">
+								<input type="text"
+									onchange="direwolf.adevices[{{@../index}}].channels[{{@index}}].setDCD(this.value)"
+									value="{{DCD}}" />
+							</div>
+						</div>
+						<div class="div-table-row">
+							<div class="div-table-col">CON</div>
+							<div class="div-table-col">
+								<input type="text"
+									onchange="direwolf.adevices[{{@../index}}].channels[{{@index}}].setCON(this.value)"
+									value="{{CON}}" />
+							</div>
+						</div>
+						<div class="div-table-row">
+							<div class="div-table-col">TXINH</div>
+							<div class="div-table-col">
+								<input type="text"
+									onchange="direwolf.adevices[{{@../index}}].channels[{{@index}}].setTXINH(this.value)"
+									value="{{TXINH}}" />
+							</div>
+						</div>
+						<div class="div-table-row">
+							<div class="div-table-col">DWAIT</div>
+							<div class="div-table-col">
+								<input type="text"
+									onchange="direwolf.adevices[{{@../index}}].channels[{{@index}}].setDWAIT(this.value)"
+									value="{{DWAIT}}" />
+							</div>
+						</div>
+						<div class="div-table-row">
+							<div class="div-table-col">SLOTTIME</div>
+							<div class="div-table-col">
+								<input type="text"
+									onchange="direwolf.adevices[{{@../index}}].channels[{{@index}}].setSLOTTIME(this.value)"
+									value="{{SLOTTIME}}" />
+							</div>
+						</div>
+						<div class="div-table-row">
+							<div class="div-table-col">PERSIST</div>
+							<div class="div-table-col">
+								<input type="text"
+									onchange="direwolf.adevices[{{@../index}}].channels[{{@index}}].setPERSIST(this.value)"
+									value="{{PERSIST}}" />
+							</div>
+						</div>
+						<div class="div-table-row">
+							<div class="div-table-col">TXDELAY</div>
+							<div class="div-table-col">
+								<input type="text"
+									onchange="direwolf.adevices[{{@../index}}].channels[{{@index}}].setTXDELAY(this.value)"
+									value="{{TXDELAY}}" />
+							</div>
+						</div>
+						<div class="div-table-row">
+							<div class="div-table-col">TXTAIL</div>
+							<div class="div-table-col">
+								<input type="text"
+									onchange="direwolf.adevices[{{@../index}}].channels[{{@index}}].setTXTAIL(this.value)"
+									value="{{TXTAIL}}" />
+							</div>
+						</div>
+						<div class="div-table-row">
+							<div class="div-table-col">FULLDUP</div>
+							<div class="div-table-col">
+								<input type="text"
+									onchange="direwolf.adevices[{{@../index}}].channels[{{@index}}].setFULLDUP(this.value)"
+									value="{{FULLDUP}}" />
+							</div>
+						</div>
+						<div class="div-table-row">
+							<div class="div-table-col">FRACK</div>
+							<input type="text"
+								onchange="direwolf.adevices[{{@../index}}].channels[{{@index}}].setFRACK(this.value)"
+								value="{{FRACK}}" />
+						</div>
+					</div>
+					<div class="div-table-row">
+						<div class="div-table-col">FIX_BITS</div>
+						<div class="div-table-col">
+							<div class="div-table">
+								<div class="div-table-row">
+									<div class="div-table-col">EFFORT</div>
+									<div class="div-table-col">
+										<select
+											onchange="direwolf.adevices[{{@../index}}].channels[{{@index}}].FIX_BITS.setEFFORT(this.value)">
+											<option value="0"
+												{{#ifEquals "0" FIX_BITS.EFFORT}}selected="selected"{{/ifEquals}}>No
+												Attempt</option>
+											<option value="1"
+												{{#ifEquals "1" FIX_BITS.EFFORT}}selected="selected"{{/ifEquals}}>Attempt
+												1 bit</option>
+											<option value="2"
+												{{#ifEquals "2" FIX_BITS.EFFORT}}selected="selected"{{/ifEquals}}>Attempt
+												2 bits</option>
+										</select>
+									</div>
+									<div class="div-table-col">SANITY</div>
+									<div class="div-table-col">
+										<select
+											onchange="direwolf.adevices[{{@../index}}].channels[{{@index}}].FIX_BITS.setSANITY(this.value)">
+											<option value="APRS"
+												{{#ifEquals "APRS" FIX_BITS.SANITY}}selected="selected"{{/ifEquals}}>APRS</option>
+											<option value="AX25"
+												{{#ifEquals "AX25" FIX_BITS.SANITY}}selected="selected"{{/ifEquals}}>AX25</option>
+											<option value="NONE"
+												{{#ifEquals "NONE" FIX_BITS.SANITY}}selected="selected"{{/ifEquals}}>NONE</option>
+										</select>
+									</div>
+									<div class="div-table-col">PASSALL</div>
+									<div class="div-table-col">
+										<select
+											onchange="direwolf.adevices[{{@../index}}].channels[{{@index}}].FIX_BITS.setPASSALL(this.value);">											
+											<option value=true {{#if FIX_BITS.PASSALL}}selected="selected"{{/if}}>Y</option>
+											<option value=false {{#unless FIX_BITS.PASSALL}}selected="selected"{{/unless}}>N</option>
+										</select>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="div-table-row">
+						<div class="div-table-col">RETRY</div>
+						<div class="div-table-col">
+							<input type="text"
+								onchange="direwolf.adevices[{{@../index}}].channels[{{@index}}].setRETRY(this.value)"
+								value="{{RETRY}}" />
+						</div>
+					</div>
+					<div class="div-table-row">
+						<div class="div-table-col">PACLEN</div>
+						<div class="div-table-col">
+							<input type="text"
+								onchange="direwolf.adevices[{{@../index}}].channels[{{@index}}].setPACLEN(this.value)"
+								value="{{PACLEN}}" />
+						</div>
+					</div>
+					<div class="div-table-row">
+						<div class="div-table-col">MAXFRAME</div>
+						<div class="div-table-col">
+							<input type="text"
+								onchange="direwolf.adevices[{{@../index}}].channels[{{@index}}].setMAXFRAME(this.value)"
+								value="{{MAXFRAME}}" />
+						</div>
+					</div>
+					<div class="div-table-row">
+						<div class="div-table-col">EMAXFRAME</div>
+						<div class="div-table-col">
+							<input type="text"
+								onchange="direwolf.adevices[{{@../index}}].channels[{{@index}}].setEMAXFRAME(this.value)"
+								value="{{EMAXFRAME}}" />
+						</div>
+					</div>
+					<div class="div-table-row">
+						<div class="div-table-col">MAXV22</div>
+						<div class="div-table-col">
+							<input type="text"
+								onchange="direwolf.adevices[{{@../index}}].channels[{{@index}}].setMAXV22(this.value)"
+								value="{{MAXV22}}" />
+						</div>
+					</div>
+				</div>
+				{{/each}}
+			</div>
+			{{/each}}
 		</div>
 	</div>
-	</fieldset>
-	{{#each channels}}
-	<!-- Channel {{CHANNEL}} -->
-	<fieldset class="channel">
-	<legend>Channel {{CHANNEL}}</legend>
-	<div class+"div-table">
-		<div class="div-table-row">
-			<div class="div-table-col">Channel: </div><div class="div-table-col" id="{{../name}}-ch-{{CHANNEL}}"><input type="number" onchange="direwolf.adevices[{{@../index}}].channels[{{@index}}].setChannel(this.value)" value="{{CHANNEL}}"/></div>
+	<!-- tabs-1 -->
+
+
+	<div id="tabs-2">
+		<div class="div-table">
+			<div class="div-table-row">
+				<div class="div-table-col">AGWPORT</div>
+				<div class="div-table-col">
+					<input type="number" onchange="direwolf.setAGWPORT(this.value)"
+						value="{{AGWPORT}}" />
+				</div>
+			</div>
+			<div class="div-table-row">
+				<div class="div-table-col">KISSPORT</div>
+				<div class="div-table-col">
+					<input type="number" onchange="direwolf.setKISSPORT(this.value)"
+						value="{{KISSPORT}}" />
+				</div>
+			</div>
+			<div class="div-table-row">
+				<div class="div-table-col">DEDUPE</div>
+				<div class="div-table-col">
+					<input type="number" onchange="direwolf.setDEDUPE(this.value)"
+						value="{{DEDUPE}}" />
+				</div>
+			</div>
+			<div class="div-table-row">
+				<div class="div-table-col">IGSERVER</div>
+				<div class="div-table-col">
+					<input type="text" onchange="direwolf.setIGSERVER(this.value)"
+						value="{{IGSERVER}}" />
+				</div>
+			</div>
+			<div class="div-table-row">
+				<div class="div-table-col">IGLOGIN</div>
+				<div class="div-table-col">
+					<input type="text" onchange="direwolf.setIGLOGIN(this.value)"
+						value="{{IGLOGIN}}" />
+				</div>
+			</div>
+			<div class="div-table-row">
+				<div class="div-table-col">IGTXLIMIT</div>
+				<div class="div-table-col">
+					<input type="text" onchange="direwolf.setIGTXLIMIT(this.value)"
+						value="{{IGTXLIMIT}}" />
+				</div>
+			</div>
+			<div class="div-table-row">
+				<div class="div-table-col">LOGDIR</div>
+				<div class="div-table-col">
+					<input type="text" onchange="direwolf.setLOGDIR(this.value)"
+						value="{{LOGDIR}}" />
+				</div>
+			</div>
 		</div>
-		<div class="div-table-row">
-			<div class="div-table-col">Modem Speed: </div><div class="div-table-col" id="{{../name}}-ch-{{CHANNEL}}-modemspd"><input type="number" onchange="direwolf.adevices[{{@../index}}].channels[{{@index}}].MODEM.setSpeed(this.value)" value="{{MODEM.SPEED}}"/></div>
+	</div>
+
+	<div id="tabs-3">
+		<div style="clear: both">
+			<button type="button"
+				onclick="direwolf.addBeacon(new Cbeacon());reloadDirewolf()">New
+				CBEACON</button>
+			<button type="button"
+				onclick="direwolf.addBeacon(new Ibeacon());reloadDirewolf()">New
+				IBEACON</button>
+			<button type="button"
+				onclick="direwolf.addBeacon(new Obeacon());reloadDirewolf()">New
+				OBEACON</button>
+			<button type="button"
+				onclick="direwolf.addBeacon(new Pbeacon());reloadDirewolf()">New
+				PBEACON</button>
+			<button type="button"
+				onclick="direwolf.addBeacon(new Tbeacon());reloadDirewolf()">New
+				TBEACON</button>
 		</div>
-		<div class="div-table-row">
-			<div class="div-table-col"> </div>
-			<div class="div-table-col">Modem Options</div> 
-		</div>
-		{{#each MODEM.options}}
-		<div class+"div-table-row">
-			<div class="div-table-col text-right">Value</div>
-			<div class="div-table-col"><input class="div-table-col" type="text" value="{{this}}" onchange="direwolf.adevices[{{@../../index}}].channels[{{@../index}}].MODEM.setOption({{@index}},this.value)"/></div>
-		</div>
+		{{#each beacons}}
+		<fieldset class="channel">
+			<legend>{{@index}} - {{toUpperCase this.constructor.name}}</legend>
+			<div class="div-table">
+				{{#each this}}
+				<div class="div-table-row">
+					<div class="div-table-col">{{@key}}</div>
+					<div class="div-table-col">
+						<input type="text" value="{{@this}}">
+					</div>
+				</div>
+				{{/each}}
+				<button type="button"
+					onclick="direwolf.beacons.splice({{@index}},1);reloadDirewolf()">Delete</button>
+				<button type="button"
+					onclick="direwolf.addBeacon(direwolf.beacons[{{@index}}]);reloadDirewolf()">Duplicate</button>
+			</div>
+		</fieldset>
 		{{/each}}
-		<div class+"div-table-row">
-			<div class="div-table-col text-right">New Option</div>
-			<input class="div-table-col" type="text" onchange="direwolf.adevices[{{@../../index}}].channels[{{@../index}}].MODEM.addOption(this.value)"/>
-		</div>
-		<div class="div-table-row">
-			<div  class="div-table-col">Call-SSID: </div>
-			<div class="div-table-col" id="{{../name}}-ch-{{CHANNEL}}-mycall"><input type="text" onchange="direwolf.adevices[{{@../index}}].channels[{{@index}}].setMycall(this.value)" value="{{MYCALL}}"/></div>
-		</div>
-		<div class="div-table-row">
-			<div  class="div-table-col">PTT: </div>
-			<div class="div-table-col" id="{{../name}}-ch-{{CHANNEL}}-{{PTT}}"><input type="text" onchange="direwolf.adevices[{{@../index}}].channels[{{@index}}].setPTT(this.value)" value="{{PTT}}"/></div>
-		</div>
-		<div class="div-table-row">
-			<div  class="div-table-col">DCD: </div>
-			<div class="div-table-col" id="{{../name}}-ch-{{CHANNEL}}-{{DCD}}"><input type="text" onchange="direwolf.adevices[{{@../index}}].channels[{{@index}}].setDCD(this.value)" value="{{DCD}}"/></div>
-		</div>
-		<div class="div-table-row">
-			<div  class="div-table-col">CON: </div>
-			<div class="div-table-col" id="{{../name}}-ch-{{CHANNEL}}-{{CON}}"><input type="text" onchange="direwolf.adevices[{{@../index}}].channels[{{@index}}].setCON(this.value)" value="{{CON}}"/></div>
-		</div>
-		<div class="div-table-row">
-			<div  class="div-table-col">TXINH: </div>
-			<div class="div-table-col" id="{{../name}}-ch-{{CHANNEL}}-{{TXINH}}"><input type="text" onchange="direwolf.adevices[{{@../index}}].channels[{{@index}}].setTXINH(this.value)" value="{{TXINH}}"/></div>
-		</div>
-		<div class="div-table-row">
-			<div  class="div-table-col">DWAIT: </div>
-			<div class="div-table-col" id="{{../name}}-ch-{{CHANNEL}}-{{DWAIT}}"><input type="text" onchange="direwolf.adevices[{{@../index}}].channels[{{@index}}].setDWAIT(this.value)" value="{{DWAIT}}"/></div>
-		</div>
-		<div class="div-table-row">
-			<div  class="div-table-col">SLOTTIME: </div>
-			<div class="div-table-col" id="{{../name}}-ch-{{CHANNEL}}-{{SLOTTIME}}"><input type="text" onchange="direwolf.adevices[{{@../index}}].channels[{{@index}}].setSLOTTIME(this.value)" value="{{SLOTTIME}}"/></div>
-		</div>
-		<div class="div-table-row">
-			<div  class="div-table-col">PERSIST: </div>
-			<div class="div-table-col" id="{{../name}}-ch-{{CHANNEL}}-{{PERSIST}}"><input type="text" onchange="direwolf.adevices[{{@../index}}].channels[{{@index}}].setPERSIST(this.value)" value="{{PERSIST}}"/></div>
-		</div>
-		<div class="div-table-row">
-			<div  class="div-table-col">TXDELAY: </div>
-			<div class="div-table-col" id="{{../name}}-ch-{{CHANNEL}}-{{TXDELAY}}"><input type="text" onchange="direwolf.adevices[{{@../index}}].channels[{{@index}}].setTXDELAY(this.value)" value="{{TXDELAY}}"/></div>
-		</div>
-		<div class="div-table-row">
-			<div  class="div-table-col">TXTAIL: </div>
-			<div class="div-table-col" id="{{../name}}-ch-{{CHANNEL}}-{{TXTAIL}}"><input type="text" onchange="direwolf.adevices[{{@../index}}].channels[{{@index}}].setTXTAIL(this.value)" value="{{TXTAIL}}"/></div>
-		</div>
-		<div class="div-table-row">
-			<div  class="div-table-col">FULLDUP: </div>
-			<div class="div-table-col" id="{{../name}}-ch-{{CHANNEL}}-{{FULLDUP}}"><input type="text" onchange="direwolf.adevices[{{@../index}}].channels[{{@index}}].setFULLDUP(this.value)" value="{{FULLDUP}}"/></div>
-		</div>
-		<div class="div-table-row">
-			<div  class="div-table-col">FIX_BITS: </div>
-			<div class="div-table-col" id="{{../name}}-ch-{{CHANNEL}}-{{FIX_BITS}}"><input type="text" onchange="direwolf.adevices[{{@../index}}].channels[{{@index}}].setFIX_BITS(this.value)" value="{{FIX_BITS}}"/></div>
-		</div>
-		<div class="div-table-row">
-			<div  class="div-table-col">FRACK: </div>
-			<div class="div-table-col" id="{{../name}}-ch-{{CHANNEL}}-{{FRACK}}"><input type="text" onchange="direwolf.adevices[{{@../index}}].channels[{{@index}}].setFRACK(this.value)" value="{{FRACK}}"/></div>
-		</div>
-		<div class="div-table-row">
-			<div  class="div-table-col">RETRY: </div>
-			<div class="div-table-col" id="{{../name}}-ch-{{CHANNEL}}-{{RETRY}}"><input type="text" onchange="direwolf.adevices[{{@../index}}].channels[{{@index}}].setRETRY(this.value)" value="{{RETRY}}"/></div>
-		</div>
-		<div class="div-table-row">
-			<div  class="div-table-col">PACLEN: </div>
-			<div class="div-table-col" id="{{../name}}-ch-{{CHANNEL}}-{{PACLEN}}"><input type="text" onchange="direwolf.adevices[{{@../index}}].channels[{{@index}}].setPACLEN(this.value)" value="{{PACLEN}}"/></div>
-		</div>
-		<div class="div-table-row">
-			<div  class="div-table-col">MAXFRAME: </div>
-			<div class="div-table-col" id="{{../name}}-ch-{{CHANNEL}}-{{MAXFRAME}}"><input type="text" onchange="direwolf.adevices[{{@../index}}].channels[{{@index}}].setMAXFRAME(this.value)" value="{{MAXFRAME}}"/></div>
-		</div>
-		<div class="div-table-row">
-			<div  class="div-table-col">EMAXFRAME: </div>
-			<div class="div-table-col" id="{{../name}}-ch-{{CHANNEL}}-{{EMAXFRAME}}"><input type="text" onchange="direwolf.adevices[{{@../index}}].channels[{{@index}}].setEMAXFRAME(this.value)" value="{{EMAXFRAME}}"/></div>
-		</div>
-		<div class="div-table-row">
-			<div  class="div-table-col">MAXV22: </div>
-			<div class="div-table-col" id="{{../name}}-ch-{{CHANNEL}}-{{MAXV22}}"><input type="text" onchange="direwolf.adevices[{{@../index}}].channels[{{@index}}].setMAXV22(this.value)" value="{{MAXV22}}"/></div>
-		</div>
 	</div>
-	</fieldset>
-	{{/each}}
-</fieldset>
-{{/each}}
-<fieldset>
-	<legend>Common Settings</legend>
-	<div class="div-table">
-		<div class="div-table-row">
-			<div class="div-table-col">AGWPORT:</div>
-			<div class="div-table-col"><input  type="number" id="AGWPORT" onchange="direwolf.setAGWPORT(this.value)" value="{{AGWPORT}}"/></div>
-		</div>
-		<div class="div-table-row">
-			<div class="div-table-col">KISSPORT:</div>
-			<div class="div-table-col"><input  type="number" id="KISSPORT" onchange="direwolf.setKISSPORT(this.value)" value="{{KISSPORT}}"/></div>
-		</div>
-		<div class="div-table-row">
-			<div class="div-table-col">DEDUPE:</div>
-			<div class="div-table-col"><input  type="number" id="DEDUPE" onchange="direwolf.setDEDUPE(this.value)" value="{{DEDUPE}}"/></div>
-		</div>
-		<div class="div-table-row">
-			<div class="div-table-col">IGSERVER:</div>
-			<div class="div-table-col"><input  type="text" id="IGSERVER" onchange="direwolf.setIGSERVER(this.value)" value="{{IGSERVER}}"/></div>
-		</div>
-		<div class="div-table-row">
-			<div class="div-table-col">IGLOGIN:</div>
-			<div class="div-table-col"><input  type="text" id="IGLOGIN" onchange="direwolf.setIGLOGIN(this.value)" value="{{IGLOGIN}}"/></div>
-		</div>
-		<div class="div-table-row">
-			<div class="div-table-col">IGTXLIMIT:</div>
-			<div class="div-table-col"><input  type="text" id="IGTXLIMIT" onchange="direwolf.setIGTXLIMIT(this.value)" value="{{IGTXLIMIT}}"/></div>
-		</div>
-		<div class="div-table-row">
-			<div class="div-table-col">LOGDIR:</div>
-			<div class="div-table-col"><input  type="text" id="LOGDIR" onchange="direwolf.setLOGDIR(this.value)" value="{{LOGDIR}}"/></div>
-		</div>
-	</div>
-</fieldset>
-<fieldset>
-	<legend>Beacons</legend>
-	<div style="clear:both">
-	<button type="button" onclick="direwolf.addBeacon(new Cbeacon());reloadDirewolf()">New CBEACON</button>
-	<button type="button" onclick="direwolf.addBeacon(new Ibeacon());reloadDirewolf()">New IBEACON</button>
-	<button type="button" onclick="direwolf.addBeacon(new Obeacon());reloadDirewolf()">New OBEACON</button>
-	<button type="button" onclick="direwolf.addBeacon(new Pbeacon());reloadDirewolf()">New PBEACON</button>
-	<button type="button" onclick="direwolf.addBeacon(new Tbeacon());reloadDirewolf()">New TBEACON</button>
-	</div>
-	{{#each beacons}}
-	<fieldset class="channel">
-	<legend>{{@index}} - {{toUpperCase this.constructor.name}}</legend>
-	<div class="div-table">
-		{{#each this}}
-		<div class="div-table-row">
-			<div class="div-table-col">{{@key}}</div>
-			<div class="div-table-col"><input type="text" value="{{@this}}"></div>
-		</div>
+
+	<div id="tabs-4">
+		{{#each digipeaters}}
+		<fieldset class="channel">
+			<legend>{{@index}} - {{toUpperCase this.constructor.name}}</legend>
+			<div class="div-table">
+				{{#each this}}
+				<div class="div-table-row">
+					<div class="div-table-col">{{@key}}</div>
+					<div class="div-table-col">
+						<input type="text" value="{{@this}}">
+					</div>
+				</div>
+				{{/each}}
+				<button type="button"
+					onclick="direwolf.digipeaters.splice({{@index}},1);reloadDirewolf()">Delete</button>
+				<button type="button"
+					onclick="direwolf.addDigipeater(direwolf.digipeaters[{{@index}}]);reloadDirewolf()">Duplicate</button>
+			</div>
+		</fieldset>
 		{{/each}}
-		<button type="button" onclick="direwolf.beacons.splice({{@index}},1);reloadDirewolf()">Delete</button>
-		<button type="button" onclick="direwolf.addBeacon(direwolf.beacons[{{@index}}]);reloadDirewolf()">Duplicate</button>
 	</div>
-	</fieldset>
-	{{/each}}
-</fieldset>
 
-
-<fieldset>
-	<legend>Digipeaters</legend>
-	{{#each digipeaters}}
-	<fieldset class="channel">
-	<legend>{{@index}} - {{toUpperCase this.constructor.name}}</legend>
-	<div class="div-table">
-		{{#each this}}
-		<div class="div-table-row">
-			<div class="div-table-col">{{@key}}</div>
-			<div class="div-table-col"><input type="text" value="{{@this}}"></div>
-		</div>
+	<div id="tabs-5">
+		{{#each filters}}
+		<fieldset class="channel">
+			<legend>{{@index}} - {{toUpperCase this.constructor.name}}</legend>
+			<div class="div-table">
+				{{#each this}}
+				<div class="div-table-row">
+					<div class="div-table-col">{{@key}}</div>
+					<div class="div-table-col">
+						<input type="text" value="{{@this}}">
+					</div>
+				</div>
+				{{/each}}
+				<button type="button"
+					onclick="direwolf.filters.splice({{@index}},1);reloadDirewolf()">Delete</button>
+				<button type="button"
+					onclick="direwolf.addFilter(direwolf.filters[{{@index}}]);reloadDirewolf()">Duplicate</button>
+			</div>
+		</fieldset>
 		{{/each}}
-		<button type="button" onclick="direwolf.digipeaters.splice({{@index}},1);reloadDirewolf()">Delete</button>
-		<button type="button" onclick="direwolf.addDigipeater(direwolf.digipeaters[{{@index}}]);reloadDirewolf()">Duplicate</button>
 	</div>
-	</fieldset>
-	{{/each}}
-</fieldset>
-
-
-<fieldset>
-	<legend>Filters</legend>
-	{{#each filters}}
-	<fieldset class="channel">
-	<legend>{{@index}} - {{toUpperCase this.constructor.name}}</legend>
-	<div class="div-table">
-		{{#each this}}
-		<div class="div-table-row">
-			<div class="div-table-col">{{@key}}</div>
-			<div class="div-table-col"><input type="text" value="{{@this}}"></div>
-		</div>
-		{{/each}}
-		<button type="button" onclick="direwolf.filters.splice({{@index}},1);reloadDirewolf()">Delete</button>
-		<button type="button" onclick="direwolf.addFilter(direwolf.filters[{{@index}}]);reloadDirewolf()">Duplicate</button>
-	</div>
-	</fieldset>
-	{{/each}}
-</fieldset>
-
-
+</div>
+<script>
+  $( function() {
+    $( "#tabs" ).tabs();
+  } );
+</script>

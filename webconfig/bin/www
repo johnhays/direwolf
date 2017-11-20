@@ -9,7 +9,6 @@ var fs = require('fs');
 var debug = require('debug')('nettnc:server');
 var http = require('http');
 var radios = require('../data/radios.json');
-var modems = require('../data/modems.json');
 var raw = fs.readFileSync('direwolf.conf');
 var port = normalizePort(process.env.PORT || '8040');
 app.set('port', port);
@@ -26,7 +25,6 @@ io.on('connection', function (socket) {
 	console.log('socket.io connection established');
 	socket.emit('direwolf',raw.toString());
 	socket.emit('radios', {radios:radios});
-	socket.emit('modems', {modems:modems});
 	socket.on('radio', function (data) {
 		console.log(data);
 	});

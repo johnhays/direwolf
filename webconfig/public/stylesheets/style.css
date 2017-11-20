@@ -1,5 +1,4 @@
 body {
-  padding: 50px;
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
 }
 
@@ -8,8 +7,14 @@ a {
 }
 
 #logo {
-	float:right;
+	float:left;
+	height:3em;
 }
+
+.dw {
+	clear:both;
+}
+
 
 fieldset.channel {
 	float:left;

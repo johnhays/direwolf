@@ -1,5 +1,0 @@
-<select>
-	{{#each modem.speeds}}
-	<option value="{{rate}}">{{rate}} {{modulation}} {{description}}</option>
-	{{/each}}
-</select>

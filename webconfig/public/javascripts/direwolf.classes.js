@@ -37,7 +37,8 @@ class Adevice {
 	
 	setAdeviceName(name) {
 		var name1 = name.toUpperCase();
-		// should be ADEVICE, ADEVICE0 (equivalent to ADEVICE), ADEVICE1, or ADEVICE2
+		// should be ADEVICE, ADEVICE0 (equivalent to ADEVICE), ADEVICE1, or
+		// ADEVICE2
 		if(/^ADEVICE[0-2]?/.test(name1)) {
 		this.name = name1;  
 		} else {
@@ -402,7 +403,7 @@ class Channel {
 
 	constructor(number) {
 		this.CHANNEL = number;
-		this.MODEM = null;
+		this.MODEM = new Modem();
 		this.MYCALL = null
 		this.PTT = null;
 		this.DCD = null;
@@ -413,8 +414,8 @@ class Channel {
 		this.PERSIST = 63;
 		this.TXDELAY = 30;
 		this.TXTAIL = 10;
-		this.FULLDUP = null;
-		this.FIX_BITS = null;
+		this.FULLDUP = 0;
+		this.FIX_BITS = new FixBits();
 		this.FRACK = null;
 		this.RETRY = null;
 		this.PACLEN = null;
@@ -577,10 +578,10 @@ class Channel {
 	}
 
 	toString() {
-		var str = "CHANNEL " + this.CHANNEL;
+		let str = "CHANNEL " + this.CHANNEL;
 		if (this.MODEM != null) str += '\n' + this.MODEM.toString();
 		if (this.MYCALL != null) str += "\nMYCALL " + this.MYCALL;
-		if (this.FIX_BITS != null) str += '\n' + this.FIX_BITS.toString();
+		str += '\n' + this.FIX_BITS.toString();
 		if (this.PTT != null) str += "\nPTT " + this.PTT;
 		if (this.DCD != null) str += "\nDCD " + this.DCD;
 		if (this.CON != null) str += "\nCON " + this.CON;
@@ -709,6 +710,8 @@ class Direwolf {
 		this.IGSERVER = null
 		this.IGLOGIN = null;
 		this.IGTXLIMIT = null;
+		this.IGTXVIA = null;
+		this.IGFILTER = null;
 		this.LOGDIR = null;
 		this.GPSD = null;
 	}
@@ -753,6 +756,20 @@ class Direwolf {
 	}
 	getIGTXLIMIT(){
 		return this.IGTXLIMIT;
+	}
+
+	setIGTXVIA(IGTXVIA) {
+		this.IGTXVIA = IGTXVIA;
+	}
+	getIGTXVIA(){
+		return this.IGTXVIA;
+	}
+
+	setIGFILTER(IGFILTER) {
+		this.IGFILTER = IGFILTER;
+	}
+	getIGFILTER(){
+		return this.IGFILTER;
 	}
 
 	setLOGDIR(LOGDIR) {
@@ -822,6 +839,8 @@ class Direwolf {
 		if (isSet(this.IGSERVER)) additional += "IGSERVER " + this.IGSERVER + "\n";
 		if (isSet(this.IGLOGIN)) additional += "IGLOGIN " + this.IGLOGIN + "\n" ;
 		if (isSet(this.IGTXLIMIT)) additional += "IGTXLIMIT " + this.IGTXLIMIT + "\n" ;
+		if (isSet(this.IGTXVIA)) additional += "IGTXVIA " + this.IGTXVIA + "\n" ;
+		if (isSet(this.IGFILTER)) additional += "IGFILTER " + this.IGFILTER + "\n" ;
 		if (isSet(this.LOGDIR)) additional += "LOGDIR " + this.LOGDIR + "\n" ;
 
 		return additional;
@@ -889,11 +908,16 @@ class Direwolf {
 					break;
 				case "FIX_BITS" :
 					var fixbits = new FixBits();
-					fixbits.EFFORT = tokens[1];
+					if (tokens[1]) fixbits.setEFFORT(tokens[1]);
+					
 					if (tokens.length > 2) {
 						for (var j=2; j < tokens.length; j++) {
-							fixbits.addOption(tokens[j]);
+							let sanity = tokens[j].match(/^APRS$|^AX25$|^NONE$/) || "APRS";
+							let passall = tokens[j].match(/^PASSALL$/g);
+							fixbits.setSANITY(sanity);
+							if (passall) fixbits.setPASSALL(true);
 						}
+					console.log(fixbits);
 					}
 					channels[curchannel].setFixBits(fixbits);
 					break;
@@ -1021,6 +1045,12 @@ class Direwolf {
 				case "IGTXLIMIT" :
 					this.setIGTXLIMIT(tokens.slice(1,tokens.length).join(' '));
 					break;
+				case "IGTXVIA" :
+					this.setIGTXVIA(tokens.slice(1,tokens.length).join(' '));
+					break;
+				case "IGFILTER" :
+					this.setIGFILTER(tokens.slice(1,tokens.length).join(' '));
+					break;
 				case "GPSD" :
 					this.setGPSD(tokens[1]);
 					break;
@@ -1112,7 +1142,8 @@ class Cfilter extends Filter{
 class FixBits {
 	constructor() {
 		this.EFFORT = 1;
-		this.options = [];
+		this.SANITY = "APRS";
+		this.PASSALL = false;
 	}
 	
 	setEFFORT(effort) {
@@ -1123,20 +1154,32 @@ class FixBits {
 		return this.EFFORT;
 	}
 
-	addOption(option) {
-		this.options.push(option);
+	setSANITY(SANITY) {
+		this.SANITY = SANITY;
 	}
 
-	getOptions() {
-		return options;
+	getSANITY() {
+		return this.SANITY;
 	}
 
+	setPASSALL(PASSALL) {
+		console.log("PASSALL + " + PASSALL);
+		this.PASSALL = PASSALL;
+	}
+
+	getPASSALL() {
+		return this.PASSALL;
+	}
 
 	toString() {
-		var str = "FIX_BITS " + this.EFFORT;
-		for (var i=0; i < this.options.length ; i++) {
-			str += " " + this.options[i];
+		console.log(JSON.stringify(this));
+		console.log(this.PASSALL);
+		var str = "FIX_BITS " + this.EFFORT + " " + this.SANITY;
+		if (this.PASSALL === true) {
+			console.log("Append PASSALL");
+			str += " PASSALL";
 		}
+		console.log(str);
 		return str;
 	}
 

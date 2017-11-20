@@ -1,13 +1,13 @@
-<div id="logo">
-	<img alt="netTNC" src="images/netTNC-logo.svg" />
-</div>
-<h1><img src="images/direwolf.svg" alt="Direwolf" /></h1>
+<!-- <div id="logo">
+<img src="images/direwolf.svg" alt="Direwolf" />
+<h1>{{title}}</h1>
 <h2>Configuration</h2>
-<form>
+</div> -->
 <div class="dw"></div>
 <br/>
-<input alt="Direwolf" type="button" onclick='updateDirewolf()' value="Update"/>
-</form>
+<div>
+<input style="clear:both" alt="Direwolf" type="button" onclick='updateDirewolf()' value="Update"/>
+</div>
 <script>
     var full = location.protocol + '//' + location.hostname + (location.port ? ':' + location.port : '');
 
@@ -17,6 +17,10 @@
     
     Handlebars.registerHelper('toUpperCase', function(str) {
       return str.toUpperCase();
+    });
+
+    Handlebars.registerHelper('ifEquals', function(arg1, arg2, options) {
+        return (arg1 == arg2) ? options.fn(this) : options.inverse(this);
     });
 
     var socket = io.connect(full);
@@ -35,18 +39,13 @@
         console.log(data);
     });
 
-    socket.on('modems', function(data) {
-	var template = Handlebars.templates['modems'];
-	var html = template(data);
-	Handlebars.registerPartial('modems',html);
-    });
-
     function updateRadio(data) {
         socket.emit('radio', data);
     }
 
     function updateDirewolf() {
         socket.emit('direwolf', direwolf.toString());
+        alert(direwolf.toString());
     }
 
     function reloadDirewolf(){
