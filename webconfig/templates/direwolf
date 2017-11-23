@@ -1,16 +1,18 @@
-<div id="tabs">
-	<ul>
-		<li><a href="#tabs-1">Soundcards</a></li>
-		<li><a href="#tabs-2">Common</a></li>
-		<li><a href="#tabs-3">Beacons</a></li>
-		<li><a href="#tabs-4">Digipeaters</a></li>
-		<li><a href="#tabs-5">Filters</a></li>
-	</ul>
+<div id="tabs" class="dw">
+        <ul>
+                <li><a href="#tabs-1">Soundcards</a></li>
+                <li><a href="#tabs-2">Common</a></li>
+                <li><a href="#tabs-3">Beacons</a></li>
+                <li><a href="#tabs-4">Digipeaters</a></li>
+                <li><a href="#tabs-5">Filters</a></li>
+                <li><a href="#tabs-6">Contents</a></li>
+        </ul>
 	<div id="tabs-1">
-		<div>
 			{{#each adevices}}
-			<div style="float: left;">
-				<h3>Soundcard Settings {{name}}</h3>
+				<a href="#{{name}}">{{name}}</a><br/>
+			{{/each}}
+			{{#each adevices}}
+				<h3 id="{{name}}">Soundcard Settings {{name}}</h3>
 				<div class="div-table">
 					<div class="div-table-row">
 						<div class="div-table-col">Name</div>
@@ -74,7 +76,7 @@
 					</div>
 				</div>
 				{{#each channels}}
-				<div style="float: left; border-right: 1px black solid;padding-left: 1em;">
+				<div style="padding-left: 1em;">
 					<h4>Channel {{CHANNEL}}</h4>
 					<div class="div-table">
 						<div class="div-table-row">
@@ -263,8 +265,8 @@
 									<div class="div-table-col">
 										<select
 											onchange="direwolf.adevices[{{@../index}}].channels[{{@index}}].FIX_BITS.setPASSALL(this.value);">											
-											<option value=true {{#if FIX_BITS.PASSALL}}selected="selected"{{/if}}>Y</option>
-											<option value=false {{#unless FIX_BITS.PASSALL}}selected="selected"{{/unless}}>N</option>
+											<option value="PASSALL" {{#ifEquals "PASSALL" FIX_BITS.PASSALL}}selected="selected"{{/ifEquals}}>Y</option>
+											<option value="" {{#ifEquals "" FIX_BITS.PASSALL}}selected="selected"{{/ifEquals}}>N</option>
 										</select>
 									</div>
 								</div>
@@ -313,9 +315,7 @@
 					</div>
 				</div>
 				{{/each}}
-			</div>
 			{{/each}}
-		</div>
 	</div>
 	<!-- tabs-1 -->
 
@@ -377,24 +377,23 @@
 	<div id="tabs-3">
 		<div style="clear: both">
 			<button type="button"
-				onclick="direwolf.addBeacon(new Cbeacon());reloadDirewolf()">New
+				onclick="direwolf.addBeacon(new Cbeacon());reloadDirewolf('tabs-3')">New
 				CBEACON</button>
 			<button type="button"
-				onclick="direwolf.addBeacon(new Ibeacon());reloadDirewolf()">New
+				onclick="direwolf.addBeacon(new Ibeacon());reloadDirewolf('tabs-3')">New
 				IBEACON</button>
 			<button type="button"
-				onclick="direwolf.addBeacon(new Obeacon());reloadDirewolf()">New
+				onclick="direwolf.addBeacon(new Obeacon());reloadDirewolf('tabs-3')">New
 				OBEACON</button>
 			<button type="button"
-				onclick="direwolf.addBeacon(new Pbeacon());reloadDirewolf()">New
+				onclick="direwolf.addBeacon(new Pbeacon());reloadDirewolf('tabs-3')">New
 				PBEACON</button>
 			<button type="button"
-				onclick="direwolf.addBeacon(new Tbeacon());reloadDirewolf()">New
+				onclick="direwolf.addBeacon(new Tbeacon());reloadDirewolf('tabs-3')">New
 				TBEACON</button>
 		</div>
 		{{#each beacons}}
-		<fieldset class="channel">
-			<legend>{{@index}} - {{toUpperCase this.constructor.name}}</legend>
+			<h3>{{@index}} - {{toUpperCase this.constructor.name}}</h3>
 			<div class="div-table">
 				{{#each this}}
 				<div class="div-table-row">
@@ -405,18 +404,16 @@
 				</div>
 				{{/each}}
 				<button type="button"
-					onclick="direwolf.beacons.splice({{@index}},1);reloadDirewolf()">Delete</button>
+					onclick="direwolf.beacons.splice({{@index}},1);reloadDirewolf('tabs-3')">Delete</button>
 				<button type="button"
-					onclick="direwolf.addBeacon(direwolf.beacons[{{@index}}]);reloadDirewolf()">Duplicate</button>
+					onclick="direwolf.addBeacon(direwolf.beacons[{{@index}}]);reloadDirewolf('tabs-3')">Duplicate</button>
 			</div>
-		</fieldset>
 		{{/each}}
 	</div>
 
 	<div id="tabs-4">
 		{{#each digipeaters}}
-		<fieldset class="channel">
-			<legend>{{@index}} - {{toUpperCase this.constructor.name}}</legend>
+			<h3>{{@index}} - {{toUpperCase this.constructor.name}}</h3>
 			<div class="div-table">
 				{{#each this}}
 				<div class="div-table-row">
@@ -427,18 +424,16 @@
 				</div>
 				{{/each}}
 				<button type="button"
-					onclick="direwolf.digipeaters.splice({{@index}},1);reloadDirewolf()">Delete</button>
+					onclick="direwolf.digipeaters.splice({{@index}},1);reloadDirewolf('tabs-4')">Delete</button>
 				<button type="button"
-					onclick="direwolf.addDigipeater(direwolf.digipeaters[{{@index}}]);reloadDirewolf()">Duplicate</button>
+					onclick="direwolf.addDigipeater(direwolf.digipeaters[{{@index}}]);reloadDirewolf('tabs-4')">Duplicate</button>
 			</div>
-		</fieldset>
 		{{/each}}
 	</div>
 
 	<div id="tabs-5">
 		{{#each filters}}
-		<fieldset class="channel">
-			<legend>{{@index}} - {{toUpperCase this.constructor.name}}</legend>
+			<h3>{{@index}} - {{toUpperCase this.constructor.name}}</h3>
 			<div class="div-table">
 				{{#each this}}
 				<div class="div-table-row">
@@ -449,16 +444,16 @@
 				</div>
 				{{/each}}
 				<button type="button"
-					onclick="direwolf.filters.splice({{@index}},1);reloadDirewolf()">Delete</button>
+					onclick="direwolf.filters.splice({{@index}},1);reloadDirewolf('tabs-5')">Delete</button>
 				<button type="button"
-					onclick="direwolf.addFilter(direwolf.filters[{{@index}}]);reloadDirewolf()">Duplicate</button>
+					onclick="direwolf.addFilter(direwolf.filters[{{@index}}]);reloadDirewolf('tabs-5')">Duplicate</button>
 			</div>
-		</fieldset>
 		{{/each}}
 	</div>
+	<div id="tabs-6"><pre/></div>
 </div>
 <script>
-  $( function() {
-    $( "#tabs" ).tabs();
-  } );
+	$( function() {
+		$( "#tabs" ).tabs();
+	});
 </script>

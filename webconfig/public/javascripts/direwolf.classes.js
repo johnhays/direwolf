@@ -704,9 +704,9 @@ class Direwolf {
 		this.AGWPORT = 8000;
 		this.KISSPORT = 8001;
 		this.beacons = [];
-		this.DEDUPE = 30;
 		this.digipeaters = [];
 		this.filters = [];
+		this.DEDUPE = 30;
 		this.IGSERVER = null
 		this.IGLOGIN = null;
 		this.IGTXLIMIT = null;
@@ -819,21 +819,25 @@ class Direwolf {
 	}
 
 	toString() {
-		var additional = "";
+		var additional = "# Created by Direwolf Configuration Web Editior\n";
+		if (this.adevices.length > 0) additional += "# Audio Devices\n";
 		for (var i = 0; i < this.adevices.length; i++) {
 			additional += this.adevices[i] + '\n';
 		}
+		if (this.beacons.length > 0) additional += "# Beacons\n";
 		for (var i = 0; i < this.beacons.length; i++) {
 			additional += this.beacons[i] + '\n';
 		}
-		if (this.DEDUPE !== null) additional += "DEDUPE " + this.DEDUPE + "\n";
+		if (this.digipeaters.length > 0) additional += "# Digipeater Definitions\n";
 		for (var i = 0; i < this.digipeaters.length; i++) {
 			additional += this.digipeaters[i].toString() + '\n';
 		}
+		if (this.filters.length > 0) additional += "# Filter Definitions\n";
 		for (var i = 0; i < this.filters.length; i++) {
 			additional += this.filters[i].toString() + '\n';
 		}
-		if (isSet(this.GPSD)) additional += "GPSD " + this.GPSD + "\n";
+		additional += "# Common Settings\n";
+		if (isSet(this.DEDUPE)) additional += "DEDUPE " + this.DEDUPE + "\n";
 		if (isSet(this.AGWPORT)) additional += "AGWPORT " +  this.AGWPORT + "\n";
 		if (isSet(this.KISSPORT)) additional += "KISSPORT " +  this.KISSPORT + "\n";
 		if (isSet(this.IGSERVER)) additional += "IGSERVER " + this.IGSERVER + "\n";
@@ -842,6 +846,7 @@ class Direwolf {
 		if (isSet(this.IGTXVIA)) additional += "IGTXVIA " + this.IGTXVIA + "\n" ;
 		if (isSet(this.IGFILTER)) additional += "IGFILTER " + this.IGFILTER + "\n" ;
 		if (isSet(this.LOGDIR)) additional += "LOGDIR " + this.LOGDIR + "\n" ;
+		if (isSet(this.GPSD)) additional += "GPSD " + this.GPSD + "\n";
 
 		return additional;
 	}
@@ -915,9 +920,8 @@ class Direwolf {
 							let sanity = tokens[j].match(/^APRS$|^AX25$|^NONE$/) || "APRS";
 							let passall = tokens[j].match(/^PASSALL$/g);
 							fixbits.setSANITY(sanity);
-							if (passall) fixbits.setPASSALL(true);
+							if (passall) fixbits.setPASSALL(passall);
 						}
-					console.log(fixbits);
 					}
 					channels[curchannel].setFixBits(fixbits);
 					break;
@@ -1143,7 +1147,7 @@ class FixBits {
 	constructor() {
 		this.EFFORT = 1;
 		this.SANITY = "APRS";
-		this.PASSALL = false;
+		this.PASSALL = "";
 	}
 	
 	setEFFORT(effort) {
@@ -1163,7 +1167,6 @@ class FixBits {
 	}
 
 	setPASSALL(PASSALL) {
-		console.log("PASSALL + " + PASSALL);
 		this.PASSALL = PASSALL;
 	}
 
@@ -1172,15 +1175,8 @@ class FixBits {
 	}
 
 	toString() {
-		console.log(JSON.stringify(this));
-		console.log(this.PASSALL);
-		var str = "FIX_BITS " + this.EFFORT + " " + this.SANITY;
-		if (this.PASSALL === true) {
-			console.log("Append PASSALL");
-			str += " PASSALL";
-		}
-		console.log(str);
-		return str;
+		let str = "FIX_BITS " + this.EFFORT + " " + this.SANITY + " " + this.PASSALL;
+		return str.trim();
 	}
 
 	asJSON() {

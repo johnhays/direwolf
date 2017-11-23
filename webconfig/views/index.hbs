@@ -1,12 +1,13 @@
-<!-- <div id="logo">
-<img src="images/direwolf.svg" alt="Direwolf" />
-<h1>{{title}}</h1>
-<h2>Configuration</h2>
-</div> -->
-<div class="dw"></div>
-<br/>
 <div>
-<input style="clear:both" alt="Direwolf" type="button" onclick='updateDirewolf()' value="Update"/>
+	<div id="logo">
+		<img src="images/direwolf-logo.svg" style="height:8em;float:left" alt="Direwolf" />
+	<div>
+	<h2 style="text-align:right">Configuration Editor</h2>
+</div>
+	<div class="dw"></div>
+	<br/>
+	<input style="clear:both" alt="Direwolf" type="button" onclick='updateDirewolf()' value="Update"/>
+	<br/>
 </div>
 <script>
     var full = location.protocol + '//' + location.hostname + (location.port ? ':' + location.port : '');
@@ -32,7 +33,7 @@
     socket.on('direwolf', function(data) {
         direwolf.ParseConfig(data.toString());
         var html = template(direwolf);
-        $('.dw').append(html);
+        $('.dw').replaceWith(html);
     });
 
     socket.on('radios', function(data) {
@@ -41,16 +42,18 @@
 
     function updateRadio(data) {
         socket.emit('radio', data);
+	location.hash = "#tabs-6";
     }
 
     function updateDirewolf() {
         socket.emit('direwolf', direwolf.toString());
-        alert(direwolf.toString());
+	$('#tabs-6 pre').text(direwolf.toString());
     }
 
-    function reloadDirewolf(){
+    function reloadDirewolf(loc){
 	var html = template(direwolf);
-	$('.dw').html(html);
+	$('.dw').replaceWith(html);
+	location.hash = "#" + loc;
     }
 </script>
 
