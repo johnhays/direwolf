@@ -3,15 +3,17 @@
 /**
  * Module dependencies.
  */
-
+const configfile = "direwolf.conf";
 var app = require('../app');
 var fs = require('fs');
 var debug = require('debug')('nettnc:server');
 var http = require('http');
 var radios = require('../data/radios.json');
-var raw = fs.readFileSync('direwolf.conf');
 var port = normalizePort(process.env.PORT || '8040');
 app.set('port', port);
+
+var raw = "";
+if (fs.existsSync(configfile)) raw = fs.readFileSync('direwolf.conf');
 
 var server = http.createServer(app);
 var io = require('socket.io')(server);
@@ -29,6 +31,7 @@ io.on('connection', function (socket) {
 		console.log(data);
 	});
 	socket.on('direwolf', function( dwobj ) {
+		fs.writeFileSync(configfile,dwobj);
 		console.log("direwolf -->\n" + dwobj);
 	});
 });

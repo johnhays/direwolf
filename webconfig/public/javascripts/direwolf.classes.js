@@ -72,7 +72,8 @@ class Adevice {
 			console.log("ADEVICE is not formed properly");
 			return "";
 		}
-		var str = this.name + " " + this.input;
+		var str = "# " + this.name;
+		str += "\n" + this.name + " " + this.input;
 		if (this.output !== null) {
 			str += " " + this.output;
 		}
@@ -578,7 +579,9 @@ class Channel {
 	}
 
 	toString() {
-		let str = "CHANNEL " + this.CHANNEL;
+		
+		let str = "# CHANNEL " + this.CHANNEL;
+		str += "\nCHANNEL " + this.CHANNEL;
 		if (this.MODEM != null) str += '\n' + this.MODEM.toString();
 		if (this.MYCALL != null) str += "\nMYCALL " + this.MYCALL;
 		str += '\n' + this.FIX_BITS.toString();
@@ -840,13 +843,14 @@ class Direwolf {
 		if (isSet(this.DEDUPE)) additional += "DEDUPE " + this.DEDUPE + "\n";
 		if (isSet(this.AGWPORT)) additional += "AGWPORT " +  this.AGWPORT + "\n";
 		if (isSet(this.KISSPORT)) additional += "KISSPORT " +  this.KISSPORT + "\n";
+		if (isSet(this.LOGDIR)) additional += "LOGDIR " + this.LOGDIR + "\n" ;
+		if (isSet(this.GPSD)) additional += "GPSD " + this.GPSD + "\n";
+		additional += "# IGate Settings\n";
 		if (isSet(this.IGSERVER)) additional += "IGSERVER " + this.IGSERVER + "\n";
 		if (isSet(this.IGLOGIN)) additional += "IGLOGIN " + this.IGLOGIN + "\n" ;
 		if (isSet(this.IGTXLIMIT)) additional += "IGTXLIMIT " + this.IGTXLIMIT + "\n" ;
 		if (isSet(this.IGTXVIA)) additional += "IGTXVIA " + this.IGTXVIA + "\n" ;
 		if (isSet(this.IGFILTER)) additional += "IGFILTER " + this.IGFILTER + "\n" ;
-		if (isSet(this.LOGDIR)) additional += "LOGDIR " + this.LOGDIR + "\n" ;
-		if (isSet(this.GPSD)) additional += "GPSD " + this.GPSD + "\n";
 
 		return additional;
 	}
@@ -945,8 +949,9 @@ class Direwolf {
 					break;
 				case (tokens[0].match(/^ADEVICE[0-2]?$/) || {}).input: 
 					curdevice = tokens[0];
+					if (curdevice === "ADEVICE") curdevice = "ADEVICE0";
 					adevices[curdevice] = new Adevice();
-					adevices[curdevice].setAdeviceName(tokens[0]);
+					adevices[curdevice].setAdeviceName(curdevice);
 					adevices[curdevice].setInput(tokens[1]);
 					if (tokens.length > 2) {
 						adevices[curdevice].setOutput(tokens[2]);

@@ -17,7 +17,7 @@ templates['direwolf'] = template({"1":function(container,depth0,helpers,partials
     + alias4(((helper = (helper = helpers.name || (depth0 != null ? depth0.name : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"name","hash":{},"data":data}) : helper)))
     + "</h3>\n				<div class=\"div-table\">\n					<div class=\"div-table-row\">\n						<div class=\"div-table-col\">Name</div>\n						<div class=\"div-table-col\">\n							<select\n								onchange=\"direwolf.adevices["
     + alias4(((helper = (helper = helpers.index || (data && data.index)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"index","hash":{},"data":data}) : helper)))
-    + "].setAdeviceName(this.value)\">\n								<option value=\"ADEVICE\" "
+    + "].setAdeviceName(this.value)\">\n								<option title=\"Use ADEVICE0 Instead\" value=\"ADEVICE\" "
     + ((stack1 = (helpers.ifEquals || (depth0 && depth0.ifEquals) || alias2).call(alias1,(depth0 != null ? depth0.name : depth0),"ADEVICE",{"name":"ifEquals","hash":{},"fn":container.program(4, data, 0, blockParams, depths),"inverse":container.noop,"data":data})) != null ? stack1 : "")
     + "\n					>ADEVICE</option>\n								<option value=\"ADEVICE0\" "
     + ((stack1 = (helpers.ifEquals || (depth0 && depth0.ifEquals) || alias2).call(alias1,(depth0 != null ? depth0.name : depth0),"ADEVICE0",{"name":"ifEquals","hash":{},"fn":container.program(4, data, 0, blockParams, depths),"inverse":container.noop,"data":data})) != null ? stack1 : "")
@@ -144,13 +144,15 @@ templates['direwolf'] = template({"1":function(container,depth0,helpers,partials
     + alias4(((helper = (helper = helpers.index || (data && data.index)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"index","hash":{},"data":data}) : helper)))
     + "].setTXTAIL(this.value)\"\n									value=\""
     + alias4(((helper = (helper = helpers.TXTAIL || (depth0 != null ? depth0.TXTAIL : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"TXTAIL","hash":{},"data":data}) : helper)))
-    + "\" />\n							</div>\n						</div>\n						<div class=\"div-table-row\">\n							<div class=\"div-table-col\">FULLDUP</div>\n							<div class=\"div-table-col\">\n								<input type=\"text\"\n									onchange=\"direwolf.adevices["
+    + "\" />\n							</div>\n						</div>\n						<div class=\"div-table-row\">\n							<div class=\"div-table-col\">FULLDUP</div>\n							<div class=\"div-table-col\">\n								<select onchange=\"direwolf.adevices["
     + alias4(alias5((container.data(data, 1) && container.data(data, 1).index), depth0))
     + "].channels["
     + alias4(((helper = (helper = helpers.index || (data && data.index)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"index","hash":{},"data":data}) : helper)))
-    + "].setFULLDUP(this.value)\"\n									value=\""
-    + alias4(((helper = (helper = helpers.FULLDUP || (depth0 != null ? depth0.FULLDUP : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"FULLDUP","hash":{},"data":data}) : helper)))
-    + "\" />\n							</div>\n						</div>\n						<div class=\"div-table-row\">\n							<div class=\"div-table-col\">FRACK</div>\n							<input type=\"text\"\n								onchange=\"direwolf.adevices["
+    + "].setFULLDUP(this.value)\">\n									<option value=\"0\" "
+    + ((stack1 = (helpers.ifEquals || (depth0 && depth0.ifEquals) || alias2).call(alias1,"0",(depth0 != null ? depth0.FULLDUP : depth0),{"name":"ifEquals","hash":{},"fn":container.program(11, data, 0, blockParams, depths),"inverse":container.noop,"data":data})) != null ? stack1 : "")
+    + ">Off</option>\n									<option value=\"1\" "
+    + ((stack1 = (helpers.ifEquals || (depth0 && depth0.ifEquals) || alias2).call(alias1,"1",(depth0 != null ? depth0.FULLDUP : depth0),{"name":"ifEquals","hash":{},"fn":container.program(11, data, 0, blockParams, depths),"inverse":container.noop,"data":data})) != null ? stack1 : "")
+    + ">On</option>\n								</select>\n							</div>\n						</div>\n						<div class=\"div-table-row\">\n							<div class=\"div-table-col\">FRACK</div>\n							<input type=\"text\"\n								onchange=\"direwolf.adevices["
     + alias4(alias5((container.data(data, 1) && container.data(data, 1).index), depth0))
     + "].channels["
     + alias4(((helper = (helper = helpers.index || (data && data.index)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"index","hash":{},"data":data}) : helper)))
@@ -297,6 +299,10 @@ templates['direwolf'] = template({"1":function(container,depth0,helpers,partials
     + alias4(((helper = (helper = helpers.IGLOGIN || (depth0 != null ? depth0.IGLOGIN : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"IGLOGIN","hash":{},"data":data}) : helper)))
     + "\" />\n				</div>\n			</div>\n			<div class=\"div-table-row\">\n				<div class=\"div-table-col\">IGTXLIMIT</div>\n				<div class=\"div-table-col\">\n					<input type=\"text\" onchange=\"direwolf.setIGTXLIMIT(this.value)\"\n						value=\""
     + alias4(((helper = (helper = helpers.IGTXLIMIT || (depth0 != null ? depth0.IGTXLIMIT : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"IGTXLIMIT","hash":{},"data":data}) : helper)))
+    + "\" />\n				</div>\n			</div>\n			<div class=\"div-table-row\">\n				<div class=\"div-table-col\">IGTXVIA</div>\n				<div class=\"div-table-col\">\n					<input type=\"text\" onchange=\"direwolf.setIGTXVIA(this.value)\"\n						value=\""
+    + alias4(((helper = (helper = helpers.IGTXVIA || (depth0 != null ? depth0.IGTXVIA : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"IGTXVIA","hash":{},"data":data}) : helper)))
+    + "\" />\n				</div>\n			</div>\n			<div class=\"div-table-row\">\n				<div class=\"div-table-col\">IGFILTER</div>\n				<div class=\"div-table-col\">\n					<input type=\"text\" onchange=\"direwolf.setIGFILTER(this.value)\"\n						value=\""
+    + alias4(((helper = (helper = helpers.IGFILTER || (depth0 != null ? depth0.IGFILTER : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"IGFILTER","hash":{},"data":data}) : helper)))
     + "\" />\n				</div>\n			</div>\n			<div class=\"div-table-row\">\n				<div class=\"div-table-col\">LOGDIR</div>\n				<div class=\"div-table-col\">\n					<input type=\"text\" onchange=\"direwolf.setLOGDIR(this.value)\"\n						value=\""
     + alias4(((helper = (helper = helpers.LOGDIR || (depth0 != null ? depth0.LOGDIR : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"LOGDIR","hash":{},"data":data}) : helper)))
     + "\" />\n				</div>\n			</div>\n		</div>\n	</div>\n\n	<div id=\"tabs-3\">\n		<div style=\"clear: both\">\n			<button type=\"button\"\n				onclick=\"direwolf.addBeacon(new Cbeacon());reloadDirewolf('tabs-3')\">New\n				CBEACON</button>\n			<button type=\"button\"\n				onclick=\"direwolf.addBeacon(new Ibeacon());reloadDirewolf('tabs-3')\">New\n				IBEACON</button>\n			<button type=\"button\"\n				onclick=\"direwolf.addBeacon(new Obeacon());reloadDirewolf('tabs-3')\">New\n				OBEACON</button>\n			<button type=\"button\"\n				onclick=\"direwolf.addBeacon(new Pbeacon());reloadDirewolf('tabs-3')\">New\n				PBEACON</button>\n			<button type=\"button\"\n				onclick=\"direwolf.addBeacon(new Tbeacon());reloadDirewolf('tabs-3')\">New\n				TBEACON</button>\n		</div>\n"

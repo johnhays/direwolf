@@ -19,7 +19,7 @@
 						<div class="div-table-col">
 							<select
 								onchange="direwolf.adevices[{{@index}}].setAdeviceName(this.value)">
-								<option value="ADEVICE" {{#ifEquals
+								<option title="Use ADEVICE0 Instead" value="ADEVICE" {{#ifEquals
 									name "ADEVICE"}}
 							 selected="selected"{{/ifEquals}}
 					>ADEVICE</option>
@@ -217,9 +217,10 @@
 						<div class="div-table-row">
 							<div class="div-table-col">FULLDUP</div>
 							<div class="div-table-col">
-								<input type="text"
-									onchange="direwolf.adevices[{{@../index}}].channels[{{@index}}].setFULLDUP(this.value)"
-									value="{{FULLDUP}}" />
+								<select onchange="direwolf.adevices[{{@../index}}].channels[{{@index}}].setFULLDUP(this.value)">
+									<option value="0" {{#ifEquals "0" FULLDUP}}selected="selected"{{/ifEquals}}>Off</option>
+									<option value="1" {{#ifEquals "1" FULLDUP}}selected="selected"{{/ifEquals}}>On</option>
+								</select>
 							</div>
 						</div>
 						<div class="div-table-row">
@@ -362,6 +363,20 @@
 				<div class="div-table-col">
 					<input type="text" onchange="direwolf.setIGTXLIMIT(this.value)"
 						value="{{IGTXLIMIT}}" />
+				</div>
+			</div>
+			<div class="div-table-row">
+				<div class="div-table-col">IGTXVIA</div>
+				<div class="div-table-col">
+					<input type="text" onchange="direwolf.setIGTXVIA(this.value)"
+						value="{{IGTXVIA}}" />
+				</div>
+			</div>
+			<div class="div-table-row">
+				<div class="div-table-col">IGFILTER</div>
+				<div class="div-table-col">
+					<input type="text" onchange="direwolf.setIGFILTER(this.value)"
+						value="{{IGFILTER}}" />
 				</div>
 			</div>
 			<div class="div-table-row">
