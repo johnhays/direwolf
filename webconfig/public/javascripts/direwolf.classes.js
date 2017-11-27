@@ -30,7 +30,7 @@ class Adevice {
 		this.name = null;
 		this.input = null;
 		this.output = null;
-		this.ARATE = 44100;
+		this.ARATE = null;
 		this.ACHANNELS = 1; // Defaults to 1
 		this.channels = [];
 	}
@@ -70,7 +70,7 @@ class Adevice {
 	toString() {
 		if (this.name == null || this.input == null) {
 			console.log("ADEVICE is not formed properly");
-			return "";
+			return "# Modem not set";
 		}
 		var str = "# " + this.name;
 		str += "\n" + this.name + " " + this.input;
@@ -78,7 +78,7 @@ class Adevice {
 			str += " " + this.output;
 		}
 		str += "\nACHANNELS " + this.ACHANNELS;
-		str += "\nARATE " + this.ARATE;
+		if (isSet(this.ARATE)) str += "\nARATE " + this.ARATE;
 		for (var i = 0; i < this.channels.length; i++) {
 			str += '\n' + this.channels[i].toString();
 		}
@@ -91,7 +91,7 @@ class Beacon {
 		this.DELAY = null;
 		this.EVERY = null;
 		this.SENDTO = null;
-		this.DESTINATION = null;
+		this.DEST = null;
 		this.VIA = null;	
 	}
 
@@ -116,11 +116,11 @@ class Beacon {
 		return this.SENDTO;
 	}
 
-	setDESTINATION(DESTINATION) {
-		this.DESTINATION = DESTINATION;
+	setDEST(DESTINATION) {
+		this.DEST = DESTINATION;
 	}
-	getDESTINATION(){
-		return this.DESTINATION;
+	getDEST(){
+		return this.DEST;
 	}
 
 	setVIA(VIA) {
@@ -428,7 +428,7 @@ class Channel {
 		this.DTMF = false;
 	}
 	setChannel(number) {
-		this.NUMBER = number;
+		this.CHANNEL = number;
 	}
 	setMycall(mycall) {
 		this.MYCALL = mycall.toUpperCase();
@@ -717,6 +717,8 @@ class Direwolf {
 		this.IGFILTER = null;
 		this.LOGDIR = null;
 		this.GPSD = null;
+		this.GPSNMEA = null;
+		this.WAYPOINT = null;
 	}
 
 	setAGWPORT(AGWPORT) {
@@ -789,6 +791,20 @@ class Direwolf {
 		return this.GPSD;
 	}
 
+	setGPSNMEA(GPSNMEA) {
+		this.GPSNMEA = GPSNMEA;
+	}
+	getGPSNMEA(){
+		return this.GPSNMEA;
+	}
+
+	setWAYPOINT(WAYPOINT) {
+		this.WAYPOINT = WAYPOINT;
+	}
+	getWAYPOINT(){
+		return this.WAYPOINT;
+	}
+
 	addAdevice(adevice){
 		this.adevices.push(adevice);
 	}
@@ -845,6 +861,8 @@ class Direwolf {
 		if (isSet(this.KISSPORT)) additional += "KISSPORT " +  this.KISSPORT + "\n";
 		if (isSet(this.LOGDIR)) additional += "LOGDIR " + this.LOGDIR + "\n" ;
 		if (isSet(this.GPSD)) additional += "GPSD " + this.GPSD + "\n";
+		if (isSet(this.GPSNMEA)) additional += "GPSNMEA " + this.GPSNMEA + "\n";
+		if (isSet(this.WAYPOINT)) additional += "WAYPOINT " + this.WAYPOINT + "\n";
 		additional += "# IGate Settings\n";
 		if (isSet(this.IGSERVER)) additional += "IGSERVER " + this.IGSERVER + "\n";
 		if (isSet(this.IGLOGIN)) additional += "IGLOGIN " + this.IGLOGIN + "\n" ;
@@ -1063,6 +1081,12 @@ class Direwolf {
 				case "GPSD" :
 					this.setGPSD(tokens[1]);
 					break;
+				case "GPSDNMEA" :
+					this.setGPSNMEA(tokens[1]);
+					break;
+				case "WAYPOINT" :
+					this.setWAYPOINT(tokens.slice(1,tokens.length).join(' '));
+					break;
 				case "LOGDIR" :
 					this.setLOGDIR(tokens[1]);
 					break;
@@ -1209,11 +1233,15 @@ class Modem {
 	}
 
 	toString() {
-		var str = "MODEM " + this.SPEED;
-		for (var i=0; i < this.options.length ; i++) {
-			str += " " + this.options[i];
+		if (isSet(this.SPEED)) {
+			let str = "MODEM " + this.SPEED;
+			for (var i=0; i < this.options.length ; i++) {
+				str += " " + this.options[i];
+			}
+			return str;
+		} else {
+			return "";
 		}
-		return str;
 	}
 
 	asJSON() {

@@ -47,3 +47,7 @@ fieldset.channel input {
   text-align: right;
   padding-right: 1 em;
 }
+
+.help {
+  text-decoration: underline;
+}

@@ -8,7 +8,9 @@
 	<br/>
 	<input style="clear:both" alt="Direwolf" type="button" onclick='updateDirewolf()' value="Update"/>
 	<br/>
+	<div id="dialog" title="Dialog Title">I'm a dialog</div>
 </div>
+<script src="helpText.js"></script>
 <script>
     var full = location.protocol + '//' + location.hostname + (location.port ? ':' + location.port : '');
 
@@ -54,6 +56,15 @@
 	var html = template(direwolf);
 	$('.dw').replaceWith(html);
 	location.hash = "#" + loc;
+    }
+
+    $( "#dialog" ).dialog({ autoOpen: false });
+
+    function termhelp(data) {
+                console.log(data);
+                $( "#dialog" ).dialog("option","title",data);
+                $( "#dialog" ).html(helpText[data]);
+                $( "#dialog" ).dialog( "open" );
     }
 </script>
 

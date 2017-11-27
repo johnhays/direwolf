@@ -13,7 +13,6 @@ var port = normalizePort(process.env.PORT || '8040');
 app.set('port', port);
 
 var raw = "";
-if (fs.existsSync(configfile)) raw = fs.readFileSync('direwolf.conf');
 
 var server = http.createServer(app);
 var io = require('socket.io')(server);
@@ -24,6 +23,7 @@ server.on('listening', onListening);
 
 
 io.on('connection', function (socket) {
+	if (fs.existsSync(configfile)) raw = fs.readFileSync('direwolf.conf');
 	console.log('socket.io connection established');
 	socket.emit('direwolf',raw.toString());
 	socket.emit('radios', {radios:radios});

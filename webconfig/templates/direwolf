@@ -15,7 +15,7 @@
 				<h3 id="{{name}}">Soundcard Settings {{name}}</h3>
 				<div class="div-table">
 					<div class="div-table-row">
-						<div class="div-table-col">Name</div>
+						<div onclick="termhelp('ADEVICE')" class="help div-table-col">Name</div>
 						<div class="div-table-col">
 							<select
 								onchange="direwolf.adevices[{{@index}}].setAdeviceName(this.value)">
@@ -39,7 +39,7 @@
 						</div>
 					</div>
 					<div class="div-table-row">
-						<div class="div-table-col">Input</div>
+						<div onclick="termhelp('ADEVICE')" class="help div-table-col">Input</div>
 						<div class="div-table-col">
 							<input type="text"
 								onchange="direwolf.adevices[{{@index}}].setInput(this.value)"
@@ -47,7 +47,7 @@
 						</div>
 					</div>
 					<div class="div-table-row">
-						<div class="div-table-col">Output</div>
+						<div onclick="termhelp('ADEVICE')" class="help div-table-col">Output</div>
 						<div class="div-table-col">
 							<input type="text"
 								onchange="direwolf.adevices[{{@index}}].setOutput(this.value)"
@@ -55,7 +55,7 @@
 						</div>
 					</div>
 					<div class="div-table-row">
-						<div class="div-table-col">Sample Rate</div>
+						<div onclick="termhelp('ARATE')" class="help div-table-col">Sample Rate</div>
 						<div class="div-table-col">
 							<input type="number"
 								onchange="direwolf.adevices[{{@index}}].setARATE(this.value)"
@@ -63,7 +63,7 @@
 						</div>
 					</div>
 					<div class="div-table-row">
-						<div class="div-table-col">Audio Channels</div>
+						<div onclick="termhelp('ACHANNELS')" class="help div-table-col">Audio Channels</div>
 						<div class="div-table-col">
 							<select
 								onchange="direwolf.adevices[{{@index}}].setACHANNELS(this.value)">
@@ -80,7 +80,7 @@
 					<h4>Channel {{CHANNEL}}</h4>
 					<div class="div-table">
 						<div class="div-table-row">
-							<div class="div-table-col">Channel</div>
+							<div onclick="termhelp('CHANNEL')" class="help div-table-col">Channel</div>
 							<div class="div-table-col">
 								<input type="number" min=0 max=5
 									onchange="direwolf.adevices[{{@../index}}].channels[{{@index}}].setChannel(this.value)"
@@ -88,10 +88,13 @@
 							</div>
 						</div>
 						<div class="div-table-row">
-							<div class="div-table-col">Modem Speed</div>
+							<div onclick="termhelp('MODEM')" class="help div-table-col">Modem Speed</div>
 							<div class="div-table-col">
 								<select
 									onchange="direwolf.adevices[{{@../index}}].channels[{{@index}}].MODEM.setSpeed(this.value)">
+									<option value="1200" {{#ifEquals
+										MODEM.SPEED ""}} selected="selected"{{/ifEquals}}>Default (1200 AFSK)
+										</option>
 									<option value="300" {{#ifEquals
 										MODEM.SPEED "300"}} selected="selected"{{/ifEquals}}>300
 										(HF)</option>
@@ -118,11 +121,11 @@
 						</div>
 						<div class="div-table-row">
 							<div class="div-table-col"></div>
-							<div class="div-table-col">Modem Options</div>
+							<div onclick="termhelp('MODEM')" class="help div-table-col">Modem Options</div>
 						</div>
 						{{#each MODEM.options}}
 						<div class="div-table-row">
-							<div class="div-table-col text-right">Value</div>
+							<div onclick="termhelp('MODEM')" class="help div-table-col text-right">Value</div>
 							<div class="div-table-col">
 								<input class="div-table-col" type="text" value="{{this}}"
 									onchange="direwolf.adevices[{{@../../index}}].channels[{{@../index}}].MODEM.setOption({{@index}},this.value)" />
@@ -130,12 +133,12 @@
 						</div>
 						{{/each}}
 						<div class="div-table-row">
-							<div class="div-table-col text-right">New Option</div>
+							<div onclick="termhelp('MODEM')" class="help div-table-col text-right">New Option</div>
 							<input class="div-table-col" type="text"
 								onchange="direwolf.adevices[{{@../../index}}].channels[{{@../index}}].MODEM.addOption(this.value)" />
 						</div>
 						<div class="div-table-row">
-							<div class="div-table-col">Call-SSID</div>
+							<div onclick="termhelp('MYCALL')" class="help div-table-col">MYCALL</div>
 							<div class="div-table-col">
 								<input type="text"
 									onchange="direwolf.adevices[{{@../index}}].channels[{{@index}}].setMycall(this.value)"
@@ -143,7 +146,7 @@
 							</div>
 						</div>
 						<div class="div-table-row">
-							<div class="div-table-col">PTT</div>
+							<div onclick="termhelp(this.innerHTML)" class="help div-table-col">PTT</div>
 							<div class="div-table-col">
 								<input type="text"
 									onchange="direwolf.adevices[{{@../index}}].channels[{{@index}}].setPTT(this.value)"
@@ -151,7 +154,7 @@
 							</div>
 						</div>
 						<div class="div-table-row">
-							<div class="div-table-col">DCD</div>
+							<div onclick="termhelp(this.innerHTML)" class="help div-table-col">DCD</div>
 							<div class="div-table-col">
 								<input type="text"
 									onchange="direwolf.adevices[{{@../index}}].channels[{{@index}}].setDCD(this.value)"
@@ -159,7 +162,7 @@
 							</div>
 						</div>
 						<div class="div-table-row">
-							<div class="div-table-col">CON</div>
+							<div onclick="termhelp(this.innerHTML)" class="help div-table-col">CON</div>
 							<div class="div-table-col">
 								<input type="text"
 									onchange="direwolf.adevices[{{@../index}}].channels[{{@index}}].setCON(this.value)"
@@ -167,7 +170,7 @@
 							</div>
 						</div>
 						<div class="div-table-row">
-							<div class="div-table-col">TXINH</div>
+							<div onclick="termhelp(this.innerHTML)" class="help div-table-col">TXINH</div>
 							<div class="div-table-col">
 								<input type="text"
 									onchange="direwolf.adevices[{{@../index}}].channels[{{@index}}].setTXINH(this.value)"
@@ -175,7 +178,7 @@
 							</div>
 						</div>
 						<div class="div-table-row">
-							<div class="div-table-col">DWAIT</div>
+							<div onclick="termhelp(this.innerHTML)" class="help div-table-col">DWAIT</div>
 							<div class="div-table-col">
 								<input type="text"
 									onchange="direwolf.adevices[{{@../index}}].channels[{{@index}}].setDWAIT(this.value)"
@@ -183,7 +186,7 @@
 							</div>
 						</div>
 						<div class="div-table-row">
-							<div class="div-table-col">SLOTTIME</div>
+							<div onclick="termhelp(this.innerHTML)" class="help div-table-col">SLOTTIME</div>
 							<div class="div-table-col">
 								<input type="text"
 									onchange="direwolf.adevices[{{@../index}}].channels[{{@index}}].setSLOTTIME(this.value)"
@@ -191,7 +194,7 @@
 							</div>
 						</div>
 						<div class="div-table-row">
-							<div class="div-table-col">PERSIST</div>
+							<div onclick="termhelp(this.innerHTML)" class="help div-table-col">PERSIST</div>
 							<div class="div-table-col">
 								<input type="text"
 									onchange="direwolf.adevices[{{@../index}}].channels[{{@index}}].setPERSIST(this.value)"
@@ -199,7 +202,7 @@
 							</div>
 						</div>
 						<div class="div-table-row">
-							<div class="div-table-col">TXDELAY</div>
+							<div onclick="termhelp(this.innerHTML)" class="help div-table-col">TXDELAY</div>
 							<div class="div-table-col">
 								<input type="text"
 									onchange="direwolf.adevices[{{@../index}}].channels[{{@index}}].setTXDELAY(this.value)"
@@ -207,7 +210,7 @@
 							</div>
 						</div>
 						<div class="div-table-row">
-							<div class="div-table-col">TXTAIL</div>
+							<div onclick="termhelp(this.innerHTML)" class="help div-table-col">TXTAIL</div>
 							<div class="div-table-col">
 								<input type="text"
 									onchange="direwolf.adevices[{{@../index}}].channels[{{@index}}].setTXTAIL(this.value)"
@@ -215,7 +218,7 @@
 							</div>
 						</div>
 						<div class="div-table-row">
-							<div class="div-table-col">FULLDUP</div>
+							<div onclick="termhelp(this.innerHTML)" class="help div-table-col">FULLDUP</div>
 							<div class="div-table-col">
 								<select onchange="direwolf.adevices[{{@../index}}].channels[{{@index}}].setFULLDUP(this.value)">
 									<option value="0" {{#ifEquals "0" FULLDUP}}selected="selected"{{/ifEquals}}>Off</option>
@@ -224,18 +227,18 @@
 							</div>
 						</div>
 						<div class="div-table-row">
-							<div class="div-table-col">FRACK</div>
+							<div onclick="termhelp(this.innerHTML)" class="help div-table-col">FRACK</div>
 							<input type="text"
 								onchange="direwolf.adevices[{{@../index}}].channels[{{@index}}].setFRACK(this.value)"
 								value="{{FRACK}}" />
 						</div>
 					</div>
 					<div class="div-table-row">
-						<div class="div-table-col">FIX_BITS</div>
+						<div onclick="termhelp(this.innerHTML)" class="help div-table-col">FIX_BITS</div>
 						<div class="div-table-col">
 							<div class="div-table">
 								<div class="div-table-row">
-									<div class="div-table-col">EFFORT</div>
+									<div onclick="termhelp(this.innerHTML)" class="help div-table-col">EFFORT</div>
 									<div class="div-table-col">
 										<select
 											onchange="direwolf.adevices[{{@../index}}].channels[{{@index}}].FIX_BITS.setEFFORT(this.value)">
@@ -250,7 +253,7 @@
 												2 bits</option>
 										</select>
 									</div>
-									<div class="div-table-col">SANITY</div>
+									<div onclick="termhelp(this.innerHTML)" class="help div-table-col">SANITY</div>
 									<div class="div-table-col">
 										<select
 											onchange="direwolf.adevices[{{@../index}}].channels[{{@index}}].FIX_BITS.setSANITY(this.value)">
@@ -262,7 +265,7 @@
 												{{#ifEquals "NONE" FIX_BITS.SANITY}}selected="selected"{{/ifEquals}}>NONE</option>
 										</select>
 									</div>
-									<div class="div-table-col">PASSALL</div>
+									<div onclick="termhelp(this.innerHTML)" class="help div-table-col">PASSALL</div>
 									<div class="div-table-col">
 										<select
 											onchange="direwolf.adevices[{{@../index}}].channels[{{@index}}].FIX_BITS.setPASSALL(this.value);">											
@@ -275,7 +278,7 @@
 						</div>
 					</div>
 					<div class="div-table-row">
-						<div class="div-table-col">RETRY</div>
+						<div onclick="termhelp(this.innerHTML)" class="help div-table-col">RETRY</div>
 						<div class="div-table-col">
 							<input type="text"
 								onchange="direwolf.adevices[{{@../index}}].channels[{{@index}}].setRETRY(this.value)"
@@ -283,7 +286,7 @@
 						</div>
 					</div>
 					<div class="div-table-row">
-						<div class="div-table-col">PACLEN</div>
+						<div onclick="termhelp(this.innerHTML)" class="help div-table-col">PACLEN</div>
 						<div class="div-table-col">
 							<input type="text"
 								onchange="direwolf.adevices[{{@../index}}].channels[{{@index}}].setPACLEN(this.value)"
@@ -291,7 +294,7 @@
 						</div>
 					</div>
 					<div class="div-table-row">
-						<div class="div-table-col">MAXFRAME</div>
+						<div onclick="termhelp(this.innerHTML)" class="help div-table-col">MAXFRAME</div>
 						<div class="div-table-col">
 							<input type="text"
 								onchange="direwolf.adevices[{{@../index}}].channels[{{@index}}].setMAXFRAME(this.value)"
@@ -299,7 +302,7 @@
 						</div>
 					</div>
 					<div class="div-table-row">
-						<div class="div-table-col">EMAXFRAME</div>
+						<div onclick="termhelp(this.innerHTML)" class="help div-table-col">EMAXFRAME</div>
 						<div class="div-table-col">
 							<input type="text"
 								onchange="direwolf.adevices[{{@../index}}].channels[{{@index}}].setEMAXFRAME(this.value)"
@@ -307,7 +310,7 @@
 						</div>
 					</div>
 					<div class="div-table-row">
-						<div class="div-table-col">MAXV22</div>
+						<div onclick="termhelp(this.innerHTML)" class="help div-table-col">MAXV22</div>
 						<div class="div-table-col">
 							<input type="text"
 								onchange="direwolf.adevices[{{@../index}}].channels[{{@index}}].setMAXV22(this.value)"
@@ -324,66 +327,87 @@
 	<div id="tabs-2">
 		<div class="div-table">
 			<div class="div-table-row">
-				<div class="div-table-col">AGWPORT</div>
+				<div onclick="termhelp(this.innerHTML)" class="help div-table-col">AGWPORT</div>
 				<div class="div-table-col">
 					<input type="number" onchange="direwolf.setAGWPORT(this.value)"
 						value="{{AGWPORT}}" />
 				</div>
 			</div>
 			<div class="div-table-row">
-				<div class="div-table-col">KISSPORT</div>
+				<div onclick="termhelp(this.innerHTML)" class="help div-table-col">KISSPORT</div>
 				<div class="div-table-col">
 					<input type="number" onchange="direwolf.setKISSPORT(this.value)"
 						value="{{KISSPORT}}" />
 				</div>
 			</div>
 			<div class="div-table-row">
-				<div class="div-table-col">DEDUPE</div>
+				<div onclick="termhelp(this.innerHTML)" class="help div-table-col">DEDUPE</div>
 				<div class="div-table-col">
 					<input type="number" onchange="direwolf.setDEDUPE(this.value)"
 						value="{{DEDUPE}}" />
 				</div>
 			</div>
 			<div class="div-table-row">
-				<div class="div-table-col">IGSERVER</div>
+				<div onclick="termhelp(this.innerHTML)" class="help div-table-col">IGSERVER</div>
 				<div class="div-table-col">
 					<input type="text" onchange="direwolf.setIGSERVER(this.value)"
 						value="{{IGSERVER}}" />
 				</div>
 			</div>
 			<div class="div-table-row">
-				<div class="div-table-col">IGLOGIN</div>
+				<div onclick="termhelp(this.innerHTML)" class="help div-table-col">IGLOGIN</div>
 				<div class="div-table-col">
 					<input type="text" onchange="direwolf.setIGLOGIN(this.value)"
 						value="{{IGLOGIN}}" />
 				</div>
 			</div>
 			<div class="div-table-row">
-				<div class="div-table-col">IGTXLIMIT</div>
+				<div onclick="termhelp(this.innerHTML)" class="help div-table-col">IGTXLIMIT</div>
 				<div class="div-table-col">
 					<input type="text" onchange="direwolf.setIGTXLIMIT(this.value)"
 						value="{{IGTXLIMIT}}" />
 				</div>
 			</div>
 			<div class="div-table-row">
-				<div class="div-table-col">IGTXVIA</div>
+				<div onclick="termhelp(this.innerHTML)" class="help div-table-col">IGTXVIA</div>
 				<div class="div-table-col">
 					<input type="text" onchange="direwolf.setIGTXVIA(this.value)"
 						value="{{IGTXVIA}}" />
 				</div>
 			</div>
 			<div class="div-table-row">
-				<div class="div-table-col">IGFILTER</div>
+				<div onclick="termhelp(this.innerHTML)" class="help div-table-col">IGFILTER</div>
 				<div class="div-table-col">
 					<input type="text" onchange="direwolf.setIGFILTER(this.value)"
 						value="{{IGFILTER}}" />
 				</div>
 			</div>
 			<div class="div-table-row">
-				<div class="div-table-col">LOGDIR</div>
+				<div onclick="termhelp(this.innerHTML)" class="help div-table-col">LOGDIR</div>
 				<div class="div-table-col">
 					<input type="text" onchange="direwolf.setLOGDIR(this.value)"
 						value="{{LOGDIR}}" />
+				</div>
+			</div>
+			<div class="div-table-row">
+				<div onclick="termhelp(this.innerHTML)" class="help div-table-col">GPSD</div>
+				<div class="div-table-col">
+					<input type="text" onchange="direwolf.setGPSD(this.value)"
+						value="{{GPSD}}" />
+				</div>
+			</div>
+			<div class="div-table-row">
+				<div onclick="termhelp(this.innerHTML)" class="help div-table-col">GPSNMEA</div>
+				<div class="div-table-col">
+					<input type="text" onchange="direwolf.setGPSNMEA(this.value)"
+						value="{{GPSNMEA}}" />
+				</div>
+			</div>
+			<div class="div-table-row">
+				<div onclick="termhelp(this.innerHTML)" class="help div-table-col">WAYPOINT</div>
+				<div class="div-table-col">
+					<input type="text" onchange="direwolf.setWAYPOINT(this.value)"
+						value="{{WAYPOINT}}" />
 				</div>
 			</div>
 		</div>
@@ -412,9 +436,9 @@
 			<div class="div-table">
 				{{#each this}}
 				<div class="div-table-row">
-					<div class="div-table-col">{{@key}}</div>
+					<div onclick="termhelp(this.innerHTML)" class="help div-table-col">{{@key}}</div>
 					<div class="div-table-col">
-						<input type="text" value="{{@this}}">
+						<input onchange="direwolf.beacons[{{@index}}].set{{@key}}(this.value)" type="text" value="{{@this}}">
 					</div>
 				</div>
 				{{/each}}
@@ -432,9 +456,9 @@
 			<div class="div-table">
 				{{#each this}}
 				<div class="div-table-row">
-					<div class="div-table-col">{{@key}}</div>
+					<div onclick="termhelp(this.innerHTML)" class="help div-table-col">{{@key}}</div>
 					<div class="div-table-col">
-						<input type="text" value="{{@this}}">
+                                                <input onchange="direwolf.digipeaters[{{@index}}].set{{@key}}(this.value)" type="text" value="{{@this}}">
 					</div>
 				</div>
 				{{/each}}
@@ -452,9 +476,9 @@
 			<div class="div-table">
 				{{#each this}}
 				<div class="div-table-row">
-					<div class="div-table-col">{{@key}}</div>
+					<div onclick="termhelp(this.innerHTML)" class="help div-table-col">{{@key}}</div>
 					<div class="div-table-col">
-						<input type="text" value="{{@this}}">
+                                                <input onchange="direwolf.filters[{{@index}}].set{{@key}}(this.value)" type="text" value="{{@this}}">
 					</div>
 				</div>
 				{{/each}}
