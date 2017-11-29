@@ -8,10 +8,16 @@
                 <li><a href="#tabs-6">Contents</a></li>
         </ul>
 	<div id="tabs-1">
+			<div style="clear:both">
 			{{#each adevices}}
-				<a href="#{{name}}">{{name}}</a><br/>
+				<button type="button" onclick="window.location.href='#{{name}}'">{{name}}</button>
 			{{/each}}
+			{{#lt adevices.length 3}}
+			<button type="button" onclick="appendAdevice();reloadDirewolf('tabs-1')">New ADEVICE</button>
+			{{/lt}}
+			</div>
 			{{#each adevices}}
+				<hr/>
 				<h3 id="{{name}}">Soundcard Settings {{name}}</h3>
 				<div class="div-table">
 					<div class="div-table-row">
@@ -76,7 +82,7 @@
 					</div>
 				</div>
 				{{#each channels}}
-				<div style="padding-left: 1em;">
+				<div style="padding: 1em;border: 1px solid red;">
 					<h4>Channel {{CHANNEL}}</h4>
 					<div class="div-table">
 						<div class="div-table-row">
@@ -317,8 +323,17 @@
 								value="{{MAXV22}}" />
 						</div>
 					</div>
+					<div style="clear:both">
+						<button type="button" onclick="direwolf.adevices[{{@../index}}].setACHANNELS(direwolf.adevices[{{@../index}}].getACHANNELS() - 1);direwolf.adevices[{{@../index}}].channels.splice({{@index}},1);reloadDirewolf('tabs-1')">Delete Channel {{CHANNEL}}</button>
+					</div>
 				</div>
 				{{/each}}
+				<div style="clear:both">
+					<button type="button" onclick="direwolf.adevices.splice({{@index}},1);reloadDirewolf('tabs-1')">Delete {{name}}</button>
+					{{#lt channels.length 2}}
+					<button type="button" onclick="direwolf.adevices[{{@index}}].setACHANNELS(direwolf.adevices[{{@index}}].getACHANNELS() + 1);direwolf.adevices[{{@index}}].addChannel(new Channel());reloadDirewolf('tabs-1')">Add Channel</button>
+					{{/lt}}
+				</div>
 			{{/each}}
 	</div>
 	<!-- tabs-1 -->
@@ -451,6 +466,10 @@
 	</div>
 
 	<div id="tabs-4">
+		<div style="clear:both">
+			<button type="button" onclick="direwolf.addDigipeater(new Digipeater());reloadDirewolf('tabs-4')">New DIGIPEATER</button>
+			<button type="button" onclick="direwolf.addDigipeater(new Cdigipeater());reloadDirewolf('tabs-4')">New CDIGIPEATER</button>
+		</div>
 		{{#each digipeaters}}
 			<h3>{{@index}} - {{toUpperCase this.constructor.name}}</h3>
 			<div class="div-table">
@@ -471,6 +490,10 @@
 	</div>
 
 	<div id="tabs-5">
+		<div style="clear:both">
+			<button type="button" onclick="direwolf.addFilter(new Filter());reloadDirewolf('tabs-5')">New FILTER</button>
+			<button type="button" onclick="direwolf.addFilter(new Cfilter());reloadDirewolf('tabs-5')">New CFILTER</button>
+		</div>
 		{{#each filters}}
 			<h3>{{@index}} - {{toUpperCase this.constructor.name}}</h3>
 			<div class="div-table">

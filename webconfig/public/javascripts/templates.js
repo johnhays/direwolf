@@ -3,28 +3,30 @@
 templates['direwolf'] = template({"1":function(container,depth0,helpers,partials,data) {
     var helper, alias1=depth0 != null ? depth0 : (container.nullContext || {}), alias2=helpers.helperMissing, alias3="function", alias4=container.escapeExpression;
 
-  return "				<a href=\"#"
+  return "				<button type=\"button\" onclick=\"window.location.href='#"
     + alias4(((helper = (helper = helpers.name || (depth0 != null ? depth0.name : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"name","hash":{},"data":data}) : helper)))
-    + "\">"
+    + "'\">"
     + alias4(((helper = (helper = helpers.name || (depth0 != null ? depth0.name : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"name","hash":{},"data":data}) : helper)))
-    + "</a><br/>\n";
-},"3":function(container,depth0,helpers,partials,data,blockParams,depths) {
+    + "</button>\n";
+},"3":function(container,depth0,helpers,partials,data) {
+    return "			<button type=\"button\" onclick=\"appendAdevice();reloadDirewolf('tabs-1')\">New ADEVICE</button>\n";
+},"5":function(container,depth0,helpers,partials,data,blockParams,depths) {
     var stack1, helper, alias1=depth0 != null ? depth0 : (container.nullContext || {}), alias2=helpers.helperMissing, alias3="function", alias4=container.escapeExpression;
 
-  return "				<h3 id=\""
+  return "				<hr/>\n				<h3 id=\""
     + alias4(((helper = (helper = helpers.name || (depth0 != null ? depth0.name : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"name","hash":{},"data":data}) : helper)))
     + "\">Soundcard Settings "
     + alias4(((helper = (helper = helpers.name || (depth0 != null ? depth0.name : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"name","hash":{},"data":data}) : helper)))
     + "</h3>\n				<div class=\"div-table\">\n					<div class=\"div-table-row\">\n						<div onclick=\"termhelp('ADEVICE')\" class=\"help div-table-col\">Name</div>\n						<div class=\"div-table-col\">\n							<select\n								onchange=\"direwolf.adevices["
     + alias4(((helper = (helper = helpers.index || (data && data.index)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"index","hash":{},"data":data}) : helper)))
     + "].setAdeviceName(this.value)\">\n								<option title=\"Use ADEVICE0 Instead\" value=\"ADEVICE\" "
-    + ((stack1 = (helpers.ifEquals || (depth0 && depth0.ifEquals) || alias2).call(alias1,(depth0 != null ? depth0.name : depth0),"ADEVICE",{"name":"ifEquals","hash":{},"fn":container.program(4, data, 0, blockParams, depths),"inverse":container.noop,"data":data})) != null ? stack1 : "")
+    + ((stack1 = (helpers.ifEquals || (depth0 && depth0.ifEquals) || alias2).call(alias1,(depth0 != null ? depth0.name : depth0),"ADEVICE",{"name":"ifEquals","hash":{},"fn":container.program(6, data, 0, blockParams, depths),"inverse":container.noop,"data":data})) != null ? stack1 : "")
     + "\n					>ADEVICE</option>\n								<option value=\"ADEVICE0\" "
-    + ((stack1 = (helpers.ifEquals || (depth0 && depth0.ifEquals) || alias2).call(alias1,(depth0 != null ? depth0.name : depth0),"ADEVICE0",{"name":"ifEquals","hash":{},"fn":container.program(4, data, 0, blockParams, depths),"inverse":container.noop,"data":data})) != null ? stack1 : "")
+    + ((stack1 = (helpers.ifEquals || (depth0 && depth0.ifEquals) || alias2).call(alias1,(depth0 != null ? depth0.name : depth0),"ADEVICE0",{"name":"ifEquals","hash":{},"fn":container.program(6, data, 0, blockParams, depths),"inverse":container.noop,"data":data})) != null ? stack1 : "")
     + "\n					>ADEVICE0</option>\n								<option value=\"ADEVICE1\" "
-    + ((stack1 = (helpers.ifEquals || (depth0 && depth0.ifEquals) || alias2).call(alias1,(depth0 != null ? depth0.name : depth0),"ADEVICE1",{"name":"ifEquals","hash":{},"fn":container.program(4, data, 0, blockParams, depths),"inverse":container.noop,"data":data})) != null ? stack1 : "")
+    + ((stack1 = (helpers.ifEquals || (depth0 && depth0.ifEquals) || alias2).call(alias1,(depth0 != null ? depth0.name : depth0),"ADEVICE1",{"name":"ifEquals","hash":{},"fn":container.program(6, data, 0, blockParams, depths),"inverse":container.noop,"data":data})) != null ? stack1 : "")
     + "\n					>ADEVICE1</option>\n								<option value=\"ADEVICE2\" "
-    + ((stack1 = (helpers.ifEquals || (depth0 && depth0.ifEquals) || alias2).call(alias1,(depth0 != null ? depth0.name : depth0),"ADEVICE2",{"name":"ifEquals","hash":{},"fn":container.program(4, data, 0, blockParams, depths),"inverse":container.noop,"data":data})) != null ? stack1 : "")
+    + ((stack1 = (helpers.ifEquals || (depth0 && depth0.ifEquals) || alias2).call(alias1,(depth0 != null ? depth0.name : depth0),"ADEVICE2",{"name":"ifEquals","hash":{},"fn":container.program(6, data, 0, blockParams, depths),"inverse":container.noop,"data":data})) != null ? stack1 : "")
     + "\n					>ADEVICE2</option>\n								<select>\n						</div>\n					</div>\n					<div class=\"div-table-row\">\n						<div onclick=\"termhelp('ADEVICE')\" class=\"help div-table-col\">Input</div>\n						<div class=\"div-table-col\">\n							<input type=\"text\"\n								onchange=\"direwolf.adevices["
     + alias4(((helper = (helper = helpers.index || (data && data.index)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"index","hash":{},"data":data}) : helper)))
     + "].setInput(this.value)\"\n								value=\""
@@ -40,19 +42,26 @@ templates['direwolf'] = template({"1":function(container,depth0,helpers,partials
     + "\" />\n						</div>\n					</div>\n					<div class=\"div-table-row\">\n						<div onclick=\"termhelp('ACHANNELS')\" class=\"help div-table-col\">Audio Channels</div>\n						<div class=\"div-table-col\">\n							<select\n								onchange=\"direwolf.adevices["
     + alias4(((helper = (helper = helpers.index || (data && data.index)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"index","hash":{},"data":data}) : helper)))
     + "].setACHANNELS(this.value)\">\n								<option value=\"1\" "
-    + ((stack1 = (helpers.ifEquals || (depth0 && depth0.ifEquals) || alias2).call(alias1,(depth0 != null ? depth0.ACHANNELS : depth0),"1",{"name":"ifEquals","hash":{},"fn":container.program(6, data, 0, blockParams, depths),"inverse":container.noop,"data":data})) != null ? stack1 : "")
+    + ((stack1 = (helpers.ifEquals || (depth0 && depth0.ifEquals) || alias2).call(alias1,(depth0 != null ? depth0.ACHANNELS : depth0),"1",{"name":"ifEquals","hash":{},"fn":container.program(8, data, 0, blockParams, depths),"inverse":container.noop,"data":data})) != null ? stack1 : "")
     + ">Mono</option>\n								<option value=\"2\" "
-    + ((stack1 = (helpers.ifEquals || (depth0 && depth0.ifEquals) || alias2).call(alias1,(depth0 != null ? depth0.ACHANNELS : depth0),"2",{"name":"ifEquals","hash":{},"fn":container.program(6, data, 0, blockParams, depths),"inverse":container.noop,"data":data})) != null ? stack1 : "")
+    + ((stack1 = (helpers.ifEquals || (depth0 && depth0.ifEquals) || alias2).call(alias1,(depth0 != null ? depth0.ACHANNELS : depth0),"2",{"name":"ifEquals","hash":{},"fn":container.program(8, data, 0, blockParams, depths),"inverse":container.noop,"data":data})) != null ? stack1 : "")
     + ">Stereo</option>\n							</select>\n						</div>\n					</div>\n				</div>\n"
-    + ((stack1 = helpers.each.call(alias1,(depth0 != null ? depth0.channels : depth0),{"name":"each","hash":{},"fn":container.program(8, data, 0, blockParams, depths),"inverse":container.noop,"data":data})) != null ? stack1 : "");
-},"4":function(container,depth0,helpers,partials,data) {
-    return "\n							 selected=\"selected\"";
+    + ((stack1 = helpers.each.call(alias1,(depth0 != null ? depth0.channels : depth0),{"name":"each","hash":{},"fn":container.program(10, data, 0, blockParams, depths),"inverse":container.noop,"data":data})) != null ? stack1 : "")
+    + "				<div style=\"clear:both\">\n					<button type=\"button\" onclick=\"direwolf.adevices.splice("
+    + alias4(((helper = (helper = helpers.index || (data && data.index)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"index","hash":{},"data":data}) : helper)))
+    + ",1);reloadDirewolf('tabs-1')\">Delete "
+    + alias4(((helper = (helper = helpers.name || (depth0 != null ? depth0.name : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"name","hash":{},"data":data}) : helper)))
+    + "</button>\n"
+    + ((stack1 = (helpers.lt || (depth0 && depth0.lt) || alias2).call(alias1,((stack1 = (depth0 != null ? depth0.channels : depth0)) != null ? stack1.length : stack1),2,{"name":"lt","hash":{},"fn":container.program(15, data, 0, blockParams, depths),"inverse":container.noop,"data":data})) != null ? stack1 : "")
+    + "				</div>\n";
 },"6":function(container,depth0,helpers,partials,data) {
+    return "\n							 selected=\"selected\"";
+},"8":function(container,depth0,helpers,partials,data) {
     return " selected=\"selected\"";
-},"8":function(container,depth0,helpers,partials,data,blockParams,depths) {
+},"10":function(container,depth0,helpers,partials,data,blockParams,depths) {
     var stack1, helper, alias1=depth0 != null ? depth0 : (container.nullContext || {}), alias2=helpers.helperMissing, alias3="function", alias4=container.escapeExpression, alias5=container.lambda;
 
-  return "				<div style=\"padding-left: 1em;\">\n					<h4>Channel "
+  return "				<div style=\"padding: 1em;border: 1px solid red;\">\n					<h4>Channel "
     + alias4(((helper = (helper = helpers.CHANNEL || (depth0 != null ? depth0.CHANNEL : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"CHANNEL","hash":{},"data":data}) : helper)))
     + "</h4>\n					<div class=\"div-table\">\n						<div class=\"div-table-row\">\n							<div onclick=\"termhelp('CHANNEL')\" class=\"help div-table-col\">Channel</div>\n							<div class=\"div-table-col\">\n								<input type=\"number\" min=0 max=5\n									onchange=\"direwolf.adevices["
     + alias4(alias5((container.data(data, 1) && container.data(data, 1).index), depth0))
@@ -65,23 +74,23 @@ templates['direwolf'] = template({"1":function(container,depth0,helpers,partials
     + "].channels["
     + alias4(((helper = (helper = helpers.index || (data && data.index)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"index","hash":{},"data":data}) : helper)))
     + "].MODEM.setSpeed(this.value)\">\n									<option value=\"1200\" "
-    + ((stack1 = (helpers.ifEquals || (depth0 && depth0.ifEquals) || alias2).call(alias1,((stack1 = (depth0 != null ? depth0.MODEM : depth0)) != null ? stack1.SPEED : stack1),"",{"name":"ifEquals","hash":{},"fn":container.program(6, data, 0, blockParams, depths),"inverse":container.noop,"data":data})) != null ? stack1 : "")
+    + ((stack1 = (helpers.ifEquals || (depth0 && depth0.ifEquals) || alias2).call(alias1,((stack1 = (depth0 != null ? depth0.MODEM : depth0)) != null ? stack1.SPEED : stack1),"",{"name":"ifEquals","hash":{},"fn":container.program(8, data, 0, blockParams, depths),"inverse":container.noop,"data":data})) != null ? stack1 : "")
     + ">Default (1200 AFSK)\n										</option>\n									<option value=\"300\" "
-    + ((stack1 = (helpers.ifEquals || (depth0 && depth0.ifEquals) || alias2).call(alias1,((stack1 = (depth0 != null ? depth0.MODEM : depth0)) != null ? stack1.SPEED : stack1),"300",{"name":"ifEquals","hash":{},"fn":container.program(6, data, 0, blockParams, depths),"inverse":container.noop,"data":data})) != null ? stack1 : "")
+    + ((stack1 = (helpers.ifEquals || (depth0 && depth0.ifEquals) || alias2).call(alias1,((stack1 = (depth0 != null ? depth0.MODEM : depth0)) != null ? stack1.SPEED : stack1),"300",{"name":"ifEquals","hash":{},"fn":container.program(8, data, 0, blockParams, depths),"inverse":container.noop,"data":data})) != null ? stack1 : "")
     + ">300\n										(HF)</option>\n									<option value=\"1200\" "
-    + ((stack1 = (helpers.ifEquals || (depth0 && depth0.ifEquals) || alias2).call(alias1,((stack1 = (depth0 != null ? depth0.MODEM : depth0)) != null ? stack1.SPEED : stack1),"1200",{"name":"ifEquals","hash":{},"fn":container.program(6, data, 0, blockParams, depths),"inverse":container.noop,"data":data})) != null ? stack1 : "")
+    + ((stack1 = (helpers.ifEquals || (depth0 && depth0.ifEquals) || alias2).call(alias1,((stack1 = (depth0 != null ? depth0.MODEM : depth0)) != null ? stack1.SPEED : stack1),"1200",{"name":"ifEquals","hash":{},"fn":container.program(8, data, 0, blockParams, depths),"inverse":container.noop,"data":data})) != null ? stack1 : "")
     + ">1200\n										(AFSK)</option>\n									<option value=\"2400\" "
-    + ((stack1 = (helpers.ifEquals || (depth0 && depth0.ifEquals) || alias2).call(alias1,((stack1 = (depth0 != null ? depth0.MODEM : depth0)) != null ? stack1.SPEED : stack1),"2400",{"name":"ifEquals","hash":{},"fn":container.program(6, data, 0, blockParams, depths),"inverse":container.noop,"data":data})) != null ? stack1 : "")
+    + ((stack1 = (helpers.ifEquals || (depth0 && depth0.ifEquals) || alias2).call(alias1,((stack1 = (depth0 != null ? depth0.MODEM : depth0)) != null ? stack1.SPEED : stack1),"2400",{"name":"ifEquals","hash":{},"fn":container.program(8, data, 0, blockParams, depths),"inverse":container.noop,"data":data})) != null ? stack1 : "")
     + ">2400\n										(PSK)</option>\n									<option value=\"4800\" "
-    + ((stack1 = (helpers.ifEquals || (depth0 && depth0.ifEquals) || alias2).call(alias1,((stack1 = (depth0 != null ? depth0.MODEM : depth0)) != null ? stack1.SPEED : stack1),"4800",{"name":"ifEquals","hash":{},"fn":container.program(6, data, 0, blockParams, depths),"inverse":container.noop,"data":data})) != null ? stack1 : "")
+    + ((stack1 = (helpers.ifEquals || (depth0 && depth0.ifEquals) || alias2).call(alias1,((stack1 = (depth0 != null ? depth0.MODEM : depth0)) != null ? stack1.SPEED : stack1),"4800",{"name":"ifEquals","hash":{},"fn":container.program(8, data, 0, blockParams, depths),"inverse":container.noop,"data":data})) != null ? stack1 : "")
     + ">4800\n										(PSK)</option>\n									<option value=\"9600\" "
-    + ((stack1 = (helpers.ifEquals || (depth0 && depth0.ifEquals) || alias2).call(alias1,((stack1 = (depth0 != null ? depth0.MODEM : depth0)) != null ? stack1.SPEED : stack1),"9600",{"name":"ifEquals","hash":{},"fn":container.program(6, data, 0, blockParams, depths),"inverse":container.noop,"data":data})) != null ? stack1 : "")
+    + ((stack1 = (helpers.ifEquals || (depth0 && depth0.ifEquals) || alias2).call(alias1,((stack1 = (depth0 != null ? depth0.MODEM : depth0)) != null ? stack1.SPEED : stack1),"9600",{"name":"ifEquals","hash":{},"fn":container.program(8, data, 0, blockParams, depths),"inverse":container.noop,"data":data})) != null ? stack1 : "")
     + ">9600\n										(FSK)</option>\n									<option value=\"19200\" "
-    + ((stack1 = (helpers.ifEquals || (depth0 && depth0.ifEquals) || alias2).call(alias1,((stack1 = (depth0 != null ? depth0.MODEM : depth0)) != null ? stack1.SPEED : stack1),"19200",{"name":"ifEquals","hash":{},"fn":container.program(6, data, 0, blockParams, depths),"inverse":container.noop,"data":data})) != null ? stack1 : "")
+    + ((stack1 = (helpers.ifEquals || (depth0 && depth0.ifEquals) || alias2).call(alias1,((stack1 = (depth0 != null ? depth0.MODEM : depth0)) != null ? stack1.SPEED : stack1),"19200",{"name":"ifEquals","hash":{},"fn":container.program(8, data, 0, blockParams, depths),"inverse":container.noop,"data":data})) != null ? stack1 : "")
     + ">19200\n										(FSK)</option>\n									<option value=\"38400\" "
-    + ((stack1 = (helpers.ifEquals || (depth0 && depth0.ifEquals) || alias2).call(alias1,((stack1 = (depth0 != null ? depth0.MODEM : depth0)) != null ? stack1.SPEED : stack1),"38400",{"name":"ifEquals","hash":{},"fn":container.program(6, data, 0, blockParams, depths),"inverse":container.noop,"data":data})) != null ? stack1 : "")
+    + ((stack1 = (helpers.ifEquals || (depth0 && depth0.ifEquals) || alias2).call(alias1,((stack1 = (depth0 != null ? depth0.MODEM : depth0)) != null ? stack1.SPEED : stack1),"38400",{"name":"ifEquals","hash":{},"fn":container.program(8, data, 0, blockParams, depths),"inverse":container.noop,"data":data})) != null ? stack1 : "")
     + ">38400\n										(FSK)</option>\n								</select>\n							</div>\n						</div>\n						<div class=\"div-table-row\">\n							<div class=\"div-table-col\"></div>\n							<div onclick=\"termhelp('MODEM')\" class=\"help div-table-col\">Modem Options</div>\n						</div>\n"
-    + ((stack1 = helpers.each.call(alias1,((stack1 = (depth0 != null ? depth0.MODEM : depth0)) != null ? stack1.options : stack1),{"name":"each","hash":{},"fn":container.program(9, data, 0, blockParams, depths),"inverse":container.noop,"data":data})) != null ? stack1 : "")
+    + ((stack1 = helpers.each.call(alias1,((stack1 = (depth0 != null ? depth0.MODEM : depth0)) != null ? stack1.options : stack1),{"name":"each","hash":{},"fn":container.program(11, data, 0, blockParams, depths),"inverse":container.noop,"data":data})) != null ? stack1 : "")
     + "						<div class=\"div-table-row\">\n							<div onclick=\"termhelp('MODEM')\" class=\"help div-table-col text-right\">New Option</div>\n							<input class=\"div-table-col\" type=\"text\"\n								onchange=\"direwolf.adevices["
     + alias4(alias5((container.data(data, 2) && container.data(data, 2).index), depth0))
     + "].channels["
@@ -151,9 +160,9 @@ templates['direwolf'] = template({"1":function(container,depth0,helpers,partials
     + "].channels["
     + alias4(((helper = (helper = helpers.index || (data && data.index)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"index","hash":{},"data":data}) : helper)))
     + "].setFULLDUP(this.value)\">\n									<option value=\"0\" "
-    + ((stack1 = (helpers.ifEquals || (depth0 && depth0.ifEquals) || alias2).call(alias1,"0",(depth0 != null ? depth0.FULLDUP : depth0),{"name":"ifEquals","hash":{},"fn":container.program(11, data, 0, blockParams, depths),"inverse":container.noop,"data":data})) != null ? stack1 : "")
+    + ((stack1 = (helpers.ifEquals || (depth0 && depth0.ifEquals) || alias2).call(alias1,"0",(depth0 != null ? depth0.FULLDUP : depth0),{"name":"ifEquals","hash":{},"fn":container.program(13, data, 0, blockParams, depths),"inverse":container.noop,"data":data})) != null ? stack1 : "")
     + ">Off</option>\n									<option value=\"1\" "
-    + ((stack1 = (helpers.ifEquals || (depth0 && depth0.ifEquals) || alias2).call(alias1,"1",(depth0 != null ? depth0.FULLDUP : depth0),{"name":"ifEquals","hash":{},"fn":container.program(11, data, 0, blockParams, depths),"inverse":container.noop,"data":data})) != null ? stack1 : "")
+    + ((stack1 = (helpers.ifEquals || (depth0 && depth0.ifEquals) || alias2).call(alias1,"1",(depth0 != null ? depth0.FULLDUP : depth0),{"name":"ifEquals","hash":{},"fn":container.program(13, data, 0, blockParams, depths),"inverse":container.noop,"data":data})) != null ? stack1 : "")
     + ">On</option>\n								</select>\n							</div>\n						</div>\n						<div class=\"div-table-row\">\n							<div onclick=\"termhelp(this.innerHTML)\" class=\"help div-table-col\">FRACK</div>\n							<input type=\"text\"\n								onchange=\"direwolf.adevices["
     + alias4(alias5((container.data(data, 1) && container.data(data, 1).index), depth0))
     + "].channels["
@@ -165,29 +174,29 @@ templates['direwolf'] = template({"1":function(container,depth0,helpers,partials
     + "].channels["
     + alias4(((helper = (helper = helpers.index || (data && data.index)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"index","hash":{},"data":data}) : helper)))
     + "].FIX_BITS.setEFFORT(this.value)\">\n											<option value=\"0\"\n												"
-    + ((stack1 = (helpers.ifEquals || (depth0 && depth0.ifEquals) || alias2).call(alias1,"0",((stack1 = (depth0 != null ? depth0.FIX_BITS : depth0)) != null ? stack1.EFFORT : stack1),{"name":"ifEquals","hash":{},"fn":container.program(11, data, 0, blockParams, depths),"inverse":container.noop,"data":data})) != null ? stack1 : "")
+    + ((stack1 = (helpers.ifEquals || (depth0 && depth0.ifEquals) || alias2).call(alias1,"0",((stack1 = (depth0 != null ? depth0.FIX_BITS : depth0)) != null ? stack1.EFFORT : stack1),{"name":"ifEquals","hash":{},"fn":container.program(13, data, 0, blockParams, depths),"inverse":container.noop,"data":data})) != null ? stack1 : "")
     + ">No\n												Attempt</option>\n											<option value=\"1\"\n												"
-    + ((stack1 = (helpers.ifEquals || (depth0 && depth0.ifEquals) || alias2).call(alias1,"1",((stack1 = (depth0 != null ? depth0.FIX_BITS : depth0)) != null ? stack1.EFFORT : stack1),{"name":"ifEquals","hash":{},"fn":container.program(11, data, 0, blockParams, depths),"inverse":container.noop,"data":data})) != null ? stack1 : "")
+    + ((stack1 = (helpers.ifEquals || (depth0 && depth0.ifEquals) || alias2).call(alias1,"1",((stack1 = (depth0 != null ? depth0.FIX_BITS : depth0)) != null ? stack1.EFFORT : stack1),{"name":"ifEquals","hash":{},"fn":container.program(13, data, 0, blockParams, depths),"inverse":container.noop,"data":data})) != null ? stack1 : "")
     + ">Attempt\n												1 bit</option>\n											<option value=\"2\"\n												"
-    + ((stack1 = (helpers.ifEquals || (depth0 && depth0.ifEquals) || alias2).call(alias1,"2",((stack1 = (depth0 != null ? depth0.FIX_BITS : depth0)) != null ? stack1.EFFORT : stack1),{"name":"ifEquals","hash":{},"fn":container.program(11, data, 0, blockParams, depths),"inverse":container.noop,"data":data})) != null ? stack1 : "")
+    + ((stack1 = (helpers.ifEquals || (depth0 && depth0.ifEquals) || alias2).call(alias1,"2",((stack1 = (depth0 != null ? depth0.FIX_BITS : depth0)) != null ? stack1.EFFORT : stack1),{"name":"ifEquals","hash":{},"fn":container.program(13, data, 0, blockParams, depths),"inverse":container.noop,"data":data})) != null ? stack1 : "")
     + ">Attempt\n												2 bits</option>\n										</select>\n									</div>\n									<div onclick=\"termhelp(this.innerHTML)\" class=\"help div-table-col\">SANITY</div>\n									<div class=\"div-table-col\">\n										<select\n											onchange=\"direwolf.adevices["
     + alias4(alias5((container.data(data, 1) && container.data(data, 1).index), depth0))
     + "].channels["
     + alias4(((helper = (helper = helpers.index || (data && data.index)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"index","hash":{},"data":data}) : helper)))
     + "].FIX_BITS.setSANITY(this.value)\">\n											<option value=\"APRS\"\n												"
-    + ((stack1 = (helpers.ifEquals || (depth0 && depth0.ifEquals) || alias2).call(alias1,"APRS",((stack1 = (depth0 != null ? depth0.FIX_BITS : depth0)) != null ? stack1.SANITY : stack1),{"name":"ifEquals","hash":{},"fn":container.program(11, data, 0, blockParams, depths),"inverse":container.noop,"data":data})) != null ? stack1 : "")
+    + ((stack1 = (helpers.ifEquals || (depth0 && depth0.ifEquals) || alias2).call(alias1,"APRS",((stack1 = (depth0 != null ? depth0.FIX_BITS : depth0)) != null ? stack1.SANITY : stack1),{"name":"ifEquals","hash":{},"fn":container.program(13, data, 0, blockParams, depths),"inverse":container.noop,"data":data})) != null ? stack1 : "")
     + ">APRS</option>\n											<option value=\"AX25\"\n												"
-    + ((stack1 = (helpers.ifEquals || (depth0 && depth0.ifEquals) || alias2).call(alias1,"AX25",((stack1 = (depth0 != null ? depth0.FIX_BITS : depth0)) != null ? stack1.SANITY : stack1),{"name":"ifEquals","hash":{},"fn":container.program(11, data, 0, blockParams, depths),"inverse":container.noop,"data":data})) != null ? stack1 : "")
+    + ((stack1 = (helpers.ifEquals || (depth0 && depth0.ifEquals) || alias2).call(alias1,"AX25",((stack1 = (depth0 != null ? depth0.FIX_BITS : depth0)) != null ? stack1.SANITY : stack1),{"name":"ifEquals","hash":{},"fn":container.program(13, data, 0, blockParams, depths),"inverse":container.noop,"data":data})) != null ? stack1 : "")
     + ">AX25</option>\n											<option value=\"NONE\"\n												"
-    + ((stack1 = (helpers.ifEquals || (depth0 && depth0.ifEquals) || alias2).call(alias1,"NONE",((stack1 = (depth0 != null ? depth0.FIX_BITS : depth0)) != null ? stack1.SANITY : stack1),{"name":"ifEquals","hash":{},"fn":container.program(11, data, 0, blockParams, depths),"inverse":container.noop,"data":data})) != null ? stack1 : "")
+    + ((stack1 = (helpers.ifEquals || (depth0 && depth0.ifEquals) || alias2).call(alias1,"NONE",((stack1 = (depth0 != null ? depth0.FIX_BITS : depth0)) != null ? stack1.SANITY : stack1),{"name":"ifEquals","hash":{},"fn":container.program(13, data, 0, blockParams, depths),"inverse":container.noop,"data":data})) != null ? stack1 : "")
     + ">NONE</option>\n										</select>\n									</div>\n									<div onclick=\"termhelp(this.innerHTML)\" class=\"help div-table-col\">PASSALL</div>\n									<div class=\"div-table-col\">\n										<select\n											onchange=\"direwolf.adevices["
     + alias4(alias5((container.data(data, 1) && container.data(data, 1).index), depth0))
     + "].channels["
     + alias4(((helper = (helper = helpers.index || (data && data.index)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"index","hash":{},"data":data}) : helper)))
     + "].FIX_BITS.setPASSALL(this.value);\">											\n											<option value=\"PASSALL\" "
-    + ((stack1 = (helpers.ifEquals || (depth0 && depth0.ifEquals) || alias2).call(alias1,"PASSALL",((stack1 = (depth0 != null ? depth0.FIX_BITS : depth0)) != null ? stack1.PASSALL : stack1),{"name":"ifEquals","hash":{},"fn":container.program(11, data, 0, blockParams, depths),"inverse":container.noop,"data":data})) != null ? stack1 : "")
+    + ((stack1 = (helpers.ifEquals || (depth0 && depth0.ifEquals) || alias2).call(alias1,"PASSALL",((stack1 = (depth0 != null ? depth0.FIX_BITS : depth0)) != null ? stack1.PASSALL : stack1),{"name":"ifEquals","hash":{},"fn":container.program(13, data, 0, blockParams, depths),"inverse":container.noop,"data":data})) != null ? stack1 : "")
     + ">Y</option>\n											<option value=\"\" "
-    + ((stack1 = (helpers.ifEquals || (depth0 && depth0.ifEquals) || alias2).call(alias1,"",((stack1 = (depth0 != null ? depth0.FIX_BITS : depth0)) != null ? stack1.PASSALL : stack1),{"name":"ifEquals","hash":{},"fn":container.program(11, data, 0, blockParams, depths),"inverse":container.noop,"data":data})) != null ? stack1 : "")
+    + ((stack1 = (helpers.ifEquals || (depth0 && depth0.ifEquals) || alias2).call(alias1,"",((stack1 = (depth0 != null ? depth0.FIX_BITS : depth0)) != null ? stack1.PASSALL : stack1),{"name":"ifEquals","hash":{},"fn":container.program(13, data, 0, blockParams, depths),"inverse":container.noop,"data":data})) != null ? stack1 : "")
     + ">N</option>\n										</select>\n									</div>\n								</div>\n							</div>\n						</div>\n					</div>\n					<div class=\"div-table-row\">\n						<div onclick=\"termhelp(this.innerHTML)\" class=\"help div-table-col\">RETRY</div>\n						<div class=\"div-table-col\">\n							<input type=\"text\"\n								onchange=\"direwolf.adevices["
     + alias4(alias5((container.data(data, 1) && container.data(data, 1).index), depth0))
     + "].channels["
@@ -218,8 +227,18 @@ templates['direwolf'] = template({"1":function(container,depth0,helpers,partials
     + alias4(((helper = (helper = helpers.index || (data && data.index)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"index","hash":{},"data":data}) : helper)))
     + "].setMAXV22(this.value)\"\n								value=\""
     + alias4(((helper = (helper = helpers.MAXV22 || (depth0 != null ? depth0.MAXV22 : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"MAXV22","hash":{},"data":data}) : helper)))
-    + "\" />\n						</div>\n					</div>\n				</div>\n";
-},"9":function(container,depth0,helpers,partials,data,blockParams,depths) {
+    + "\" />\n						</div>\n					</div>\n					<div style=\"clear:both\">\n						<button type=\"button\" onclick=\"direwolf.adevices["
+    + alias4(alias5((container.data(data, 1) && container.data(data, 1).index), depth0))
+    + "].setACHANNELS(direwolf.adevices["
+    + alias4(alias5((container.data(data, 1) && container.data(data, 1).index), depth0))
+    + "].getACHANNELS() - 1);direwolf.adevices["
+    + alias4(alias5((container.data(data, 1) && container.data(data, 1).index), depth0))
+    + "].channels.splice("
+    + alias4(((helper = (helper = helpers.index || (data && data.index)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"index","hash":{},"data":data}) : helper)))
+    + ",1);reloadDirewolf('tabs-1')\">Delete Channel "
+    + alias4(((helper = (helper = helpers.CHANNEL || (depth0 != null ? depth0.CHANNEL : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"CHANNEL","hash":{},"data":data}) : helper)))
+    + "</button>\n					</div>\n				</div>\n";
+},"11":function(container,depth0,helpers,partials,data,blockParams,depths) {
     var helper, alias1=container.lambda, alias2=container.escapeExpression;
 
   return "						<div class=\"div-table-row\">\n							<div onclick=\"termhelp('MODEM')\" class=\"help div-table-col text-right\">Value</div>\n							<div class=\"div-table-col\">\n								<input class=\"div-table-col\" type=\"text\" value=\""
@@ -231,9 +250,19 @@ templates['direwolf'] = template({"1":function(container,depth0,helpers,partials
     + "].MODEM.setOption("
     + alias2(((helper = (helper = helpers.index || (data && data.index)) != null ? helper : helpers.helperMissing),(typeof helper === "function" ? helper.call(depth0 != null ? depth0 : (container.nullContext || {}),{"name":"index","hash":{},"data":data}) : helper)))
     + ",this.value)\" />\n							</div>\n						</div>\n";
-},"11":function(container,depth0,helpers,partials,data) {
-    return "selected=\"selected\"";
 },"13":function(container,depth0,helpers,partials,data) {
+    return "selected=\"selected\"";
+},"15":function(container,depth0,helpers,partials,data) {
+    var helper, alias1=depth0 != null ? depth0 : (container.nullContext || {}), alias2=helpers.helperMissing, alias3="function", alias4=container.escapeExpression;
+
+  return "					<button type=\"button\" onclick=\"direwolf.adevices["
+    + alias4(((helper = (helper = helpers.index || (data && data.index)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"index","hash":{},"data":data}) : helper)))
+    + "].setACHANNELS(direwolf.adevices["
+    + alias4(((helper = (helper = helpers.index || (data && data.index)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"index","hash":{},"data":data}) : helper)))
+    + "].getACHANNELS() + 1);direwolf.adevices["
+    + alias4(((helper = (helper = helpers.index || (data && data.index)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"index","hash":{},"data":data}) : helper)))
+    + "].addChannel(new Channel());reloadDirewolf('tabs-1')\">Add Channel</button>\n";
+},"17":function(container,depth0,helpers,partials,data) {
     var stack1, helper, alias1=depth0 != null ? depth0 : (container.nullContext || {}), alias2=helpers.helperMissing, alias3="function", alias4=container.escapeExpression;
 
   return "			<h3>"
@@ -241,13 +270,13 @@ templates['direwolf'] = template({"1":function(container,depth0,helpers,partials
     + " - "
     + alias4((helpers.toUpperCase || (depth0 && depth0.toUpperCase) || alias2).call(alias1,((stack1 = (depth0 != null ? depth0["constructor"] : depth0)) != null ? stack1.name : stack1),{"name":"toUpperCase","hash":{},"data":data}))
     + "</h3>\n			<div class=\"div-table\">\n"
-    + ((stack1 = helpers.each.call(alias1,depth0,{"name":"each","hash":{},"fn":container.program(14, data, 0),"inverse":container.noop,"data":data})) != null ? stack1 : "")
+    + ((stack1 = helpers.each.call(alias1,depth0,{"name":"each","hash":{},"fn":container.program(18, data, 0),"inverse":container.noop,"data":data})) != null ? stack1 : "")
     + "				<button type=\"button\"\n					onclick=\"direwolf.beacons.splice("
     + alias4(((helper = (helper = helpers.index || (data && data.index)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"index","hash":{},"data":data}) : helper)))
     + ",1);reloadDirewolf('tabs-3')\">Delete</button>\n				<button type=\"button\"\n					onclick=\"direwolf.addBeacon(direwolf.beacons["
     + alias4(((helper = (helper = helpers.index || (data && data.index)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"index","hash":{},"data":data}) : helper)))
     + "]);reloadDirewolf('tabs-3')\">Duplicate</button>\n			</div>\n";
-},"14":function(container,depth0,helpers,partials,data) {
+},"18":function(container,depth0,helpers,partials,data) {
     var helper, alias1=depth0 != null ? depth0 : (container.nullContext || {}), alias2=helpers.helperMissing, alias3="function", alias4=container.escapeExpression;
 
   return "				<div class=\"div-table-row\">\n					<div onclick=\"termhelp(this.innerHTML)\" class=\"help div-table-col\">"
@@ -259,7 +288,7 @@ templates['direwolf'] = template({"1":function(container,depth0,helpers,partials
     + "(this.value)\" type=\"text\" value=\""
     + alias4(container.lambda(depth0, depth0))
     + "\">\n					</div>\n				</div>\n";
-},"16":function(container,depth0,helpers,partials,data) {
+},"20":function(container,depth0,helpers,partials,data) {
     var stack1, helper, alias1=depth0 != null ? depth0 : (container.nullContext || {}), alias2=helpers.helperMissing, alias3="function", alias4=container.escapeExpression;
 
   return "			<h3>"
@@ -267,13 +296,13 @@ templates['direwolf'] = template({"1":function(container,depth0,helpers,partials
     + " - "
     + alias4((helpers.toUpperCase || (depth0 && depth0.toUpperCase) || alias2).call(alias1,((stack1 = (depth0 != null ? depth0["constructor"] : depth0)) != null ? stack1.name : stack1),{"name":"toUpperCase","hash":{},"data":data}))
     + "</h3>\n			<div class=\"div-table\">\n"
-    + ((stack1 = helpers.each.call(alias1,depth0,{"name":"each","hash":{},"fn":container.program(17, data, 0),"inverse":container.noop,"data":data})) != null ? stack1 : "")
+    + ((stack1 = helpers.each.call(alias1,depth0,{"name":"each","hash":{},"fn":container.program(21, data, 0),"inverse":container.noop,"data":data})) != null ? stack1 : "")
     + "				<button type=\"button\"\n					onclick=\"direwolf.digipeaters.splice("
     + alias4(((helper = (helper = helpers.index || (data && data.index)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"index","hash":{},"data":data}) : helper)))
     + ",1);reloadDirewolf('tabs-4')\">Delete</button>\n				<button type=\"button\"\n					onclick=\"direwolf.addDigipeater(direwolf.digipeaters["
     + alias4(((helper = (helper = helpers.index || (data && data.index)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"index","hash":{},"data":data}) : helper)))
     + "]);reloadDirewolf('tabs-4')\">Duplicate</button>\n			</div>\n";
-},"17":function(container,depth0,helpers,partials,data) {
+},"21":function(container,depth0,helpers,partials,data) {
     var helper, alias1=depth0 != null ? depth0 : (container.nullContext || {}), alias2=helpers.helperMissing, alias3="function", alias4=container.escapeExpression;
 
   return "				<div class=\"div-table-row\">\n					<div onclick=\"termhelp(this.innerHTML)\" class=\"help div-table-col\">"
@@ -285,7 +314,7 @@ templates['direwolf'] = template({"1":function(container,depth0,helpers,partials
     + "(this.value)\" type=\"text\" value=\""
     + alias4(container.lambda(depth0, depth0))
     + "\">\n					</div>\n				</div>\n";
-},"19":function(container,depth0,helpers,partials,data) {
+},"23":function(container,depth0,helpers,partials,data) {
     var stack1, helper, alias1=depth0 != null ? depth0 : (container.nullContext || {}), alias2=helpers.helperMissing, alias3="function", alias4=container.escapeExpression;
 
   return "			<h3>"
@@ -293,13 +322,13 @@ templates['direwolf'] = template({"1":function(container,depth0,helpers,partials
     + " - "
     + alias4((helpers.toUpperCase || (depth0 && depth0.toUpperCase) || alias2).call(alias1,((stack1 = (depth0 != null ? depth0["constructor"] : depth0)) != null ? stack1.name : stack1),{"name":"toUpperCase","hash":{},"data":data}))
     + "</h3>\n			<div class=\"div-table\">\n"
-    + ((stack1 = helpers.each.call(alias1,depth0,{"name":"each","hash":{},"fn":container.program(20, data, 0),"inverse":container.noop,"data":data})) != null ? stack1 : "")
+    + ((stack1 = helpers.each.call(alias1,depth0,{"name":"each","hash":{},"fn":container.program(24, data, 0),"inverse":container.noop,"data":data})) != null ? stack1 : "")
     + "				<button type=\"button\"\n					onclick=\"direwolf.filters.splice("
     + alias4(((helper = (helper = helpers.index || (data && data.index)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"index","hash":{},"data":data}) : helper)))
     + ",1);reloadDirewolf('tabs-5')\">Delete</button>\n				<button type=\"button\"\n					onclick=\"direwolf.addFilter(direwolf.filters["
     + alias4(((helper = (helper = helpers.index || (data && data.index)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"index","hash":{},"data":data}) : helper)))
     + "]);reloadDirewolf('tabs-5')\">Duplicate</button>\n			</div>\n";
-},"20":function(container,depth0,helpers,partials,data) {
+},"24":function(container,depth0,helpers,partials,data) {
     var helper, alias1=depth0 != null ? depth0 : (container.nullContext || {}), alias2=helpers.helperMissing, alias3="function", alias4=container.escapeExpression;
 
   return "				<div class=\"div-table-row\">\n					<div onclick=\"termhelp(this.innerHTML)\" class=\"help div-table-col\">"
@@ -314,9 +343,11 @@ templates['direwolf'] = template({"1":function(container,depth0,helpers,partials
 },"compiler":[7,">= 4.0.0"],"main":function(container,depth0,helpers,partials,data,blockParams,depths) {
     var stack1, helper, alias1=depth0 != null ? depth0 : (container.nullContext || {}), alias2=helpers.helperMissing, alias3="function", alias4=container.escapeExpression;
 
-  return "<div id=\"tabs\" class=\"dw\">\n        <ul>\n                <li><a href=\"#tabs-1\">Soundcards</a></li>\n                <li><a href=\"#tabs-2\">Common</a></li>\n                <li><a href=\"#tabs-3\">Beacons</a></li>\n                <li><a href=\"#tabs-4\">Digipeaters</a></li>\n                <li><a href=\"#tabs-5\">Filters</a></li>\n                <li><a href=\"#tabs-6\">Contents</a></li>\n        </ul>\n	<div id=\"tabs-1\">\n"
+  return "<div id=\"tabs\" class=\"dw\">\n        <ul>\n                <li><a href=\"#tabs-1\">Soundcards</a></li>\n                <li><a href=\"#tabs-2\">Common</a></li>\n                <li><a href=\"#tabs-3\">Beacons</a></li>\n                <li><a href=\"#tabs-4\">Digipeaters</a></li>\n                <li><a href=\"#tabs-5\">Filters</a></li>\n                <li><a href=\"#tabs-6\">Contents</a></li>\n        </ul>\n	<div id=\"tabs-1\">\n			<div style=\"clear:both\">\n"
     + ((stack1 = helpers.each.call(alias1,(depth0 != null ? depth0.adevices : depth0),{"name":"each","hash":{},"fn":container.program(1, data, 0, blockParams, depths),"inverse":container.noop,"data":data})) != null ? stack1 : "")
-    + ((stack1 = helpers.each.call(alias1,(depth0 != null ? depth0.adevices : depth0),{"name":"each","hash":{},"fn":container.program(3, data, 0, blockParams, depths),"inverse":container.noop,"data":data})) != null ? stack1 : "")
+    + ((stack1 = (helpers.lt || (depth0 && depth0.lt) || alias2).call(alias1,((stack1 = (depth0 != null ? depth0.adevices : depth0)) != null ? stack1.length : stack1),3,{"name":"lt","hash":{},"fn":container.program(3, data, 0, blockParams, depths),"inverse":container.noop,"data":data})) != null ? stack1 : "")
+    + "			</div>\n"
+    + ((stack1 = helpers.each.call(alias1,(depth0 != null ? depth0.adevices : depth0),{"name":"each","hash":{},"fn":container.program(5, data, 0, blockParams, depths),"inverse":container.noop,"data":data})) != null ? stack1 : "")
     + "	</div>\n	<!-- tabs-1 -->\n\n\n	<div id=\"tabs-2\">\n		<div class=\"div-table\">\n			<div class=\"div-table-row\">\n				<div onclick=\"termhelp(this.innerHTML)\" class=\"help div-table-col\">AGWPORT</div>\n				<div class=\"div-table-col\">\n					<input type=\"number\" onchange=\"direwolf.setAGWPORT(this.value)\"\n						value=\""
     + alias4(((helper = (helper = helpers.AGWPORT || (depth0 != null ? depth0.AGWPORT : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"AGWPORT","hash":{},"data":data}) : helper)))
     + "\" />\n				</div>\n			</div>\n			<div class=\"div-table-row\">\n				<div onclick=\"termhelp(this.innerHTML)\" class=\"help div-table-col\">KISSPORT</div>\n				<div class=\"div-table-col\">\n					<input type=\"number\" onchange=\"direwolf.setKISSPORT(this.value)\"\n						value=\""
@@ -342,11 +373,11 @@ templates['direwolf'] = template({"1":function(container,depth0,helpers,partials
     + "\" />\n				</div>\n			</div>\n			<div class=\"div-table-row\">\n				<div onclick=\"termhelp(this.innerHTML)\" class=\"help div-table-col\">WAYPOINT</div>\n				<div class=\"div-table-col\">\n					<input type=\"text\" onchange=\"direwolf.setWAYPOINT(this.value)\"\n						value=\""
     + alias4(((helper = (helper = helpers.WAYPOINT || (depth0 != null ? depth0.WAYPOINT : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"WAYPOINT","hash":{},"data":data}) : helper)))
     + "\" />\n				</div>\n			</div>\n		</div>\n	</div>\n\n	<div id=\"tabs-3\">\n		<div style=\"clear: both\">\n			<button type=\"button\"\n				onclick=\"direwolf.addBeacon(new Cbeacon());reloadDirewolf('tabs-3')\">New\n				CBEACON</button>\n			<button type=\"button\"\n				onclick=\"direwolf.addBeacon(new Ibeacon());reloadDirewolf('tabs-3')\">New\n				IBEACON</button>\n			<button type=\"button\"\n				onclick=\"direwolf.addBeacon(new Obeacon());reloadDirewolf('tabs-3')\">New\n				OBEACON</button>\n			<button type=\"button\"\n				onclick=\"direwolf.addBeacon(new Pbeacon());reloadDirewolf('tabs-3')\">New\n				PBEACON</button>\n			<button type=\"button\"\n				onclick=\"direwolf.addBeacon(new Tbeacon());reloadDirewolf('tabs-3')\">New\n				TBEACON</button>\n		</div>\n"
-    + ((stack1 = helpers.each.call(alias1,(depth0 != null ? depth0.beacons : depth0),{"name":"each","hash":{},"fn":container.program(13, data, 0, blockParams, depths),"inverse":container.noop,"data":data})) != null ? stack1 : "")
-    + "	</div>\n\n	<div id=\"tabs-4\">\n"
-    + ((stack1 = helpers.each.call(alias1,(depth0 != null ? depth0.digipeaters : depth0),{"name":"each","hash":{},"fn":container.program(16, data, 0, blockParams, depths),"inverse":container.noop,"data":data})) != null ? stack1 : "")
-    + "	</div>\n\n	<div id=\"tabs-5\">\n"
-    + ((stack1 = helpers.each.call(alias1,(depth0 != null ? depth0.filters : depth0),{"name":"each","hash":{},"fn":container.program(19, data, 0, blockParams, depths),"inverse":container.noop,"data":data})) != null ? stack1 : "")
+    + ((stack1 = helpers.each.call(alias1,(depth0 != null ? depth0.beacons : depth0),{"name":"each","hash":{},"fn":container.program(17, data, 0, blockParams, depths),"inverse":container.noop,"data":data})) != null ? stack1 : "")
+    + "	</div>\n\n	<div id=\"tabs-4\">\n		<div style=\"clear:both\">\n			<button type=\"button\" onclick=\"direwolf.addDigipeater(new Digipeater());reloadDirewolf('tabs-4')\">New DIGIPEATER</button>\n			<button type=\"button\" onclick=\"direwolf.addDigipeater(new Cdigipeater());reloadDirewolf('tabs-4')\">New CDIGIPEATER</button>\n		</div>\n"
+    + ((stack1 = helpers.each.call(alias1,(depth0 != null ? depth0.digipeaters : depth0),{"name":"each","hash":{},"fn":container.program(20, data, 0, blockParams, depths),"inverse":container.noop,"data":data})) != null ? stack1 : "")
+    + "	</div>\n\n	<div id=\"tabs-5\">\n		<div style=\"clear:both\">\n			<button type=\"button\" onclick=\"direwolf.addFilter(new Filter());reloadDirewolf('tabs-5')\">New FILTER</button>\n			<button type=\"button\" onclick=\"direwolf.addFilter(new Cfilter());reloadDirewolf('tabs-5')\">New CFILTER</button>\n		</div>\n"
+    + ((stack1 = helpers.each.call(alias1,(depth0 != null ? depth0.filters : depth0),{"name":"each","hash":{},"fn":container.program(23, data, 0, blockParams, depths),"inverse":container.noop,"data":data})) != null ? stack1 : "")
     + "	</div>\n	<div id=\"tabs-6\"><pre/></div>\n</div>\n<script>\n	$( function() {\n		$( \"#tabs\" ).tabs();\n	});\n</script>\n";
 },"useData":true,"useDepths":true});
 })();

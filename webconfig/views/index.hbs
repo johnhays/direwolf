@@ -12,59 +12,92 @@
 </div>
 <script src="helpText.js"></script>
 <script>
-    var full = location.protocol + '//' + location.hostname + (location.port ? ':' + location.port : '');
+	var full = location.protocol + '//' + location.hostname + (location.port ? ':' + location.port : '');
 
-    Handlebars.registerHelper('toLowerCase', function(str) {
-      return str.toLowerCase();
-    });
-    
-    Handlebars.registerHelper('toUpperCase', function(str) {
-      return str.toUpperCase();
-    });
+	Handlebars.registerHelper('toLowerCase', function(str) {
+	  return str.toLowerCase();
+	});
+	
+	Handlebars.registerHelper('toUpperCase', function(str) {
+	  return str.toUpperCase();
+	});
 
-    Handlebars.registerHelper('ifEquals', function(arg1, arg2, options) {
-        return (arg1 == arg2) ? options.fn(this) : options.inverse(this);
-    });
+	Handlebars.registerHelper('ifEquals', function(arg1, arg2, options) {
+		return (arg1 == arg2) ? options.fn(this) : options.inverse(this);
+	});
 
-    var socket = io.connect(full);
+	Handlebars.registerHelper('lt', function( a, b ){
+		var next =  arguments[arguments.length-1];
+		return (a < b) ? next.fn(this) : next.inverse(this);
+	});
 
-    var direwolf = new Direwolf();
+	var socket = io.connect(full);
 
-    var template = Handlebars.templates['direwolf'];
+	var direwolf = new Direwolf();
 
-    socket.on('direwolf', function(data) {
-        direwolf.ParseConfig(data.toString());
-        var html = template(direwolf);
-        $('.dw').replaceWith(html);
-    });
+	var template = Handlebars.templates['direwolf'];
 
-    socket.on('radios', function(data) {
-        console.log(data);
-    });
+	socket.on('direwolf', function(data) {
+		direwolf.ParseConfig(data.toString());
+		var html = template(direwolf);
+		$('.dw').replaceWith(html);
+	});
 
-    function updateRadio(data) {
-        socket.emit('radio', data);
-	location.hash = "#tabs-6";
-    }
+/*	socket.on('radios', function(data) {
+		console.log(data);
+	});
+*/
+	function updateRadio(data) {
+		socket.emit('radio', data);
+		location.hash = "#tabs-6";
+	}
 
-    function updateDirewolf() {
-        socket.emit('direwolf', direwolf.toString());
-	$('#tabs-6 pre').text(direwolf.toString());
-    }
+	function updateDirewolf() {
+		socket.emit('direwolf', direwolf.toString());
+		$('#tabs-6 pre').text(direwolf.toString());
+	}
 
-    function reloadDirewolf(loc){
-	var html = template(direwolf);
-	$('.dw').replaceWith(html);
-	location.hash = "#" + loc;
-    }
+	function reloadDirewolf(loc){
+		var html = template(direwolf);
+		$('.dw').replaceWith(html);
+		location.hash = "#" + loc;
+	}
 
-    $( "#dialog" ).dialog({ autoOpen: false });
+	$( "#dialog" ).dialog({ autoOpen: false });
 
-    function termhelp(data) {
-                console.log(data);
-                $( "#dialog" ).dialog("option","title",data);
-                $( "#dialog" ).html(helpText[data]);
-                $( "#dialog" ).dialog( "open" );
-    }
+	function termhelp(data) {
+		console.log(data);
+		$( "#dialog" ).dialog("option","title",data);
+		$( "#dialog" ).html(helpText[data]);
+		$( "#dialog" ).dialog( "open" );
+	}
+
+	function appendAdevice() {
+		let adevices = direwolf.getAdevices();
+		let candidates = ['ADEVICE0','ADEVICE1','ADEVICE2'];
+		let devices = [];
+		adevices.forEach(function(dev){
+			devices.push(dev.name);
+		});
+		if (adevices.length == 0) {
+			let device = new Adevice();
+			device.setAdeviceName('ADEVICE0');
+			device.addChannel(new Channel(1));
+			direwolf.addAdevice(device);
+			return true;
+		} else {
+			for (let i = 0; i < candidates.length; i++) {
+				if (!devices.includes(candidates[i])) {
+					let x = new Adevice();
+					x.setAdeviceName(candidates[i]);
+					x.addChannel(new Channel(-1));
+					direwolf.addAdevice(x);
+					return true;
+				}
+			}
+		}
+		alert("Maximum Audio Devices Reached");
+	}
+
 </script>
 

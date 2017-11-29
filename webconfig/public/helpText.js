@@ -64,7 +64,7 @@ helpText["SANITY"] = "<p><i>sanity_check</i> adds a heuristic to guess whether t
 helpText["SENDTO"] = "<p>Radio channel for transmission or “IG” to send to Internet Gateway.</p><p>Default is the first, or only, radio channel 0.</p><p>\“R\” followed by a number simulates signal received on that channel.</p>";
 helpText["SLOTTIME"] = "<p>See the <a href='USER-GUIDE.html' target='guide'>User's Guide</a>, Section 9.2.12 for details</p>";
 helpText["SPEED"] = "<p>Modem Speed in bps</p>";
-helpText["SYMBOL"] = "<p>Two different styles are available:<br/>(a) Exactly two characters specifying symbol table / overlay and the symbol code.<br/>(b) A substring of the description.</p><p>See the <a href='USER-GUIDE.html' target='guide'>User's Guide</a>, Section 9.8.1 for details</p>";
+helpText["SYMBOL"] = "<p>Two different styles are available:<br/>(a) Exactly two characters specifying symbol table / overlay and the symbol code.<br/>(b) A substring of the description.</p><p>See the <a href='USER-GUIDE.html' target='guide'>User's Guide</a>, Section 9.8.1 for details</p><p><a href='http://aprs.org/symbols/symbolsX.txt' target='symbols'>Specifications</a></p>";
 helpText["TO"] = "<p>Channel to send packet TO</p>";
 helpText["TONE"] = "<p>CTCSS tone required for specified radio frequency in Hz.</p>";
 helpText["TXDELAY"] = "<p>See the <a href='USER-GUIDE.html' target='guide'>User's Guide</a>, Section 9.2.12 for details</p>";

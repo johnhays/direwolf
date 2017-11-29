@@ -37,8 +37,6 @@ class Adevice {
 	
 	setAdeviceName(name) {
 		var name1 = name.toUpperCase();
-		// should be ADEVICE, ADEVICE0 (equivalent to ADEVICE), ADEVICE1, or
-		// ADEVICE2
 		if(/^ADEVICE[0-2]?/.test(name1)) {
 		this.name = name1;  
 		} else {
@@ -46,20 +44,40 @@ class Adevice {
 		}
 	}
 
+	getAdeviceName() {
+		return this.name;
+	}
+
 	setInput(input) {
 		this.input = input;
+	}
+
+	getInput(){
+		return this.input;
 	}
 
 	setOutput(output) {
 		this.output = output; // Optional, defaults to input
 	}
 
+	getOutput(){
+		return this.output;
+	}
+
 	setARATE(ARATE){
 		this.ARATE = ARATE;
 	}
 
+	getARATE(){
+		return this.ARATE;
+	}
+
 	setACHANNELS(ACHANNELS){
 		this.ACHANNELS = ACHANNELS;
+	}
+
+	getACHANNELS(){
+		return this.ACHANNELS;
 	}
 
 
@@ -702,13 +720,8 @@ class Cdigipeater extends Digipeater {
 
 class Direwolf {
 	constructor() {
-		// this.NULLMODEM = null;
-		this.adevices = [];
 		this.AGWPORT = 8000;
 		this.KISSPORT = 8001;
-		this.beacons = [];
-		this.digipeaters = [];
-		this.filters = [];
 		this.DEDUPE = 30;
 		this.IGSERVER = null
 		this.IGLOGIN = null;
@@ -719,6 +732,10 @@ class Direwolf {
 		this.GPSD = null;
 		this.GPSNMEA = null;
 		this.WAYPOINT = null;
+		this.adevices = [];
+		this.beacons = [];
+		this.digipeaters = [];
+		this.filters = [];
 	}
 
 	setAGWPORT(AGWPORT) {
@@ -895,6 +912,17 @@ class Direwolf {
 				case "ACHANNELS" :
 					adevices[curdevice].setACHANNELS(tokens[1]);
 					break;
+				case (tokens[0].match(/^ADEVICE[0-2]?$/) || {}).input: 
+					curdevice = tokens[0];
+					if (curdevice === "ADEVICE") curdevice = "ADEVICE0";
+					adevices[curdevice] = new Adevice();
+					adevices[curdevice].setAdeviceName(curdevice);
+					adevices[curdevice].setInput(tokens[1]);
+					if (tokens.length > 2) {
+						adevices[curdevice].setOutput(tokens[2]);
+					}
+					this.addAdevice(adevices[curdevice]);
+					break;
 				case "AGWPORT" :
 					this.setAGWPORT(tokens[1]);
 					break;
@@ -964,17 +992,6 @@ class Direwolf {
 					break;
 				case "DTMF" :
 					channels[curchannel].setDTMF();
-					break;
-				case (tokens[0].match(/^ADEVICE[0-2]?$/) || {}).input: 
-					curdevice = tokens[0];
-					if (curdevice === "ADEVICE") curdevice = "ADEVICE0";
-					adevices[curdevice] = new Adevice();
-					adevices[curdevice].setAdeviceName(curdevice);
-					adevices[curdevice].setInput(tokens[1]);
-					if (tokens.length > 2) {
-						adevices[curdevice].setOutput(tokens[2]);
-					}
-					this.addAdevice(adevices[curdevice]);
 					break;
 				case "PBEACON" :
 					var argstr = line.substring(tokens[0].length,line.length);
