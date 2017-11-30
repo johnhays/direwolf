@@ -88,7 +88,7 @@ class Adevice {
 	toString() {
 		if (this.name == null || this.input == null) {
 			console.log("ADEVICE is not formed properly");
-			return "# Modem not set";
+			return "# ADEVICE not set";
 		}
 		var str = "# " + this.name;
 		str += "\n" + this.name + " " + this.input;
@@ -101,6 +101,10 @@ class Adevice {
 			str += '\n' + this.channels[i].toString();
 		}
 		return str;	
+	}
+
+	asJSON() {
+		return JSON.stringify(this);
 	}
 }
 
@@ -147,6 +151,22 @@ class Beacon {
 	getVIA(){
 		return this.VIA;
 	}
+
+	getElements() {
+		var elements = "";
+		for (var prop in this) if (this[prop] != null) elements += " " + prop + "=" + this[prop];
+		return elements;
+	}
+	
+	toString() {
+		return this.constructor.name.toUpperCase() + this.getElements();
+		console.log(this.constructor.name);
+	}
+
+	asJSON() {
+		return JSON.toString(this);
+	}
+
 
 }
 
@@ -306,17 +326,6 @@ class Pbeacon extends Beacon {
 	getCOMPRESS(){
 		return this.COMPRESS;
 	}
-
-	getElements() {
-		var elements = "";
-		for (var prop in this) if (this[prop] != null) elements += " " + prop + "=" + this[prop];
-		return elements;
-	}
-	
-	toString() {
-		return "PBEACON" + this.getElements();
-	}
-
 }
 
 class Obeacon extends Pbeacon {
@@ -331,17 +340,6 @@ class Obeacon extends Pbeacon {
 	getOBJNAME(){
 		return this.OBJNAME;
 	}
-
-        getElements() {
-                var elements = "";
-                for (var prop in this) if (this[prop] != null) elements += " " + prop + "=" + this[prop];
-                return elements;
-        }
-
-        toString() {
-                return "OBEACON" + this.getElements();
-        }
-
 }
 
 class Cbeacon extends Beacon {
@@ -365,17 +363,6 @@ class Cbeacon extends Beacon {
 		return this.INFOCMD;
 	}
 
-        getElements() {
-                var elements = "";
-                for (var prop in this) if (this[prop] != null) elements += " " + prop + "=" + this[prop];
-                return elements;
-        }
-
-        toString() {
-                return "OBEACON" + this.getElements();
-        }
-
-
 }
 
 class Tbeacon extends Pbeacon {
@@ -389,16 +376,6 @@ class Tbeacon extends Pbeacon {
 		delete this.NORTHING;
 	}
 
-        getElements() {
-                var elements = "";
-                for (var prop in this) if (this[prop] != null) elements += " " + prop + "=" + this[prop];
-                return elements;
-        }
-
-        toString() {
-                return "TBEACON" + this.getElements();
-        }
-
 }
 
 class Ibeacon extends Beacon {
@@ -406,16 +383,6 @@ class Ibeacon extends Beacon {
 	constructor() {
 		super();
 	}
-
-        getElements() {
-                var elements = "";
-                for (var prop in this) if (this[prop] != null) elements += " " + prop + "=" + this[prop];
-                return elements;
-        }
-
-        toString() {
-                return "IBEACON" + this.getElements();
-        }
 }
 
 class Channel {
@@ -676,6 +643,12 @@ class Digipeater {
 		if (this.PREEMPTIVE != null) str += " " + this.PREEMPTIVE;
 		return str;
 	}
+
+	asJSON() {
+		return JSON.stringify(this);
+	}
+
+
 }
 
 class Cdigipeater extends Digipeater {
@@ -714,6 +687,10 @@ class Cdigipeater extends Digipeater {
 		var str = "CDIGIPEAT " + this.FROM + " " + this.TO;
 		if (this.ALIASES != null) str += " " + this.ALIASES;
 		return str;
+	}
+
+	asJSON() {
+		return JSON.stringify(this);
 	}
 }
 
@@ -1171,20 +1148,18 @@ class Filter {
 
 	toString() {
 		var params = this.getParamString();
-		if (params == null) return "# FILTER  malformed"
-		else return "FILTER " + params;
+		if (params == null) return "# " + this.constructor.name.toUpperCase() + " malformed"
+		else return this.constructor.name.toUpperCase() + " " + params;
+	}
+
+	asJSON() {
+		return JSON.stringify(this);
 	}
 }
 
 class Cfilter extends Filter{
 	constructor() {
 		super();
-	}
-
-	toString() {
-		var params = super.getParamString();
-		if (params == null) return "# CFILTER  malformed"
-		else return "CFILTER " + params;
 	}
 }		
 	
@@ -1251,7 +1226,7 @@ class Modem {
 
 	toString() {
 		if (isSet(this.SPEED)) {
-			let str = "MODEM " + this.SPEED;
+			let str = this.constructor.name.toUpperCase() + " " + this.SPEED;
 			for (var i=0; i < this.options.length ; i++) {
 				str += " " + this.options[i];
 			}
@@ -1264,7 +1239,6 @@ class Modem {
 	asJSON() {
 		return JSON.stringify(this);
 	}
-	
 
 }
 
