@@ -63,9 +63,10 @@ helpText["RETRY"] = "<p><b>CONNECTED MODE OPTION</b><br/>Number of times to retr
 helpText["SANITY"] = "<p><i>sanity_check</i> adds a heuristic to guess whether the fix up attempt was successful.<br/><b>APRS</b> tests whether it looks like a valid APRS packet. (default)<br/><b>AX25</b> only checks the address part. Suitable for non-APRS packet.<br/><b>NONE</b> bypasses the sanity check.</p>";
 helpText["SENDTO"] = "<p>Radio channel for transmission or “IG” to send to Internet Gateway.</p><p>Default is the first, or only, radio channel 0.</p><p>\“R\” followed by a number simulates signal received on that channel.</p>";
 helpText["SLOTTIME"] = "<p>See the <a href='USER-GUIDE.html' target='guide'>User's Guide</a>, Section 9.2.12 for details</p>";
+helpText["SPEECH"] = "<p>There are many software applications that will convert text to speech. Dire Wolf can utilize these to transmit information with a synthesized voice.</p><p>See the <a href='USER-GUIDE.html' target='guide'>User's Guide</a>, Section 9.11 for details</p></p>";
 helpText["SPEED"] = "<p>Modem Speed in bps</p>";
 helpText["SYMBOL"] = "<p>Two different styles are available:<br/>(a) Exactly two characters specifying symbol table / overlay and the symbol code.<br/>(b) A substring of the description.</p><p>See the <a href='USER-GUIDE.html' target='guide'>User's Guide</a>, Section 9.8.1 for details</p><p><a href='http://aprs.org/symbols/symbolsX.txt' target='symbols'>Specifications</a></p>";
-helpText["TO"] = "<p>Channel to send packet TO</p>";
+helpText["TO"] = "<p>Channel to send packet TO: Channel #, SPEECH, IG, DTMF, or MORSE</p>";
 helpText["TONE"] = "<p>CTCSS tone required for specified radio frequency in Hz.</p>";
 helpText["TXDELAY"] = "<p>See the <a href='USER-GUIDE.html' target='guide'>User's Guide</a>, Section 9.2.12 for details</p>";
 helpText["TXINH"] = "<p>For the <b><u>Linux</u></b> version only, it is possible to have a GPIO control input to prevent transmitting. This might be used with a squelch signal from the receiver. A site with multiple radios could use this to give priority to the other radio service when it is active.</p><p><b>TXINH GPIO 17</b><br/><b>TXINH GPIO -17</b></p><p>As with PTT, minus in front of the GPIO number means invert the signal.</p>";

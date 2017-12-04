@@ -1,5 +1,6 @@
 <div id="tabs" class="dw">
         <ul>
+                <li><a href="#tabs-start">Help</a></li>
                 <li><a href="#tabs-1">Soundcards</a></li>
                 <li><a href="#tabs-2">Common</a></li>
                 <li><a href="#tabs-3">Beacons</a></li>
@@ -7,6 +8,9 @@
                 <li><a href="#tabs-5">Filters</a></li>
                 <li><a href="#tabs-6">Contents</a></li>
         </ul>
+	<div id="tabs-start">
+		<h1>Under Development</h1>
+	</div>
 	<div id="tabs-1">
 			<div style="clear:both">
 			{{#each adevices}}
@@ -340,6 +344,7 @@
 
 
 	<div id="tabs-2">
+		<h3>General Values</h3>
 		<div class="div-table">
 			<div class="div-table-row">
 				<div onclick="termhelp(this.innerHTML)" class="help div-table-col">AGWPORT</div>
@@ -405,6 +410,13 @@
 				</div>
 			</div>
 			<div class="div-table-row">
+				<div onclick="termhelp(this.innerHTML)" class="help div-table-col">SPEECH</div>
+				<div class="div-table-col">
+					<input type="text" onchange="direwolf.setSPEECH(this.value)"
+						value="{{SPEECH}}" />
+				</div>
+			</div>
+			<div class="div-table-row">
 				<div onclick="termhelp(this.innerHTML)" class="help div-table-col">GPSD</div>
 				<div class="div-table-col">
 					<input type="text" onchange="direwolf.setGPSD(this.value)"
@@ -425,6 +437,17 @@
 						value="{{WAYPOINT}}" />
 				</div>
 			</div>
+		</div>
+		<h3>Touch Tone Commands and Objects</h3>
+		<div class="div-table">
+		{{#each ttcommands}}
+			<div class="div-table-row">
+				<div onclick="termhelp(this.innerHTML)" class="help div-table-col">{{COMMAND}}</div>
+				<div class="div-table-col">
+					<input onchange="direwolf.ttcommands[{{@index}}].setVALUE(this.value)" type="text" value="{{VALUE}}">
+				</div>
+			</div>
+		{{/each}}
 		</div>
 	</div>
 

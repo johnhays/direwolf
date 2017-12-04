@@ -699,6 +699,7 @@ class Direwolf {
 	constructor() {
 		this.AGWPORT = 8000;
 		this.KISSPORT = 8001;
+		this.SPEECH = null;
 		this.DEDUPE = 30;
 		this.IGSERVER = null
 		this.IGLOGIN = null;
@@ -713,6 +714,7 @@ class Direwolf {
 		this.beacons = [];
 		this.digipeaters = [];
 		this.filters = [];
+		this.ttcommands = [];
 	}
 
 	setAGWPORT(AGWPORT) {
@@ -778,6 +780,13 @@ class Direwolf {
 		return this.LOGDIR;
 	}
 
+	setSPEECH(SPEECH) {
+		this.SPEECH = SPEECH;
+	}
+	getSPEECH(){
+		return this.SPEECH;
+	}
+
 	setGPSD(GPSD) {
 		this.GPSD = GPSD;
 	}
@@ -831,6 +840,15 @@ class Direwolf {
 		return this.filters;
 	}
 
+	addTTCommand(ttCommand) {
+		this.ttcommands.push(ttCommand);
+	}
+
+	getTTCommmands() {
+		return this.ttcommands;
+	}
+
+
 	toString() {
 		var additional = "# Created by Direwolf Configuration Web Editior\n";
 		if (this.adevices.length > 0) additional += "# Audio Devices\n";
@@ -849,11 +867,16 @@ class Direwolf {
 		for (var i = 0; i < this.filters.length; i++) {
 			additional += this.filters[i].toString() + '\n';
 		}
+		if (this.ttcommands.length > 0) additional += "# Touch Tone Rules and Objects\n";
+		for (var i = 0; i < this.ttcommands.length; i++) {
+			additional += this.ttcommands[i].toString() + '\n';
+		}
 		additional += "# Common Settings\n";
 		if (isSet(this.DEDUPE)) additional += "DEDUPE " + this.DEDUPE + "\n";
 		if (isSet(this.AGWPORT)) additional += "AGWPORT " +  this.AGWPORT + "\n";
 		if (isSet(this.KISSPORT)) additional += "KISSPORT " +  this.KISSPORT + "\n";
 		if (isSet(this.LOGDIR)) additional += "LOGDIR " + this.LOGDIR + "\n" ;
+		if (isSet(this.SPEECH)) additional += "SPEECH " + this.SPEECH + "\n" ;
 		if (isSet(this.GPSD)) additional += "GPSD " + this.GPSD + "\n";
 		if (isSet(this.GPSNMEA)) additional += "GPSNMEA " + this.GPSNMEA + "\n";
 		if (isSet(this.WAYPOINT)) additional += "WAYPOINT " + this.WAYPOINT + "\n";
@@ -879,7 +902,7 @@ class Direwolf {
 		var curchannel = null;
 		
 		for (var i = 0; i < raw.length ; i++) {
-			let line = raw[i];
+			let line = raw[i].trim();
 			let tokens = line.split(/\s+/);
 			switch(tokens[0])
 			{
@@ -899,6 +922,12 @@ class Direwolf {
 						adevices[curdevice].setOutput(tokens[2]);
 					}
 					this.addAdevice(adevices[curdevice]);
+					break;
+				case (tokens[0].match(/^TT.*?$/) || {}).input:
+					let ttCMD = new TTCommand();
+					ttCMD.setCOMMAND(tokens[0]);
+					ttCMD.setVALUE(line.slice(tokens[0].length));
+					this.addTTCommand(ttCMD);
 					break;
 				case "AGWPORT" :
 					this.setAGWPORT(tokens[1]);
@@ -1072,6 +1101,9 @@ class Direwolf {
 				case "IGFILTER" :
 					this.setIGFILTER(tokens.slice(1,tokens.length).join(' '));
 					break;
+				case "SPEECH" :
+					this.setSPEECH(tokens[1]);
+					break;
 				case "GPSD" :
 					this.setGPSD(tokens[1]);
 					break;
@@ -1240,5 +1272,40 @@ class Modem {
 		return JSON.stringify(this);
 	}
 
+}
+
+class TTCommand {
+	constructor() {
+		this.COMMAND = null;
+		this.VALUE = null;
+	}
+	
+	setCOMMAND(COMMAND) {
+		this.COMMAND = COMMAND;
+	}
+
+	getCOMMAND() {
+		return this.COMMAND;
+	}
+	
+	setVALUE(VALUE) {
+		this.VALUE = VALUE;
+	}
+
+	getVALUE() {
+		return this.VALUE;
+	}
+
+	toString() {
+		if (isSet(this.COMMAND)) {
+			return this.COMMAND + " " + this.VALUE;
+		} else {
+			return "";
+		}
+	}
+
+	asJSON() {
+		return JSON.stringify(this);
+	}
 }
 
