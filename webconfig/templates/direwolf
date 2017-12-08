@@ -75,13 +75,15 @@
 					<div class="div-table-row">
 						<div onclick="termhelp('ACHANNELS')" class="help div-table-col">Audio Channels</div>
 						<div class="div-table-col">
-							<select
+<!--							<select
 								onchange="direwolf.adevices[{{@index}}].setACHANNELS(this.value)">
 								<option value="1" {{#ifEquals
 									ACHANNELS "1"}} selected="selected"{{/ifEquals}}>Mono</option>
 								<option value="2" {{#ifEquals
 									ACHANNELS "2"}} selected="selected"{{/ifEquals}}>Stereo</option>
 							</select>
+-->
+							{{channels.length}}
 						</div>
 					</div>
 				</div>

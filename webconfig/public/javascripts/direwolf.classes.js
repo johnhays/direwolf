@@ -95,7 +95,7 @@ class Adevice {
 		if (this.output !== null) {
 			str += " " + this.output;
 		}
-		str += "\nACHANNELS " + this.ACHANNELS;
+		if (this.channels.length > 0) str += "\nACHANNELS " + this.ACHANNELS;
 		if (isSet(this.ARATE)) str += "\nARATE " + this.ARATE;
 		for (var i = 0; i < this.channels.length; i++) {
 			str += '\n' + this.channels[i].toString();

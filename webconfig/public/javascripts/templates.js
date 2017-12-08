@@ -39,13 +39,15 @@ templates['direwolf'] = template({"1":function(container,depth0,helpers,partials
     + alias4(((helper = (helper = helpers.index || (data && data.index)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"index","hash":{},"data":data}) : helper)))
     + "].setARATE(this.value)\"\n								value=\""
     + alias4(((helper = (helper = helpers.ARATE || (depth0 != null ? depth0.ARATE : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"ARATE","hash":{},"data":data}) : helper)))
-    + "\" />\n						</div>\n					</div>\n					<div class=\"div-table-row\">\n						<div onclick=\"termhelp('ACHANNELS')\" class=\"help div-table-col\">Audio Channels</div>\n						<div class=\"div-table-col\">\n							<select\n								onchange=\"direwolf.adevices["
+    + "\" />\n						</div>\n					</div>\n					<div class=\"div-table-row\">\n						<div onclick=\"termhelp('ACHANNELS')\" class=\"help div-table-col\">Audio Channels</div>\n						<div class=\"div-table-col\">\n<!--							<select\n								onchange=\"direwolf.adevices["
     + alias4(((helper = (helper = helpers.index || (data && data.index)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"index","hash":{},"data":data}) : helper)))
     + "].setACHANNELS(this.value)\">\n								<option value=\"1\" "
     + ((stack1 = (helpers.ifEquals || (depth0 && depth0.ifEquals) || alias2).call(alias1,(depth0 != null ? depth0.ACHANNELS : depth0),"1",{"name":"ifEquals","hash":{},"fn":container.program(8, data, 0, blockParams, depths),"inverse":container.noop,"data":data})) != null ? stack1 : "")
     + ">Mono</option>\n								<option value=\"2\" "
     + ((stack1 = (helpers.ifEquals || (depth0 && depth0.ifEquals) || alias2).call(alias1,(depth0 != null ? depth0.ACHANNELS : depth0),"2",{"name":"ifEquals","hash":{},"fn":container.program(8, data, 0, blockParams, depths),"inverse":container.noop,"data":data})) != null ? stack1 : "")
-    + ">Stereo</option>\n							</select>\n						</div>\n					</div>\n				</div>\n"
+    + ">Stereo</option>\n							</select>\n-->\n							"
+    + alias4(container.lambda(((stack1 = (depth0 != null ? depth0.channels : depth0)) != null ? stack1.length : stack1), depth0))
+    + "\n						</div>\n					</div>\n				</div>\n"
     + ((stack1 = helpers.each.call(alias1,(depth0 != null ? depth0.channels : depth0),{"name":"each","hash":{},"fn":container.program(10, data, 0, blockParams, depths),"inverse":container.noop,"data":data})) != null ? stack1 : "")
     + "				<div style=\"clear:both\">\n					<button type=\"button\" onclick=\"direwolf.adevices.splice("
     + alias4(((helper = (helper = helpers.index || (data && data.index)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"index","hash":{},"data":data}) : helper)))
